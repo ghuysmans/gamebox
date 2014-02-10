@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0070)http://turing.cs.pub.ro/auf2/html/chapters/chapter3/chapter_3_4_2.html -->
+<HTML><HEAD><TITLE>Chapitre 3</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<STYLE></STYLE>
+<LINK href="Chapitre 3_files/auf_webstyle.css" type=text/css rel=stylesheet>
+<SCRIPT language=JavaScript src="Chapitre 3_files/scripts.js">
+</SCRIPT>
+
+<META content="MSHTML 6.00.2900.2802" name=GENERATOR></HEAD>
+<BODY lang=EN-US vLink=purple link=blue bgColor=#ffffff>
+<TABLE cellSpacing=0 cellPadding=0 width="80%" align=center border=0>
+  <TBODY>
+  <TR>
+    <TD><MAP name=FPMap0Map><AREA shape=RECT coords=145,44,227,59 
+        href="http://turing.cs.pub.ro/auf2/html/apprenant.html"><AREA shape=RECT 
+        coords=246,44,328,60 
+        href="http://turing.cs.pub.ro/auf2/html/evaluation.html"><AREA 
+        shape=RECT coords=345,44,428,60 
+        href="http://turing.cs.pub.ro/auf2/html/contact.html"><AREA shape=RECT 
+        coords=445,44,524,60 
+        href="http://turing.cs.pub.ro/auf2/html/aide.html"><AREA shape=RECT 
+        coords=540,44,630,60 
+        href="http://turing.cs.pub.ro/auf2/html/cartederoute.html"><AREA 
+        shape=RECT target=_blank coords=4,7,112,60 
+        href="http://www.auf.org/programmes/programme4/"><AREA shape=RECT 
+        coords=135,14,380,34 
+      href="http://turing.cs.pub.ro/auf2/index.html"></MAP><IMG height=69 
+      src="Chapitre 3_files/main2_01.gif" width=760 useMap=#FPMap0Map 
+    border=0></TD></TR>
+  <TR>
+    <TD height=30>&nbsp;</TD></TR>
+  <TR>
+    <TD height=2><IMG height=2 src="Chapitre 3_files/main2_03.gif" 
+    width=760></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=3 cellPadding=3 width="80%" align=center border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H4><B>3. Algorithmes de recherche dans les systèmes à 
+      agents<BR></B><B>3.4. Stratégies en jeux</B></H4>
+      <H3>3.4.2. L`algorithme MINIMAX</H3>
+      <P>On va noter par MAX l'agent qu'on cherche à faire gagner et son 
+      adversaire par MIN. Les deux joueurs désirent gagner le jeu. On suppose 
+      que le joueur MIN joue logiquement et qu'il ne va jamais rater une 
+      occasion de gagner. Si pour gagner le joueur MAX essaie de maximiser son 
+      score, le joueur MIN désire aussi maximiser son propre score (ou de 
+      minimiser le score du joueur MAX).</P>
+      <P>L'algorithme MINIMAX, dû à Von Neumann, à comme but l'élaboration d'une 
+      stratégie optimale pour le joueur MAX.</P>
+      <P>À chaque tour le joueur MAX va choisir le coup qui va maximiser son 
+      score, tout en minimisant les bénéfices de l'adversaire. Ces bénéfices 
+      sont évalués en termes de la <I>fonction d'évaluation statique</I> 
+      utilisée pour apprécier les positions pendant le jeu.</P>
+      <P>Pour des raisons de temps de calcul et de mémoire, l'analyse est faite 
+      pour un horizon de jeu de P, le nombre de coups en avant (la profondeur de 
+      l'arbre de jeu examiné).</P>
+      <P>On a vu que l'évaluation statique des positions terminales de jeu est 
+      simple et précise : il faut apprécier selon les règles du jeu s'il s'agit 
+      d'une victoire, d'une défaite ou d'une égalité. Pour les postions 
+      intermédiaires cette fonction est imprécise, à cause des critères plus au 
+      moins subjectifs qui ont été utilisé pour l'évaluation. Le manque 
+      d'exactitude de la fonction d'évaluation statique est compensée par 
+      l'analyse rigoureuse des conséquences de chaque coup de deux joueurs.</P>
+      <P>L'algorithme réalise une évaluation de la position courante, 
+      représentée par la racine de l'arbre de jeu, en partant des nœuds 
+      terminaux. Dans ce but l'ensemble des nœuds de l'arbre de jeu est divisé 
+      en deux classes : les nœuds MAX sur les niveaux où ce joueur va choisir un 
+      coup et les nœuds MIN pour les niveaux de décision du joueur MIN.</P>
+      <P><I>Exemple</I>. On considère que pendant une partie de <I>Tic Tac 
+      Toe</I> on est arrivé dans la position présentée dans la racine de l`arbre 
+      de la figure 3.4.2. On voit que le premier niveau est coloré en jaune, 
+      donc c'est au tour du joueur <B><I>X</I> </B>(le joueur&nbsp; MAX) de 
+      jouer.</P>
+      <P style="TEXT-ALIGN: center" align=center><IMG height=292 
+      src="Chapitre 3_files/image42-002.gif" width=343 v:shapes="_x0000_i1025"> 
+      </P>
+      <P style="TEXT-ALIGN: center" align=center>Figure 3.4.2. Exemple d`analyse 
+      pendant une partie de <I>Tic Tac Toe</I></P>
+      <P style="TEXT-ALIGN: justify">Les niveaux de décision pour le joueur MIN 
+      sont colorés en bleu et les positions terminales sont présentées dans des 
+      zones vertes, ayant écrit au-dessous les valeurs de la fonction 
+      d`évaluation statique.</P>
+      <P style="TEXT-ALIGN: justify">L`arbre de jeu correspondant à cette 
+      position est présenté dans la figure 3.4.3. Les nœuds MAX et MIN sont 
+      représentés par des triangles. Les nœuds MIN se distinguent des nœuds MAX 
+      par la position du triangle et, en général, ils ne sont pas colorés. Mais 
+      pour garder une correspondance facile avec la situation de la figure 3.4.2 
+      on a coloré les nœuds avec les mêmes couleurs que les niveaux de décisions 
+      des joueurs.</P>
+      <P>Sous les nœuds terminaux (soit MIN soit MAX, mais tous colorés en 
+      vert&nbsp;) on a marqué la valeur de la fonction d`évaluation statique 
+      (+100 pour la victoire de MAX, 0 pour une partie nulle, et -100 pour la 
+      victoire de MIN).</P>
+      <P>L`algorithme MINIMAX associe une valeur à la racine, selon laquelle le 
+      joueur MAX fera le choix de son coup. Un algorithme pour l`agent qui 
+      implémente le joueur MAX comportera les phases suivantes&nbsp;:</P>
+      <UL>
+        <LI>Construire l`arbre de jeu pour <I>P</I> niveaux 
+        <LI>Visiter l`arbre de jeu <I>par niveaux</I>, en montant des nœuds 
+        terminaux jusqu`à la racine: 
+        <UL>
+          <LI>si le nœud courant <I>p</I> représente une position terminale, on 
+          lui associe la valeur de la fonction d`évaluation statique, 
+          f(<I>p</I>) </LI></UL>
+        <UL>
+          <LI>s'il s'agit d'une position intermediaire et d'un nœud MIN on lui 
+          associe la plus petite des valeurs associées à ses fils 
+          <LI>s'il s'agit d'une position intermediaire et d'un nœud MAX on lui 
+          associe la valeur maximale qui a été associée à ses fils </LI></UL>
+        <LI>Quand on a réussi à associer une valeur à la racine (appelée valeur 
+        <I>MiniMax</I>), on fait le choix de coup qui mène vers le fils qui a 
+        cette valeur maximale. S'il y a plusieurs fils qui ont la même valeur, 
+        alors on en choisit un au hasard (ou celui qui conduit à la victoire, ou 
+        celui qui conduit à une situation finale dans le plus petit nombre de 
+        coups, ou un autre critère selon les spécificités du jeu). </LI></UL>
+      <P style="TEXT-ALIGN: center" align=center><IMG height=335 
+      src="Chapitre 3_files/image42-003.gif" width=283 v:shapes="_x0000_i1026"> 
+      <BR>Figure 3.4.3. L`arbre MIN-MAX</P><BR style="PAGE-BREAK-BEFORE: always" 
+      clear=all>
+      <P><I><B>Exemple</B></I><B>.</B> On peut voir dans la figure 3.4.3 ce 
+      processus d`association des valeurs aux nœuds intermédiaires, valeurs 
+      marquées en <I>Italique</I>s. La valeur <I>MiniMax</I> obtenue (+100) est 
+      la meilleure valeur possible à partir de la position considérée, et 
+      apporte en ce cas la victoire en un coup pour le joueur MAX,&nbsp; s`il se 
+      dirige vers le fils situé au milieu en la figure. S`il fait le choix de se 
+      diriger vers le fils situé à gauche, qui a une valeur associée de –100, il 
+      va perdre la partie, si l`opposant joue de façon optimale. S&nbsp;`il se 
+      dirige vers le fils avec la valeur associé 0 il obtiendra un résultat 
+      nul.</P>
+      <P>La valeur <I>MiniMax</I> qui sera déterminée ne peut pas garantir la 
+      victoire pour le joueur MAX, mais le conduira toujours dans la meilleure 
+      situation possible pour la position donnée.</P>
+      <P><B><I>Exemple</I></B>. Le jeu des allumettes.<B><I> </I></B>Sur une 
+      table il y a au départ quelques allumettes. Chaque joueur peut choisir à 
+      son tour de prendre 1,2 ou 3 allumettes en même temps. Le joueur qui 
+      retire la dernière allumette a perdu. L'arbre MINIMAX pour la situation 
+      avec 5 allumettes sur la table et le tour de l'agent MAX est présenté dans 
+      la figure 3.4.4, où dans les triangles sont inscrits les nombres des 
+      allumettes se trouvant sur la table avant le coup.</P>
+      <P style="TEXT-ALIGN: center" align=center><IMG height=408 
+      src="Chapitre 3_files/image42-004.gif" width=430 v:shapes="_x0000_i1027"> 
+      </P>
+      <P style="TEXT-ALIGN: center" align=center>Figure 3.4.4. L`arbre MiniMax 
+      pour le jeu “des allumettes”</P>
+      <P>Les opérateurs qui modélisent les coups sont -1, -2, -3 (le nombre des 
+      allumettes qui sont pris par l'agent) et ils sont toujours appliqués dans 
+      cet ordre, de gauche à droite dans l'arbre de jeu présenté. Pour les trois 
+      premiers arcs qui partent de la position initiale, on a montré le nombre 
+      d'allumettes retirées, mais pour simplifier le dessin on ne l'a pas fait 
+      figurer sur les arcs des autres niveaux. La fonction d'évaluation statique 
+      associe à une position terminale victorieuse pour l'agent MAX la valeur 
+      +100, et -100 pour une position perdante.</P>
+      <P>Si on détermine la valeur <I>MiniMax</I> pour la situation avec 5 
+      allumettes sur la table et le tour du joueur MAX, on va trouver –100, donc 
+      le joueur MAX va perdre la partie si le joueur MIN joue de façon logique. 
+      On peut observer que les valeurs associées à tous les nœuds MIN 
+      successeurs de la racine sont égales à –100, donc quel que soit 
+      l`opérateur appliqué (le coup)&nbsp; par l`agent MAX, on va arriver dans 
+      une position gagnante pour le joueur MIN. </P>
+      <P>En effet, si l'agent MAX retire 1 allumette, l'agent MIN en retire à 
+      son tour 3, si MAX en retire 2, MIN en retire 2 aussi et si MAX en retire 
+      3, MIN va en retirer 1, et dans toutes ces situations MAX va trouver sur 
+      la table 1 allumette qu'il sera forcé de prendre, donc il perdra la 
+      partie.</P>
+      <P><IMG height=84 hspace=12 src="Chapitre 3_files/image42-005.gif" 
+      width=40 align=left v:shapes="_x0000_s1026"><B>Questions</B>. Considèrez 
+      le successeur direct le plus à gauche de la racine, qui correspond à une 
+      position avec 4 allumettes sur la table. </P>
+      <P><B>1)</B> Quelles sont les valeurs associées à ses fils&nbsp;? 
+      <B><BR>2)</B> Quelle est la valeur n (n&lt;5) des allumettes qui peuvent 
+      être sur la table et, si c' est le tour du joueur MAX, peut-il gagner le 
+      jeu?</P>
+      <H5><A href="javascript:show_response(3,'response_3_4_2_1.html')">Cliquez 
+      ici pour voir la réponse</A></H5>
+      <P>L`algorithme MINIMAX peut être décrit par le pseudo code suivant.</P>
+      <P><B>fonction </B>MINIMAX( p) <B>est</B> 
+      <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxime = 
+      -MAX_VAL<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>pour </B>*) <B>chacune</B> 
+      fils = successeur(p) 
+      <B>faire<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>val_fils 
+      = 
+      ValeurMINI(fils)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>si 
+      </B>val_fils &gt; maxime 
+      <B>alors<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>maxime 
+      = 
+      val_fils<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coup 
+      = fils<B> </B><B><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fin 
+      pour<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>retourner </B>coup<BR><B>Fin 
+      </B></P>
+      <P><B><BR>fonction </B>ValeurMINI ( n ) 
+      <B>est<BR></B><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;si&nbsp; </B>Feuille( n )= 
+      <B>vrai 
+      alors<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>retourner 
+      </B>f(n) <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>sinon 
+      <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>v_min 
+      = 
+      MAX_VAL<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>pour 
+      </B>*) <B>chacune</B> fils = successeur(p) 
+      <B>faire<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>v_fils 
+      = 
+      ValeurMAX(fils)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_min 
+      = min (v_min, v_fils)<B> 
+      <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>fin 
+      pour<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>fin si&nbsp; 
+      <BR></B><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retourner 
+      </B>v_min<BR><B>Fin</B></P>
+      <P><B><BR>fonction </B>ValeurMAX ( n ) 
+      <B>est<BR></B><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;si&nbsp; </B>Feuille( n )= 
+      <B>vrai</B> 
+      <B>alors<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>retourner 
+      </B>f(n) <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>sinon 
+      <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>v_max 
+      = 
+      -MAX_VAL<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>pour 
+      </B>*) <B>chacune</B> fils = successeur(p) 
+      <B>faire<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B>v_fils 
+      = 
+      ValeurMINI(fils)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_max= 
+      max(v_max,v_fils)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>fin 
+      pour<BR>&nbsp;&nbsp;&nbsp;&nbsp; </B><B>fin 
+      si&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</B><B>retourner 
+      </B>v_max<BR><B>Fin</B></P>
+      <P>Les fonctions max(x,y) et min(x,y) retournent la plus grande / petite 
+      valeur de l'ensemble {x , y}. La fonction Feuille(n) retourne <B>vrai</B> 
+      si le nœud n est un nœud terminal (fin de jeu ou nœud terminal pour la 
+      recherche d'un arbre de jeu à profondeur limitée P).</P>
+      <P>La fonction MINIMAX appelle pour tous les fils de la racine <I>p</I> 
+      (la position initiale) la fonction ValeurMINI(fils) parce que tous les 
+      fils de la racine sont des nœuds MINI. On remarque une récursivité 
+      indirecte: la fonction ValeurMINI(n)appelle la fonction ValeurMAX(fils), 
+      qui à son tour appelle la fonction ValeurMINI(fils), en assurant ainsi 
+      l`alternance des traitement MINI – MAX dans l`exploration de l`arbre de 
+      jeu.</P>
+      <P><IMG height=84 hspace=12 src="Chapitre 3_files/image42-005.gif" 
+      width=40 align=left v:shapes="_x0000_s1027"> <B>Question.</B> Quel type 
+      d`exploration dans l`arbre de jeu réalise l`algorithme MINIMAX présenté 
+      ?</P>
+      <H5><A href="javascript:show_response(3,'response_3_4_2_2.html')">Cliquez 
+      ici pour voir la réponse</A></H5>
+      <P><BR><I>L`analyse de l`algorithme MINIMAX<BR></I><I>Complète </I>– oui 
+      si l`arbre de jeu est fini<BR><I>Optimal </I>– oui si le joueur MAX a un 
+      adversaire qui joue de façon optimale<BR><I>Complexité en temps</I> - 
+      <B><I>O</I></B>(<I>b<SUP>P</SUP> </I>)<BR><I>Complexité en place </I>– 
+      pour une exploration de l`arbre de jeu en profondeur d`abord 
+      <B><I>O</I></B>(<I>bP</I>)</P>
+      <P>Il faut préciser que pour les jeux complexes la solution exacte ne peut 
+      pas être trouvée dans un temps raisonnable. Par exemple le jeu d`échec a 
+      un facteur de branchement b=35 et pour des jeux communs <I>P</I>=100, donc 
+      on obtient un nombre de traitements de l`ordre 35<SUP>100</SUP>, ce qui 
+      est un nombre géant (pour faire une comparaison, le nombre des atomes de 
+      l`univers est de l'ordre de 10<SUP>100</SUP>). Il est nécessaire des 
+      trouver des stratégies plus pratiques.</P>
+      <TABLE cellSpacing=0 cellPadding=0 width="80%" align=center border=0>
+        <TBODY>
+        <TR align=middle>
+          <TD width="33%"><A 
+            href="http://turing.cs.pub.ro/auf2/html/chapters/chapter3/chapter_3_4_1.html">&lt;&lt; 
+            Section précédente</A></TD>
+          <TD width="33%"><A 
+            href="http://turing.cs.pub.ro/auf2/html/chapters/chapter3/sommaire.html">Table 
+            de matières</A></TD>
+          <TD width="34%"><A 
+            href="http://turing.cs.pub.ro/auf2/html/chapters/chapter3/chapter_3_4_3.html">Section 
+            suivante &gt;&gt;</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+<TABLE cellSpacing=0 cellPadding=0 width="80%" align=center border=0>
+  <TBODY>
+  <TR>
+    <TD>Politechnica University of Bucharest - 2002<BR><IMG height=2 
+      src="Chapitre 3_files/main2_03.gif" 
+width=760></TD></TR></TBODY></TABLE></BODY></HTML>
