@@ -1,0 +1,33 @@
+\section{Fonctionnalités supplémentaires}
+Le~diagramme du projet pourra contenir quelques classes bonus mais elle ne devront être effectivement implémentées que si on a terminé le~reste ! Il ne faut pas donner l'impression (même si elle est fausse) qu'on s'est concentrés sur les~détails ! Au besoin, créer des mocks\footnote{Classes vides avec juste ce qu'il faut pour que ça compile et fasse fonctionner le~reste.}. Les~idées sont citées par ordre de priorité.
+\subsection{Idées du prof}
+\begin{enumerate}
+    \item Possibilité de modifier la~taille du plateau.
+    \item Possibilité de modifier le~nombre de jetons à aligner pour gagner.
+    \item Mode de triche (affichage de <<~conseils~>>, aussi un \textit{debug mode}) activable via un raccourci clavier discret (\textit{Konami Code, just for fun!}).
+    \item Effets visuels (animations, images au lieu de formes).
+\end{enumerate}
+\subsection{Idées originales}
+\begin{enumerate}
+    \item Après la~remise du projet, mettre ça en commun avec les~autres.
+    \item Stockage de l'historique des coups et possibilité de retour en arrière.
+    \item Keypad comme interface pour Tic-tac-toe.
+    \item Système de succès (trophées, \textit{achievements}...) via des règles.
+        \begin{enumerate}
+            \item Bruitages basés là-dessus
+            \item Commentaires audio/textuels désobligeants
+        \end{enumerate}
+    \item Réseau
+        \begin{enumerate}
+            \item protocole TCP/IP (réseau local d'abord) par paquets sérialisés.
+                \begin{itemize}
+                    \item tchat textuel (\textit{debug mode}, aussi)
+                    \item visualisation du profil de l'autre
+                    \item partie normale : coups et chrono
+                    \item mode spectateur
+                \end{itemize}
+            \item matchmaking via broadcasting local
+            \item classement ELO via un~serveur (POO en PHP, alors !)
+        \end{enumerate}
+	\item Multilinguisme de l'interface ? Gros morceau, malheureusement.
+\end{enumerate}
