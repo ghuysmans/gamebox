@@ -23,13 +23,6 @@ def dispBoard(b):
             print d,
         print
 
-def hasFinished(b):
-    for r in b:
-        for c in r:
-            if c==0:
-                return False
-    return True
-
 def getScore(b, c):
     """
     Computes a score for the IA (!): 0=draw, -1=lost, 1=won.
@@ -109,6 +102,17 @@ def getScore(b, c):
     #nobody has won, so...
     return 0 #draw
 
+def hasFinished(b):
+    #if any player has won, it's finished.
+    score = getScore(board, 3)
+    if score != 0: return True
+    #else, let's see whether the board is full
+    for r in b:
+        for c in r:
+            if c==0:
+                return False
+    return True
+
 def playMove(b, h, m, p):
     #m[0] = row, m[1] = column
     h.append([p, m])
@@ -121,7 +125,64 @@ def undoMove(b, h):
     p = x[1]
     b[p[0]][p[1]] = 0
 
+def possibleMoves(b):
+    ret = [] #empty array to be filled
+    for i, r in enumerate(b):
+        for j, c in enumerate(r):
+            if c==0:
+                ret.append([i, j])
+    return ret
 
+def iaMax(b, h, p):
+    #leaf? (a player has won)
+    score = getScore(b, 3)
+    if score != 0: return score
+    #part 2: testing possible moves (if any)
+    mvs = possibleMoves(b)
+    if len(mvs)==0:
+        return score
+    else:
+        M = -2 #fake max score, will be replaced by a real one
+        for mv in mvs:
+            playMove(b, h, mv, p)
+            v = iaMin(b, h, not p)
+            undoMove(b, h)
+            M = max(v, M) #take the best move
+        return M
+
+def iaMin(b, h, p):
+    #leaf? (a player has won)
+    score = getScore(b, 3)
+    if score != 0: return score
+    #part 2: testing possible moves (if any)
+    mvs = possibleMoves(b)
+    if len(mvs)==0:
+        return score
+    else:
+        M = 2 #fake min score, will be replaced by a real one
+        for mv in mvs:
+            playMove(b, h, mv, p)
+            v = iaMax(b, h, not p)
+            undoMove(b, h)
+            M = min(v, M) #take the best move
+        return M
+
+def minMax(b, h, p):
+    #M contains a fake max score: it will be replaced by the first possb move.
+    M = -2 #Mc doesn't need to be initialized
+    mvs = possibleMoves(b)
+    for mv in mvs:
+        playMove(b, h, mv, p)
+        v = iaMin(b, h, not p)
+        undoMove(b, h)
+        if v>M:
+            #better...
+            M = v
+            Mc = mv
+    return Mc
+
+
+#basic tests...
 import doctest
 doctest.testmod()
 
@@ -129,17 +190,21 @@ doctest.testmod()
 board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 history = [] #each item: player, pos
 curPlayer = False
-print "BEFORE"
-dispBoard(board)
 
-curPlayer = playMove(board, history, [0, 0], curPlayer)
-print "FIRST"
-dispBoard(board)
+while not hasFinished(board):
+    inv = True
+    while inv:
+        x = int(raw_input("X coordinate "))
+        y = int(raw_input("Y coordinate "))
+        if board[y][x] == 0: 
+            inv = False #valid input
+    curPlayer = playMove(board, history, [y, x], curPlayer)
+    if hasFinished(board): break
+    computedMove = minMax(board, history, False)
+    curPlayer = playMove(board, history, computedMove, curPlayer)
+    dispBoard(board)
+    print "..."
+    print
 
-curPlayer = playMove(board, history, [0, 1], curPlayer)
-print "SECOND"
 dispBoard(board)
-
-print "UNDO"
-undoMove(board, history)
-dispBoard(board)
+print "FINISHED."
