@@ -12,48 +12,56 @@ By Guillaume Huysmans and Mathieu Leclerq, 2014.
 #False=first, IA, plays with Ow
 #True=second, HU, plays with X
 
+MAX_RECURSION = 2
 
-def dispBoard(b):
+
+def dispBoard(b, rec=0):
+    pre = "\t"*rec
     for r in b:
+        rs = ""
         for c in r:
             #print c,
             if c==0: d='-'
             elif c==1: d='O'
             else: d='X'
-            print d,
-        print
+            rs += d
+        print pre+rs
 
-def getScore(b, c):
+def getScore(b, c, p):
     """
-    Computes a score for the IA (!): 0=draw, -1=lost, 1=won.
+    Computes a score: 0=draw, -1=lost, 1=won.
     Several test cases:
 
     Draw: the board is empty
-    >>> getScore([[0, 0, 0], [0, 0, 0], [0, 0, 0]], 3)
+    >>> getScore([[0, 0, 0], [0, 0, 0], [0, 0, 0]], 3, False)
     0
 
     IA wins (first row)
-    >>> getScore([[1, 1, 1], [0, 0, 0], [0, 0, 0]], 3)
+    >>> getScore([[1, 1, 1], [0, 0, 0], [0, 0, 0]], 3, False)
     1
 
     IA wins (second row)
-    >>> getScore([[0, 0, 0], [1, 1, 1], [0, 0, 0]], 3)
+    >>> getScore([[0, 0, 0], [1, 1, 1], [0, 0, 0]], 3, False)
     1
 
     IA wins (second column) - FAILS
-    >>> getScore([[1, 1, 0], [1, 1, 0], [2, 1, 0]], 3)
+    >>> getScore([[1, 1, 0], [1, 1, 0], [2, 1, 0]], 3, False)
     1
 
     Player wins (third column) - FAILS
-    >>> getScore([[0, 0, 2], [0, 0, 2], [0, 0, 2]], 3)
+    >>> getScore([[0, 0, 2], [0, 0, 2], [0, 0, 2]], 3, True)
+    1
+
+    Player wins (third row), 2 not 3
+    >>> getScore([[0, 0, 0], [0, 1, 0], [2, 2, 0]], 2, False)
     -1
 
     Player wins (third row), 2 not 3
-    >>> getScore([[0, 0, 0], [0, 1, 0], [2, 2, 0]], 2)
-    -1
+    >>> getScore([[0, 0, 0], [0, 1, 0], [2, 2, 0]], 2, True)
+    1
 
     IA wins (first column)
-    >>> getScore([[1, 0, 0], [1, 0, 0], [1, 0, 0]], 3)
+    >>> getScore([[1, 0, 0], [1, 0, 0], [1, 0, 0]], 3, False)
     1
     """
     #horizontal
@@ -72,8 +80,8 @@ def getScore(b, c):
                 pass
             else:
                 #found!
-                if v==1: return 1
-                elif v==2: return -1
+                if v==1: return -1 if p else 1
+                elif v==2: return 1 if p else -1
                 else: pass #empty!!
     #vertical
     for x in range(len(b)): #let's assume it's a square
@@ -93,8 +101,8 @@ def getScore(b, c):
                 pass
             else:
                 #found!
-                if v==1: return 1
-                elif v==2: return -1
+                if v==1: return -1 if p else 1
+                elif v==2: return 1 if p else -1
                 else: pass #empty!!
     #diagonal (?)
     pass #FIXME pain in the ass...
@@ -103,8 +111,8 @@ def getScore(b, c):
     return 0 #draw
 
 def hasFinished(b):
-    #if any player has won, it's finished.
-    score = getScore(board, 3)
+    #if any player has won (the first one, for example), it's finished.
+    score = getScore(board, 3, False)
     if score != 0: return True
     #else, let's see whether the board is full
     for r in b:
@@ -133,10 +141,17 @@ def possibleMoves(b):
                 ret.append([i, j])
     return ret
 
-def iaMax(b, h, p):
+def iaCalc(b, h, p, rec=0):
     #leaf? (a player has won)
-    score = getScore(b, 3)
-    if score != 0: return score
+    score = getScore(b, 3, False)
+    if score!=0 or rec==MAX_RECURSION:
+        #debug
+        print "\t"*rec + "iaCalc: aborted player", p, "score", score, "rec", rec
+        dispBoard(b, rec)
+        return score
+    #debug
+    print "\t"*rec + "iaCalc: entering with player", p, "score", score
+    dispBoard(b, rec)
     #part 2: testing possible moves (if any)
     mvs = possibleMoves(b)
     if len(mvs)==0:
@@ -145,35 +160,23 @@ def iaMax(b, h, p):
         M = -2 #fake max score, will be replaced by a real one
         for mv in mvs:
             playMove(b, h, mv, p)
-            v = iaMin(b, h, not p)
+            v = -iaCalc(b, h, not p, rec+1)
             undoMove(b, h)
             M = max(v, M) #take the best move
+        print "\t"*rec + "iaCalc: returning", score
         return M
 
-def iaMin(b, h, p):
-    #leaf? (a player has won)
-    score = getScore(b, 3)
-    if score != 0: return score
-    #part 2: testing possible moves (if any)
-    mvs = possibleMoves(b)
-    if len(mvs)==0:
-        return score
-    else:
-        M = 2 #fake min score, will be replaced by a real one
-        for mv in mvs:
-            playMove(b, h, mv, p)
-            v = iaMax(b, h, not p)
-            undoMove(b, h)
-            M = min(v, M) #take the best move
-        return M
-
-def minMax(b, h, p):
+def negaMax(b, h, p):
     #M contains a fake max score: it will be replaced by the first possb move.
+    print "negaMax: entering with player", p
+    dispBoard(b, 0)
     M = -2 #Mc doesn't need to be initialized
-    mvs = possibleMoves(b)
-    for mv in mvs:
+    poss = possibleMoves(b)
+    if len(poss)==0: return False #can't play anything
+    for mv in poss:
         playMove(b, h, mv, p)
-        v = iaMin(b, h, not p)
+        v = iaCalc(b, h, not p, 1) #1 for indentation
+        if p==True: v = -v #zero-sum
         undoMove(b, h)
         if v>M:
             #better...
@@ -187,24 +190,30 @@ import doctest
 doctest.testmod()
 
 
-board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+#board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+board = [[1, 0, 2], [0, 1, 0], [1, 2, 2]]
 history = [] #each item: player, pos
-curPlayer = False
+curPlayer = True
+#curPlayer = playMove(board, history, [0, 0], curPlayer)
+#dispBoard(board)
 
 while not hasFinished(board):
-    inv = True
-    while inv:
-        x = int(raw_input("X coordinate "))
-        y = int(raw_input("Y coordinate "))
-        if board[y][x] == 0: 
-            inv = False #valid input
-    curPlayer = playMove(board, history, [y, x], curPlayer)
-    if hasFinished(board): break
-    computedMove = minMax(board, history, False)
+    computedMove = negaMax(board, history, False)
     curPlayer = playMove(board, history, computedMove, curPlayer)
     dispBoard(board)
     print "..."
-    print
+    if hasFinished(board): break
+    inv = True
+    while inv:
+        try:
+            x = int(raw_input("X coordinate "))
+            y = int(raw_input("Y coordinate "))
+            if board[y][x] == 0: 
+                inv = False #valid input
+        except:
+            pass
+    curPlayer = playMove(board, history, [y, x], curPlayer)
 
-dispBoard(board)
 print "FINISHED."
+print "Score:", getScore(board, 3, curPlayer)
+dispBoard(board)
