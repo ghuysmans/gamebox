@@ -1,5 +1,5 @@
 """
-Demo implementation of the MinMax algorithm.
+Demo implementation of the NegaMax algorithm.
 By Guillaume Huysmans and Mathieu Leclerq, 2014.
 """
 
@@ -12,7 +12,7 @@ By Guillaume Huysmans and Mathieu Leclerq, 2014.
 #False=first, IA, plays with Ow
 #True=second, HU, plays with X
 
-MAX_RECURSION = 2
+MAX_RECURSION = 5
 
 
 def dispBoard(b, rec=0):
@@ -141,17 +141,11 @@ def possibleMoves(b):
                 ret.append([i, j])
     return ret
 
-def iaCalc(b, h, p, rec=0):
+def negaMax(b, h, p, rec=0):
     #leaf? (a player has won)
-    score = getScore(b, 3, False)
+    score = getScore(b, 3, p)
     if score!=0 or rec==MAX_RECURSION:
-        #debug
-        print "\t"*rec + "iaCalc: aborted player", p, "score", score, "rec", rec
-        dispBoard(b, rec)
         return score
-    #debug
-    print "\t"*rec + "iaCalc: entering with player", p, "score", score
-    dispBoard(b, rec)
     #part 2: testing possible moves (if any)
     mvs = possibleMoves(b)
     if len(mvs)==0:
@@ -160,23 +154,20 @@ def iaCalc(b, h, p, rec=0):
         M = -2 #fake max score, will be replaced by a real one
         for mv in mvs:
             playMove(b, h, mv, p)
-            v = -iaCalc(b, h, not p, rec+1)
+            v = -negaMax(b, h, not p, rec+1)
             undoMove(b, h)
             M = max(v, M) #take the best move
-        print "\t"*rec + "iaCalc: returning", score
         return M
 
-def negaMax(b, h, p):
+def getBestMove(b, h, p):
     #M contains a fake max score: it will be replaced by the first possb move.
-    print "negaMax: entering with player", p
-    dispBoard(b, 0)
     M = -2 #Mc doesn't need to be initialized
     poss = possibleMoves(b)
     if len(poss)==0: return False #can't play anything
     for mv in poss:
         playMove(b, h, mv, p)
-        v = iaCalc(b, h, not p, 1) #1 for indentation
-        if p==True: v = -v #zero-sum
+        v = negaMax(b, h, not p, 1) #1 for indentation
+        if p==False: v = -v #zero-sum; FIXME Maybe it should be always done?
         undoMove(b, h)
         if v>M:
             #better...
@@ -190,15 +181,19 @@ import doctest
 doctest.testmod()
 
 
-#board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-board = [[1, 0, 2], [0, 1, 0], [1, 2, 2]]
+board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+#board = [[2, 0, 1], [0, 2, 0], [2, 1, 1]]
+shortcuts = {   'a': [0,0], 'z': [1,0], 'e': [2,0], 
+                'q': [0,1], 's': [1,1], 'd': [2,1], 
+                'w': [0,2], 'x': [1,2], 'c': [2,2]
+            }
 history = [] #each item: player, pos
-curPlayer = True
+curPlayer = False
 #curPlayer = playMove(board, history, [0, 0], curPlayer)
 #dispBoard(board)
 
 while not hasFinished(board):
-    computedMove = negaMax(board, history, False)
+    computedMove = getBestMove(board, history, curPlayer)
     curPlayer = playMove(board, history, computedMove, curPlayer)
     dispBoard(board)
     print "..."
@@ -206,14 +201,22 @@ while not hasFinished(board):
     inv = True
     while inv:
         try:
-            x = int(raw_input("X coordinate "))
-            y = int(raw_input("Y coordinate "))
-            if board[y][x] == 0: 
-                inv = False #valid input
+            key = raw_input("Move? (AZE/QSD/WXC) ")
+            x = shortcuts[key][0]
+            y = shortcuts[key][1]
+            #FIXME play should forbid piece replacing!
+            if board[y][x] == 0:
+                inv = False
         except:
             pass
     curPlayer = playMove(board, history, [y, x], curPlayer)
 
 print "FINISHED."
-print "Score:", getScore(board, 3, curPlayer)
+score = getScore(board, 3, False)
+if score==-1:
+    print "You won!"
+elif score==0:
+    print "Draw."
+else:
+    print "IA won!"
 dispBoard(board)
