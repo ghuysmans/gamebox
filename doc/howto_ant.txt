@@ -1,0 +1,5 @@
+Copy both JAR files into a directory (\Program Files\Java\apache-ant-1.9.3\, for example) 
+and store this path into the ANT_HOME environment variables.
+
+Update JAVA_HOME to point to the JDK's home directory (not JRE's!)
+Append "%ANT_HOME%\bin" to PATH.
