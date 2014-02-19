@@ -14,7 +14,7 @@ public class ConverterTest
 	public void base36f()
 	{
 		Converter myConv = new Converter(36);
-		Assert.assertEquals(myConv.fromString("GUILLAUME"), 1305567814);
+		Assert.assertEquals(myConv.fromString("GUILLAUMEx"), 1305567814);
 	}
 	
 	@Test
