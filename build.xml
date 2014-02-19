@@ -1,0 +1,34 @@
+<!--
+BA1 Programming Project - Game box
+By Guillaume HUYSMANS, Mathieu LECLERCQ, 2014.
+
+License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
+-->
+
+<project name="Game box">
+	<property name="src.dir" value="code" />
+	<property name="build.dir" value="build" />
+	<property name="junit.cp" value="lib/junit-4.11.jar; lib/hamcrest-core-1.3.jar" />
+	<property name="main-class" value="be.ac.umons.informatique.ba1.gamebox.ui.main" />
+	<target name="build">
+		<mkdir dir="build" />
+		<javac srcdir="${src.dir}" includeantruntime="false" classpath="${junit.cp}" destdir="${build.dir}" />
+	</target>
+	<target name="test" depends="build">
+		<junit printsummary="yes" showoutput="yes">
+			<classpath>
+				<pathelement path="${junit.cp}" />
+				<pathelement path="${build.dir}" />
+			</classpath>
+			<batchtest>
+				<fileset dir="${src.dir}" includes="**/*Test.java" />
+			</batchtest>
+		</junit>
+	</target>
+	<target name="run" depends="build" >
+		<java classname="${main-class}" fork="true" classpath="${build.dir}" />
+	</target>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+</project>
