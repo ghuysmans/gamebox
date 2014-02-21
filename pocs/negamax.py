@@ -63,6 +63,38 @@ def getScore(b, c, p):
     IA wins (first column)
     >>> getScore([[1, 0, 0], [1, 0, 0], [1, 0, 0]], 3, False)
     1
+
+    IA wins (diagonal)
+    >>> getScore([[1, 0, 0], [0, 1, 0], [0, 0, 1]], 3, False)
+    1
+
+    Nobody wins (failed IA diagonal)
+    >>> getScore([[2, 0, 0], [0, 2, 0], [0, 0, 1]], 3, True)
+    0
+
+    Nobody wins (failed IA diagonal)
+    >>> getScore([[0, 0, 1], [0, 2, 0], [1, 0, 1]], 3, False)
+    0
+
+    Nobody wins (incomplete IA diagonal)
+    >>> getScore([[0, 0, 0], [0, 1, 0], [0, 0, 1]], 3, False)
+    0
+
+    IA wins (diagonal)
+    >>> getScore([[0, 0, 1], [0, 1, 0], [1, 0, 1]], 3, False)
+    1
+
+    Nobody wins (incomplete player diagonal)
+    >>> getScore([[0, 0, 0], [0, 2, 0], [2, 0, 0]], 3, True)
+    0
+
+    Player wins (diagonal)
+    >>> getScore([[2, 0, 0], [0, 2, 0], [0, 0, 2]], 3, True)
+    1
+
+    Player wins (diagonal)
+    >>> getScore([[2, 0, 0], [0, 2, 0], [0, 0, 2]], 3, False)
+    -1
     """
     #horizontal
     for r in b:
@@ -84,9 +116,10 @@ def getScore(b, c, p):
                 elif v==2: return 1 if p else -1
                 else: pass #empty!!
     #vertical
+    #FIXME we can't assume it's a square!
     for x in range(len(b)): #let's assume it's a square
         #for each start row,
-        for y in range(len(b)-c+1):
+        for y in range(len(b[x])-c+1):
             v = b[y][x]
             #print "at %d:%d, start is %d" % (y, x, v)
             skip = False
@@ -104,11 +137,71 @@ def getScore(b, c, p):
                 if v==1: return -1 if p else 1
                 elif v==2: return 1 if p else -1
                 else: pass #empty!!
-    #diagonal (?)
-    pass #FIXME pain in the ass...
-    
+    #TODO move this into another function
+    #diagonal, down; FIXME not a square + test
+    for y in range(len(b)-c+1):
+        for x in range(len(b[y])-c+1):
+            v = b[y][x] #first
+            skip = False
+            for o in range(1, c):
+                if v != b[y+o][x+o]:
+                    skip = True
+                    break
+            if skip:
+                #no match
+                pass
+            else:
+                #found!
+                if v==1: return -1 if p else 1
+                elif v==2: return 1 if p else -1
+                else: pass #empty!!
+    #diagonal, up; FIXME not a square + test
+    for y in range(len(b)-1, len(b)-c, -1):
+        for x in range(len(b[y])-c+1):
+            v = b[y][x] #first
+            skip = False
+            for o in range(1, c):
+                if v != b[y-o][x+o]:
+                    skip = True
+                    break
+            if skip:
+                #no match
+                pass
+            else:
+                #found!
+                if v==1: return -1 if p else 1
+                elif v==2: return 1 if p else -1
+                else: pass #empty!!
     #nobody has won, so...
     return 0 #draw
+"""
+FIXME BUG
+
+O--
+---
+---
+...
+Move? (AZE/QSD/WXC) d
+OO-
+--X
+---
+...
+Move? (AZE/QSD/WXC) e
+OOX
+--X
+--O
+...
+Move? (AZE/QSD/WXC) s
+OOX
+OXX
+--O
+...
+FINISHED.
+IA won!
+OOX
+OXX
+--O
+"""
 
 def hasFinished(b):
     #if any player has won (the first one, for example), it's finished.
@@ -166,8 +259,8 @@ def getBestMove(b, h, p):
     if len(poss)==0: return False #can't play anything
     for mv in poss:
         playMove(b, h, mv, p)
-        v = negaMax(b, h, not p, 1) #1 for indentation
-        if p==False: v = -v #zero-sum; FIXME Maybe it should be always done?
+        v = -negaMax(b, h, not p, 1) #1 for indentation
+        #TODO test with the other player
         undoMove(b, h)
         if v>M:
             #better...
