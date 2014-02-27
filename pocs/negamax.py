@@ -95,6 +95,26 @@ def getScore(b, c, p):
     Player wins (diagonal)
     >>> getScore([[2, 0, 0], [0, 2, 0], [0, 0, 2]], 3, False)
     -1
+    
+    IA wins (diagonal)
+    >>> getScore([[0,0,0,0,0,0,1], [0,0,0,0,0,1,0], [0,0,0,0,1,0,0], [0,0,0,0,0,0,0]], 3, False)
+    1
+    
+    Player wins (diagonal)
+    >>> getScore([[0,0,0,0,0,0,0], [0,2,1,0,0,0,0], [0,2,2,0,0,0,0], [1,0,0,2,0,0,0]], 3, True)
+    1
+
+    IA wins (horizontal)
+    >>> getScore([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0], [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]], 3, False)
+    1
+
+    IA wins (diagonal)
+    >>> getScore([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,2,0,0,0,0,0,0,1,0,0,0], [0,0,0,0,1,2,2,2,0,0,0,0,0,1,0,0], [0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0], [0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,1], [0,1,0,0,0,0,0,0,0,0,0,0,0,0,2,0], [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2]], 4, False)
+    1
+
+    Bug (nobody wins)
+    >>> getScore([[1, 1, 2], [1, 2, 2], [0, 0, 1]], 3, True)
+    0
     """
     #horizontal
     for r in b:
@@ -116,10 +136,9 @@ def getScore(b, c, p):
                 elif v==2: return 1 if p else -1
                 else: pass #empty!!
     #vertical
-    #FIXME we can't assume it's a square!
-    for x in range(len(b)): #let's assume it's a square
+    for x in range(len(b[0])):
         #for each start row,
-        for y in range(len(b[x])-c+1):
+        for y in range(len(b)-c+1):
             v = b[y][x]
             #print "at %d:%d, start is %d" % (y, x, v)
             skip = False
@@ -137,8 +156,7 @@ def getScore(b, c, p):
                 if v==1: return -1 if p else 1
                 elif v==2: return 1 if p else -1
                 else: pass #empty!!
-    #TODO move this into another function
-    #diagonal, down; FIXME not a square + test
+    #diagonal, down
     for y in range(len(b)-c+1):
         for x in range(len(b[y])-c+1):
             v = b[y][x] #first
@@ -155,8 +173,8 @@ def getScore(b, c, p):
                 if v==1: return -1 if p else 1
                 elif v==2: return 1 if p else -1
                 else: pass #empty!!
-    #diagonal, up; FIXME not a square + test
-    for y in range(len(b)-1, len(b)-c, -1):
+    #diagonal, up
+    for y in range(c-1, len(b)):
         for x in range(len(b[y])-c+1):
             v = b[y][x] #first
             skip = False
