@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class SoundMessage extends TextMessage {
+
+
+
+}

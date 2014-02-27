@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class TextMessage extends Event {
+
+
+
+}

@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class TakeMove extends Move {
+
+
+
+}

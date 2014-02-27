@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class RealMove extends Move {
+
+
+
+}

@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class PutMove extends Move {
+
+
+
+}

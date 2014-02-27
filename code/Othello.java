@@ -1,0 +1,10 @@
+/* 
+   
+ */
+
+
+class Othello extends Game {
+
+
+
+}
