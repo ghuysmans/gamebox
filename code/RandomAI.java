@@ -9,4 +9,13 @@ class RandomAI extends AI {
         super("Random AI");
     }
 
+    public int computeNode(Player p) {
+        throw new UnsupportedOperationException(); //FIXME
+    }
+
+    public Move getBest() {
+        throw new UnsupportedOperationException(); //FIXME
+    }
+
+
 }

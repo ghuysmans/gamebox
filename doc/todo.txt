@@ -1,6 +1,8 @@
+events structure: okay?
+Move.play()?
+
 Ant verbose
 update private doc
 update UML
-create code structure (directories)
 create packaging script using Python
 setup Eclipse to match the dir structure
