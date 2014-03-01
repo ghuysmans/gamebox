@@ -2,6 +2,7 @@
    
  */
 
+package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.Observable;
 import java.util.ArrayList;
 
