@@ -1,8 +1,8 @@
+update private doc to match changes on paper
 events structure: okay?
 Move.play()?
+non-boolean getScore() for C4 and TTT
 
-Ant verbose
-update private doc
-update UML
+Ant verbose (tests)
 create packaging script using Python
 setup Eclipse to match the dir structure
