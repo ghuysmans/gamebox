@@ -4,6 +4,7 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+
 class SoundMessage extends TextMessage {
 
     protected final String file;

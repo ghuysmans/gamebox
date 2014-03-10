@@ -4,10 +4,11 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-class AbsentAI extends AI {
 
-    public AbsentAI() {
-        super("Absent AI (always plays the first possible move");
+public class RandomAI extends AI {
+
+    public RandomAI() {
+        super("Random AI");
     }
 
     public int computeNode(Player p) {

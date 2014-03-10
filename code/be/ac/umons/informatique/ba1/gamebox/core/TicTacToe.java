@@ -5,11 +5,13 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
 
-class Othello extends Game {
+public class TicTacToe extends Game {
+    
+    protected final int required;
 
-    public Othello(int width, int height) {
-        //FIXME parity check!
+    public TicTacToe(int width, int height, int req) {
         super(width, height);
+        required = req;
     }
 
     public int getScore() {

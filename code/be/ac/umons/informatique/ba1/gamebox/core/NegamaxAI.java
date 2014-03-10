@@ -4,7 +4,8 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-class NegamaxAI extends AI {
+
+public class NegamaxAI extends AI {
 
     public NegamaxAI() {
         super("Negamax AI");

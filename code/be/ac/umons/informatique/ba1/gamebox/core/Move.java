@@ -4,7 +4,7 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-abstract class Move {
+public abstract class Move {
 
     protected Player player;
     public final boolean conseq;

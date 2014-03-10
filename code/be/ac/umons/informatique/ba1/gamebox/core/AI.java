@@ -4,7 +4,8 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-abstract class AI {
+
+public abstract class AI {
 
     public final String desc;
 

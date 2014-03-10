@@ -4,6 +4,7 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+
 class TextMessage extends Event {
 
     protected final String message;

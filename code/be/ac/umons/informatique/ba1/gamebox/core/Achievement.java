@@ -4,7 +4,8 @@
 
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-class Achievement extends Event {
+
+public class Achievement extends Event {
 
     protected int threshold;
 

@@ -5,7 +5,7 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
 
-class Connect4 extends TicTacToe {
+public class Connect4 extends TicTacToe {
 
     public Connect4(int width, int height, int req) {
         super(width, height, req);
