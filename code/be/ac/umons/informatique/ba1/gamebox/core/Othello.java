@@ -1,9 +1,9 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
+
+/** 
+ * Traditional Othello game
+ */
 
 public class Othello extends Game {
 

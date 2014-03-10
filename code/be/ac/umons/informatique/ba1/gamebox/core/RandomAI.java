@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Always plays a random move among possible moves
+ */
 
 public class RandomAI extends AI {
 

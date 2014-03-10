@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Generic Artificial Intelligence class.  
+ */
 
 public abstract class AI {
 

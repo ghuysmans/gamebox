@@ -1,8 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
+
+/** 
+ * Move consisting of a piece moving from a position to another
+ */
 
 class RealMove extends Move {
 

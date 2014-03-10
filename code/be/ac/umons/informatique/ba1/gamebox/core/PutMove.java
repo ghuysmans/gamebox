@@ -1,8 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
+
+/** 
+ * Move consisting of a piece directly placed on the board
+ */
 
 class PutMove extends Move {
 

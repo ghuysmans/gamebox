@@ -1,10 +1,10 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-abstract class Player {
+/** 
+ * Generic player  
+ */
+
+public abstract class Player {
 
 
 

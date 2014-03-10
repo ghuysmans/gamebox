@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Plays a sound  
+ */
 
 class SoundMessage extends TextMessage {
 

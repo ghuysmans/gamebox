@@ -1,9 +1,9 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Like classical achievements, displays a message when a particular action is done.
+ * These are saved for each player, independently. 
+ */
 
 public class Achievement extends Event {
 

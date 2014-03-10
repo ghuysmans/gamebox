@@ -1,21 +1,17 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-class Condition {
+/** 
+ * Generic condition for events
+ */
+
+abstract class Condition {
 
     protected int count;
 
-    public final boolean isMet() {
-        //FIXME
-        return false;
-    }
+    public abstract boolean isMet();
 
     public final void reset() {
-    
+    	count = 0;
     }
-
 
 }

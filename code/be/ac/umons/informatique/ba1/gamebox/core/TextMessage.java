@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Displays a text message  
+ */
 
 class TextMessage extends Event {
 

@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Move consisting of a piece taken (replaced) by another one  
+ */
 
 class TakeMove extends Move {
 

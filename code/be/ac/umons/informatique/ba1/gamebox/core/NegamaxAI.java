@@ -1,9 +1,8 @@
-/* 
-   
- */
-
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/** 
+ * Negamax algorithm implementation. FIXME
+ */
 
 public class NegamaxAI extends AI {
 
