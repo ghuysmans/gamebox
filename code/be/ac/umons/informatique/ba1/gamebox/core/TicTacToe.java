@@ -13,11 +13,100 @@ public class TicTacToe extends Game {
 		super(width, height);
 		required = req;
 	}
-
-	public int getScore() {
-		throw new UnsupportedOperationException();
+	
+	/**
+	 * Evaluates the score of a given player. Returns :
+	 * - a negative value if he loses
+	 * - zero if draw (or there's nothing special)
+	 * - a positive value if he wins
+	 * @param p	Player
+	 * @return numeric score
+	 */
+	public int getScore(Player p) {
+		//horizontal
+		for (int r=0; r<board.getHeight(); r++) {
+			//for each start cell,
+			for (int x=0; x<=board.getWidth()-required; x++) {
+				Piece v = board.getPiece(x, r);
+				if (v != null)
+				{
+					boolean skip = false;
+					for (int y=x+1; y<x+required; y++) {
+						Piece cur = board.getPiece(y, x);
+						if (cur==null || v.owner!=cur.owner) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip) //found!
+						return (v.owner == p ? 1 : -1);
+				}
+			}
+		}
+		//vertical
+		for (int x=0; x<board.getWidth(); x++) {
+			//for each start cell,
+			for (int y=0; y<=board.getHeight()-required; y++) {
+				Piece v = board.getPiece(x, y);
+				if (v != null)
+				{
+					boolean skip = false;
+					for (int z=y+1; z<y+required; z++) {
+						Piece cur = board.getPiece(x, z);
+						if (cur==null || v.owner!=cur.owner) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip) //found!
+						return (v.owner == p ? 1 : -1);
+				}
+			}
+		}
+		//diagonal, down
+		for (int y=0; y<=board.getHeight()-required; y++) {
+			//for each start cell,
+			for (int x=0; x<=board.getWidth()-required; x++) {
+				Piece v = board.getPiece(x, y);
+				if (v != null)
+				{
+					boolean skip = false;
+					for (int o=1; o<required; o++) {
+						Piece cur = board.getPiece(x+o, y+o);
+						if (cur==null || v.owner!=cur.owner) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip) //found!
+						return (v.owner == p ? 1 : -1);
+				}
+			}
+		}
+		//diagonal, up
+		for (int y=required-1; y<board.getHeight(); y++) {
+			//for each start cell,
+			for (int x=0; x<=board.getWidth()-required; x++) {
+				Piece v = board.getPiece(x, y);
+				if (v != null)
+				{
+					boolean skip = false;
+					for (int o=1; o<required; o++) {
+						Piece cur = board.getPiece(x+o, y-o);
+						if (cur==null || v.owner!=cur.owner) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip) //found!
+						return (v.owner == p ? 1 : -1);
+				}
+			}
+		}
+		//nobody has won: draw
+		return 0;
 	}
-
+	
 	public ArrayList<Move> getLegalMoves() {
 		throw new UnsupportedOperationException();
 	}

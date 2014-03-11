@@ -19,6 +19,10 @@ class Board {
 	public int getHeight() {
 		return arr.length;
 	}
+	
+	public Piece getPiece(int x, int y) {
+		return arr[y][x];
+	}
 
 
 }
