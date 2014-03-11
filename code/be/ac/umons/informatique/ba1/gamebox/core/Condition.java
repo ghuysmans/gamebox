@@ -6,12 +6,12 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 abstract class Condition {
 
-    protected int count;
+	protected int count;
 
-    public abstract boolean isMet();
+	public abstract boolean isMet();
 
-    public final void reset() {
-    	count = 0;
-    }
+	public final void reset() {
+		count = 0;
+	}
 
 }

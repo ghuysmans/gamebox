@@ -8,24 +8,24 @@ import java.util.ArrayList;
 
 public abstract class Game extends Observable {
 
-    public Player currentPlayer;
-    public ArrayList<Player> players;
-    public final Board board;
+	public Player currentPlayer;
+	public ArrayList<Player> players;
+	public final Board board;
 
-    public abstract int getScore();
-    public abstract ArrayList<Move> getLegalMoves();
+	public abstract int getScore();
+	public abstract ArrayList<Move> getLegalMoves();
 
-    public Game(int width, int height) {
-        board = new Board(width, height);
-        players = new ArrayList<Player>();
-    }
+	public Game(int width, int height) {
+		board = new Board(width, height);
+		players = new ArrayList<Player>();
+	}
 
-    public String getPosStr(int x, int y) {
-        if (board.getWidth() <= 26)
-            return Character.toString((char)('a'+x)) + y;
-        else
-            return x+","+y;
-    }
+	public String getPosStr(int x, int y) {
+		if (board.getWidth() <= 26)
+			return Character.toString((char)('a'+x)) + y;
+		else
+			return x+","+y;
+	}
 
 
 }

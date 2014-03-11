@@ -9,12 +9,12 @@ public class History extends Stack<Move> {
 	private static final long serialVersionUID = 7376467524592531262L;
 
 	public final void undo() {
-        //undo consequences
-        while (!empty() && peek().conseq)
-            pop().undo();
-        //real undo
-        pop().undo();
-    }
+		//undo consequences
+		while (!empty() && peek().conseq)
+			pop().undo();
+		//real undo
+		pop().undo();
+	}
 
 
 }

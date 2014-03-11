@@ -6,14 +6,14 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public abstract class AI {
 
-    public final String desc;
+	public final String desc;
 
-    public AI(String d) {
-        desc = d;
-    }
+	public AI(String d) {
+		desc = d;
+	}
 
-    public abstract int computeNode(Player p);
-    public abstract Move getBest();
+	public abstract int computeNode(Player p);
+	public abstract Move getBest();
 
 
 }
