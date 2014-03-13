@@ -8,19 +8,29 @@ class TakeMove extends Move {
 
 	public final int x;
 	public final int y;
-
-	public void undo() {
-		throw new UnsupportedOperationException();
-	}
+	protected Player old_player;
 
 	public String toString() {
-		throw new UnsupportedOperationException();
+		return "TakeMove by "+player.name+"@"+game.getPosStr(x, y);
 	}
 
-	public TakeMove(Player p, boolean csq, int x, int y) {
-		super(p, csq);
+	public TakeMove(Game g, Player p, boolean csq, int x, int y) {
+		super(g, p, csq);
 		this.x = x;
 		this.y = y;
+	}
+
+	public void play() {
+		Piece pc = game.board.getPiece(x, y);
+		old_player = pc.getOwner();
+		assert (player != old_player): "Can't play the same move twice";
+		pc.setOwner(player);
+	}
+	
+	public void undo() {
+		Piece pc = game.board.getPiece(x, y);
+		assert (pc.getOwner() != old_player): "Can't undo the same move twice";
+		pc.setOwner(old_player);
 	}
 
 

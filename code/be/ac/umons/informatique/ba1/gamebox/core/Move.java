@@ -6,14 +6,17 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public abstract class Move {
 
+	protected Game game;
 	protected Player player;
 	public final boolean conseq;
 	
-	public Move(Player p, boolean csq) {
+	public Move(Game g, Player p, boolean csq) {
+		game = g;
 		player = p;
 		conseq = csq;
 	}
 
+	public abstract void play();
 	public abstract void undo();
 	public abstract String toString();
 

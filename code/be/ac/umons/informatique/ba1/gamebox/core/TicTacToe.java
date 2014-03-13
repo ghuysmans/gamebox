@@ -21,6 +21,7 @@ public class TicTacToe extends Game {
 	 * - a positive value if he wins
 	 * @param p	Player
 	 * @return numeric score
+	 * @author ghs
 	 */
 	public int getScore(Player p) {
 		//horizontal
@@ -107,8 +108,16 @@ public class TicTacToe extends Game {
 		return 0;
 	}
 	
-	public ArrayList<Move> getLegalMoves() {
-		throw new UnsupportedOperationException();
+	@Override
+	public ArrayList<Move> getLegalMoves(Player p) {
+		ArrayList<Move> al = new ArrayList<Move>();
+		for (int y=0; y<board.getHeight(); y++) {
+			for (int x=0; x<board.getWidth(); x++) {
+				if (board.getPiece(x, y) == null)
+					al.add(new PutMove(this, p, x, y));
+			}
+		}
+		return al;
 	}
 
 

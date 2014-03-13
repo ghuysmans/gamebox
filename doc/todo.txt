@@ -1,7 +1,7 @@
 update private doc to match changes on paper
 events structure: okay?
-Move.play()?
 non-boolean getScore() for C4 and TTT
+credits via a special Game! numbered pieces, etc. BY MLQ
 
 Ant verbose (tests)
 create packaging script using Python

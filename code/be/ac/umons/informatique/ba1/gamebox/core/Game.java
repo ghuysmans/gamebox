@@ -13,7 +13,7 @@ public abstract class Game extends Observable {
 	public final Board board;
 
 	public abstract int getScore(Player p);
-	public abstract ArrayList<Move> getLegalMoves();
+	public abstract ArrayList<Move> getLegalMoves(Player p);
 
 	public Game(int width, int height) {
 		board = new Board(width, height);

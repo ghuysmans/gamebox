@@ -1,4 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
+import java.util.ArrayList;
+
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /** 
@@ -8,10 +10,15 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Game g = new TicTacToe(3, 3, 3);
-		System.out.println("I'm alive, biatch!");
-		//g.
+		Player p1 = new HumanPlayer("Guillaume", g);
+		Player p2 = new HumanPlayer("Mathieu", g);
+		g.players.add(p1);
+		g.players.add(p2);
+		System.out.print(g.board);
+		ArrayList<Move> mv = g.getLegalMoves(p1);
+		for (int k=0; k<mv.size(); k++)
+			System.out.println(mv.get(k));
 	}
 
 }
