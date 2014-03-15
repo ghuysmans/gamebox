@@ -40,7 +40,7 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? 1 : -1);
+						return (v.owner == p ? SCORE_WON : SCORE_LOST);
 				}
 			}
 		}
@@ -60,7 +60,7 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? 1 : -1);
+						return (v.owner == p ? SCORE_WON : SCORE_LOST);
 				}
 			}
 		}
@@ -80,7 +80,7 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? 1 : -1);
+						return (v.owner == p ? SCORE_WON : SCORE_LOST);
 				}
 			}
 		}
@@ -100,12 +100,12 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? 1 : -1);
+						return (v.owner == p ? SCORE_WON : SCORE_LOST);
 				}
 			}
 		}
 		//nobody has won: draw
-		return 0;
+		return SCORE_DRAW;
 	}
 	
 	@Override

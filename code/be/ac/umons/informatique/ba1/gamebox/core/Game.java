@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 public abstract class Game extends Observable {
 
+	public static final int SCORE_WON 	= 42;
+	public static final int SCORE_LOST 	= -42;
+	public static final int SCORE_DRAW 	= 0;
+	
 	public Player currentPlayer;
 	public ArrayList<Player> players;
 	public final Board board;
-
-	public abstract int getScore(Player p);
-	public abstract ArrayList<Move> getLegalMoves(Player p);
 
 	public Game(int width, int height) {
 		board = new Board(width, height);
@@ -27,5 +28,7 @@ public abstract class Game extends Observable {
 			return x+","+y;
 	}
 
+	public abstract int getScore(Player p);
+	public abstract ArrayList<Move> getLegalMoves(Player p);
 
 }

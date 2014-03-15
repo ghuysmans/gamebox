@@ -8,10 +8,10 @@ abstract class Condition {
 
 	protected int count;
 
-	public abstract boolean isMet();
-
 	public final void reset() {
 		count = 0;
 	}
+	
+	public abstract boolean isMet();
 
 }

@@ -11,6 +11,8 @@ public class HumanPlayer extends Player {
 	
 	public HumanPlayer(String n, Game g) {
 		super(n, g);
+		events = new ArrayList<Event>();
+		//TODO add Achievements here
 	}
 
 	public final void saveProfile() {
