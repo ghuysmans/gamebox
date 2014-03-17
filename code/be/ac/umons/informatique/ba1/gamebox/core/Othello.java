@@ -21,5 +21,8 @@ public class Othello extends Game {
 		throw new UnsupportedOperationException();
 	}
 
+	public boolean hasFinished() {
+		throw new UnsupportedOperationException();
+	}
 
 }

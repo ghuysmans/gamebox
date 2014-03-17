@@ -17,8 +17,11 @@ public class Main {
 		g.players.add(p2);
 		System.out.print(g.board);
 		ArrayList<Move> mv = g.getLegalMoves(p1);
-		for (int k=0; k<mv.size(); k++)
+		/*for (int k=0; k<mv.size(); k++){
 			System.out.println(mv.get(k));
+			mv.get(k).play();
+		}*/
+		System.out.println(g.hasFinished());
 	}
 
 }

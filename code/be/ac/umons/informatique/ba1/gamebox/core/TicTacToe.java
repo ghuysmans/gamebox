@@ -107,6 +107,21 @@ public class TicTacToe extends Game {
 		//nobody has won: draw
 		return SCORE_DRAW;
 	}
+
+	public boolean hasFinished() {
+		int score = getScore(this.players.get(0));
+		//if any player has won (the first one, for example), it's finished.
+		if (score != SCORE_DRAW)
+			return true;
+		//else, let's see whether the board is full
+		for (int y=0; y<board.getHeight(); y++) {
+			for (int x=0; x<board.getWidth(); x++) { 
+				if (this.board.getPiece(x, y) == null)
+					return false;
+			}
+		}
+		return true;
+	}
 	
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {

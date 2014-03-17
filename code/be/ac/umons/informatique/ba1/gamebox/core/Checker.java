@@ -20,6 +20,8 @@ public class Checker extends Game {
 	public ArrayList<Move> getLegalMoves(Player p) {
 		throw new UnsupportedOperationException();
 	}
-
-
+	
+	public boolean hasFinished() {
+		throw new UnsupportedOperationException();
+	}
 }

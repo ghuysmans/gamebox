@@ -27,7 +27,8 @@ public abstract class Game extends Observable {
 		else
 			return x+","+y;
 	}
-
+	
+	public abstract boolean hasFinished();
 	public abstract int getScore(Player p);
 	public abstract ArrayList<Move> getLegalMoves(Player p);
 
