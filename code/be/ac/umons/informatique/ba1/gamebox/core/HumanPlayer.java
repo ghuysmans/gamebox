@@ -15,6 +15,9 @@ public class HumanPlayer extends Player {
 		//TODO add Achievements here
 	}
 
+	/**
+	 * Saves achievements, etc.
+	 */
 	public final void saveProfile() {
 		//TODO
 	}

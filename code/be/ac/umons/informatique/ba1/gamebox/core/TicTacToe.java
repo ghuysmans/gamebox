@@ -15,12 +15,6 @@ public class TicTacToe extends Game {
 	}
 	
 	/**
-	 * Evaluates the score of a given player. Returns :
-	 * - a negative value if he loses
-	 * - zero if draw (or there's nothing special)
-	 * - a positive value if he wins
-	 * @param p	Player
-	 * @return numeric score
 	 * @author ghs
 	 */
 	@Override
@@ -109,6 +103,9 @@ public class TicTacToe extends Game {
 		return SCORE_DRAW;
 	}
 
+	/**
+	 * @author ghs
+	 */
 	@Override
 	public boolean hasFinished() {
 		int score = getScore(this.players.get(0));
@@ -125,6 +122,9 @@ public class TicTacToe extends Game {
 		return true;
 	}
 	
+	/**
+	 * @author ghs
+	 */
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {
 		ArrayList<Move> al = new ArrayList<Move>();

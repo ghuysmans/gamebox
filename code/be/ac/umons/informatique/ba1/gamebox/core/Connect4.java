@@ -16,6 +16,9 @@ public class Connect4 extends TicTacToe {
 		return Integer.toString(x);
 	}
 	
+	/**
+	 * @author mlq
+	 */
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {
 		ArrayList<Move> al = new ArrayList<Move>();

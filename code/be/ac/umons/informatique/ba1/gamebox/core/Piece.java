@@ -11,7 +11,7 @@ public class Piece {
 	public Piece(Player owner) {
 		this.owner = owner;
 	}
-
+	
 	public final Player getOwner() {
 		return owner;
 	}

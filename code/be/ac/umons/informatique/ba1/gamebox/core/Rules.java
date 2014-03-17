@@ -13,6 +13,11 @@ class Rules extends Rule {
 		rules = new ArrayList<Rule>();
 	}
 
+	/**
+	 * Determines whether m matches the rules set
+	 * @param m Move
+	 * @return true if it matches all of them
+	 */
 	@Override
 	public final boolean match(Move move) {
 		for (Rule r: rules)
@@ -20,6 +25,10 @@ class Rules extends Rule {
 		return true;
 	}
 
+	/**
+	 * Adds r to the list
+	 * @param r Rule
+	 */
 	public final void addRule(Rule r) {
 		rules.add(r);
 	}
