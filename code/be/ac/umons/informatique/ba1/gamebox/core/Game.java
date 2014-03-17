@@ -24,8 +24,7 @@ public abstract class Game extends Observable {
 	}
 
 	/**
-	 * Converts a given (x,y) position to a human-readable string
-	 * It should be overridden by subclasses...
+	 * Converts a given (x,y) position to a human-readable string.
 	 * @param x X coordinate
 	 * @param y Y coordinate
 	 * @return A string corresponding to the game

@@ -11,7 +11,6 @@ public class ComputerPlayer {
 	/**
 	 * Selects an AI corresponding to the given level
 	 * @param lvl Difficulty level
-	 * @author mlq
 	 */
 	public ComputerPlayer(int lvl) {
 		throw new UnsupportedOperationException(); //TODO

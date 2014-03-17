@@ -10,7 +10,6 @@ public class History extends Stack<Move> {
 
 	/**
 	 * Undoes the last move and its consequences.
-	 * @author ghs
 	 */
 	public final void undo() {
 		//undo consequences

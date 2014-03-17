@@ -45,6 +45,6 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 		<delete dir="${reports.dir}" />
 	</target>
 	<target name="javadoc">
-        <javadoc access="public" author="true" classpath="${junit.cp}" destdir="${doc.dir}" nodeprecated="true" nodeprecatedlist="true" noindex="false" nonavbar="false" notree="false" packagenames="${root-pkg}.*" source="1.7" sourcepath="${src.dir}" splitindex="true" use="true" version="false"/>
-    </target>
+		<javadoc access="public" author="true" classpath="${junit.cp}" destdir="${doc.dir}" nodeprecated="true" nodeprecatedlist="true" noindex="false" nonavbar="false" notree="false" packagenames="${root-pkg}.*" source="1.7" sourcepath="${src.dir}" splitindex="true" use="true" version="false"/>
+	</target>
 </project>

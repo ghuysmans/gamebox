@@ -15,7 +15,6 @@ public abstract class AI {
 	/**
 	 * Computes a numeric score for the current node.
 	 * @param p Current player
-	 * @param rec Recursion level
 	 * @return Score associated to the current node
 	 */
 	public abstract int computeNode(Player p);

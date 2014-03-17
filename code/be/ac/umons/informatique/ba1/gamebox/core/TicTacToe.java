@@ -14,9 +14,6 @@ public class TicTacToe extends Game {
 		required = req;
 	}
 	
-	/**
-	 * @author ghs
-	 */
 	@Override
 	public int getScore(Player p) {
 		//horizontal
@@ -103,9 +100,6 @@ public class TicTacToe extends Game {
 		return SCORE_DRAW;
 	}
 
-	/**
-	 * @author ghs
-	 */
 	@Override
 	public boolean hasFinished() {
 		int score = getScore(this.players.get(0));
@@ -122,9 +116,6 @@ public class TicTacToe extends Game {
 		return true;
 	}
 	
-	/**
-	 * @author ghs
-	 */
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {
 		ArrayList<Move> al = new ArrayList<Move>();
