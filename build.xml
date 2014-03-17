@@ -9,23 +9,32 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 	<property name="src.dir" value="code" />
 	<property name="build.dir" value="build" />
 	<property name="doc.dir" value="doc/java" />
+	<property name="reports.dir" value="reports" />
 	<property name="junit.cp" value="lib/junit-4.11.jar; lib/hamcrest-core-1.3.jar" />
 	<property name="root-pkg" value="be.ac.umons.informatique.ba1.gamebox" />
 	<property name="main-class" value="${root-pkg}.ui.main" />
 	<target name="build">
-		<mkdir dir="build" />
+		<mkdir dir="${build.dir}" />
 		<javac srcdir="${src.dir}" includeantruntime="false" classpath="${junit.cp}" destdir="${build.dir}" />
 	</target>
 	<target name="test" depends="build">
+		<mkdir dir="${reports.dir}" />
 		<junit printsummary="yes" showoutput="yes">
 			<classpath>
 				<pathelement path="${junit.cp}" />
 				<pathelement path="${build.dir}" />
 			</classpath>
-			<batchtest>
+			<formatter type="xml" />
+			<batchtest todir="${reports.dir}">
 				<fileset dir="${src.dir}" includes="**/*Test.java" />
 			</batchtest>
 		</junit>
+		<junitreport todir="./reports">
+			<fileset dir="${reports.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${reports.dir}/html" />
+		</junitreport>
 	</target>
 	<target name="run" depends="build" >
 		<java classname="${main-class}" fork="true" classpath="${build.dir}" />
@@ -33,6 +42,7 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<delete dir="${doc.dir}" />
+		<delete dir="${reports.dir}" />
 	</target>
 	<target name="javadoc">
         <javadoc access="public" author="true" classpath="${junit.cp}" destdir="${doc.dir}" nodeprecated="true" nodeprecatedlist="true" noindex="false" nonavbar="false" notree="false" packagenames="${root-pkg}.*" source="1.7" sourcepath="${src.dir}" splitindex="true" use="true" version="false"/>
