@@ -22,7 +22,7 @@ class TakeMove extends Move {
 	}
 
 	@Override
-	public void play() {
+	protected void internalPlay() {
 		Piece pc = game.board.getPiece(x, y);
 		old_player = pc.getOwner();
 		assert (player != old_player): "Can't play the same move twice";
@@ -30,7 +30,7 @@ class TakeMove extends Move {
 	}
 	
 	@Override
-	public void undo() {
+	protected void internalUndo() {
 		Piece pc = game.board.getPiece(x, y);
 		assert (pc.getOwner() != old_player): "Can't undo the same move twice";
 		pc.setOwner(old_player);

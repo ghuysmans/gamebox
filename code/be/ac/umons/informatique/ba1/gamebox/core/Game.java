@@ -13,12 +13,14 @@ public abstract class Game extends Observable {
 	public static final int SCORE_DRAW 	= 0;
 	
 	public Player currentPlayer;
-	public ArrayList<Player> players;
+	public final ArrayList<Player> players;
 	public final Board board;
+	public final History history;
 
 	public Game(int width, int height) {
 		board = new Board(width, height);
 		players = new ArrayList<Player>();
+		history = new History();
 	}
 
 	public String getPosStr(int x, int y) {

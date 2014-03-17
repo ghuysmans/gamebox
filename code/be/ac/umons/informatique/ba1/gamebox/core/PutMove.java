@@ -20,15 +20,14 @@ class PutMove extends Move {
 		return "PutMove by "+player.name+"@"+game.getPosStr(x, y);
 	}
 
-
 	@Override
-	public void play() {
+	protected void internalPlay() {
 		assert (game.board.getPiece(x, y) != null): "Can't replace a piece with PutMove";
 		game.board.setPiece(new Piece(player), x, y);
 	}
 
 	@Override
-	public void undo() {
+	protected void internalUndo() {
 		assert (game.board.getPiece(x, y) != null): "Can't undo a PutMove on an empty cell";
 		game.board.setPiece(null, x, y);
 	}

@@ -23,13 +23,13 @@ class RealMove extends Move {
 	}
 
 	@Override
-	public void play() {
+	protected void internalPlay() {
 		//TODO
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public void undo() {
+	protected void internalUndo() {
 		//TODO
 		throw new UnsupportedOperationException();
 	}
