@@ -18,11 +18,11 @@ public class Connect4 extends TicTacToe {
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {
 		ArrayList<Move> al = new ArrayList<Move>();
-		for (int x=0; x<board.getHeight(); x++) {
-			for (int y=0; y<board.getWidth(); y++) {
-				if (board.getPiece(x, y)!=null && y>0)
+		for (int x=0; x<board.getWidth(); x++) {
+			for (int y=board.getHeight()-1; y>=0; y--) {
+				if (board.getPiece(x, y) == null)
 				{
-					al.add(new PutMove(this, p, x, y-1));
+					al.add(new PutMove(this, p, x, y));
 					break; //next column
 				}
 			}
