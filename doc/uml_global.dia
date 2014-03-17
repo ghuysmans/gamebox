@@ -2943,13 +2943,13 @@
         <dia:point val="23.9972,-3.8527"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.9472,-3.9027;35.7122,-1.0027"/>
+        <dia:rectangle val="23.9472,-3.9027;33.7872,-1.0027"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="23.9972,-3.8527"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="11.665000000000001"/>
+        <dia:real val="9.7400000000000002"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="2.7999999999999998"/>
@@ -3045,13 +3045,13 @@
       <dia:attribute name="operations">
         <dia:composite type="umloperation">
           <dia:attribute name="name">
-            <dia:string>#setDifficulty#</dia:string>
+            <dia:string>#ComputerPlayer#</dia:string>
           </dia:attribute>
           <dia:attribute name="stereotype">
             <dia:string>##</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#void#</dia:string>
+            <dia:string>##</dia:string>
           </dia:attribute>
           <dia:attribute name="visibility">
             <dia:enum val="0"/>
@@ -3392,7 +3392,7 @@
         <dia:point val="42.4515,-3.92978"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="35.6122,-4.67978;43.3865,-1.10405"/>
+        <dia:rectangle val="33.6872,-4.67978;43.3865,-1.10405"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -3402,7 +3402,7 @@
         <dia:point val="42.4515,-1.15405"/>
         <dia:point val="39.2354,-1.15405"/>
         <dia:point val="39.2354,-3.1527"/>
-        <dia:point val="35.6622,-3.1527"/>
+        <dia:point val="33.7372,-3.1527"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
@@ -5935,7 +5935,7 @@
         <dia:point val="29.828,-6.28917"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="28.978,-6.33917;30.678,-3.8027"/>
+        <dia:rectangle val="28.8172,-6.33917;30.678,-3.8027"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -5943,8 +5943,8 @@
       <dia:attribute name="orth_points">
         <dia:point val="29.828,-6.28917"/>
         <dia:point val="29.828,-4.67094"/>
-        <dia:point val="29.8297,-4.67094"/>
-        <dia:point val="29.8297,-3.8527"/>
+        <dia:point val="28.8672,-4.67094"/>
+        <dia:point val="28.8672,-3.8527"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>

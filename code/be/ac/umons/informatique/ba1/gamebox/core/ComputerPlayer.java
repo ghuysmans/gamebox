@@ -6,15 +6,15 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public class ComputerPlayer {
 
-	protected AI ai = null;
+	protected final AI ai;
 	
 	/**
 	 * Selects an AI corresponding to the given level
-	 * @param lvl
+	 * @param lvl Difficulty level
 	 * @author mlq
 	 */
-	public final void setDifficulty(int lvl) {
-	
+	public ComputerPlayer(int lvl) {
+		throw new UnsupportedOperationException(); //TODO
 	}
 
 
