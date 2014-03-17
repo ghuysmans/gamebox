@@ -11,10 +11,12 @@ public class NegamaxAI extends AI {
 		super("Negamax AI");
 	}
 
+	@Override
 	public int computeNode(Player p) {
 		throw new UnsupportedOperationException(); //FIXME
 	}
 
+	@Override
 	public Move getBest() {
 		throw new UnsupportedOperationException(); //FIXME
 	}

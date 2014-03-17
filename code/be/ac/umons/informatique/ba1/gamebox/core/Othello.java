@@ -12,6 +12,7 @@ public class Othello extends Game {
 		super(width, height);
 	}
 
+	@Override
 	public int getScore(Player p) {
 		throw new UnsupportedOperationException();
 	}
@@ -21,6 +22,7 @@ public class Othello extends Game {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasFinished() {
 		throw new UnsupportedOperationException();
 	}

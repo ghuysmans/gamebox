@@ -23,6 +23,7 @@ public class TicTacToe extends Game {
 	 * @return numeric score
 	 * @author ghs
 	 */
+	@Override
 	public int getScore(Player p) {
 		//horizontal
 		for (int r=0; r<board.getHeight(); r++) {
@@ -108,6 +109,7 @@ public class TicTacToe extends Game {
 		return SCORE_DRAW;
 	}
 
+	@Override
 	public boolean hasFinished() {
 		int score = getScore(this.players.get(0));
 		//if any player has won (the first one, for example), it's finished.

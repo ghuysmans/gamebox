@@ -13,6 +13,7 @@ class Rules extends Rule {
 		rules = new ArrayList<Rule>();
 	}
 
+	@Override
 	public final boolean match(Move move) {
 		for (Rule r: rules)
 			if (!r.match(move)) return false;

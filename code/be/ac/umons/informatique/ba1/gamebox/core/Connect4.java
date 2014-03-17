@@ -11,6 +11,7 @@ public class Connect4 extends TicTacToe {
 		super(width, height, req);
 	}
 
+	@Override
 	public String getPosStr(int x, int y) {
 		return Integer.toString(x);
 	}

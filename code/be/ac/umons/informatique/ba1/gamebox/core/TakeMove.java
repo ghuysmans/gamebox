@@ -9,17 +9,19 @@ class TakeMove extends Move {
 	public final int x;
 	public final int y;
 	protected Player old_player;
-
-	public String toString() {
-		return "TakeMove by "+player.name+"@"+game.getPosStr(x, y);
-	}
-
+	
 	public TakeMove(Game g, Player p, boolean csq, int x, int y) {
 		super(g, p, csq);
 		this.x = x;
 		this.y = y;
 	}
 
+	@Override
+	public String toString() {
+		return "TakeMove by "+player.name+"@"+game.getPosStr(x, y);
+	}
+
+	@Override
 	public void play() {
 		Piece pc = game.board.getPiece(x, y);
 		old_player = pc.getOwner();
@@ -27,6 +29,7 @@ class TakeMove extends Move {
 		pc.setOwner(player);
 	}
 	
+	@Override
 	public void undo() {
 		Piece pc = game.board.getPiece(x, y);
 		assert (pc.getOwner() != old_player): "Can't undo the same move twice";

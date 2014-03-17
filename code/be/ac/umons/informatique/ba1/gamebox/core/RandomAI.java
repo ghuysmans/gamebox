@@ -10,10 +10,12 @@ public class RandomAI extends AI {
 		super("Random AI");
 	}
 
+	@Override
 	public int computeNode(Player p) {
 		throw new UnsupportedOperationException(); //FIXME
 	}
 
+	@Override
 	public Move getBest() {
 		throw new UnsupportedOperationException(); //FIXME
 	}
