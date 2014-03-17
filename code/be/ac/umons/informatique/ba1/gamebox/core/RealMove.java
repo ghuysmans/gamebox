@@ -16,6 +16,12 @@ class RealMove extends Move {
 		this.x1 = x1; this.x2 = x2;
 		this.y1 = y1; this.y2 = y2;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		RealMove other = (RealMove)obj;
+		return super.equals(obj) && (other.x1==x1) && (other.y1==y1) && (other.x2==x2) && (other.y2==y2);
+	}
 
 	@Override
 	public String toString() {

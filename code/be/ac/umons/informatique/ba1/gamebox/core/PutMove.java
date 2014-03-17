@@ -14,6 +14,12 @@ class PutMove extends Move {
 		this.x = x;
 		this.y = y;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		PutMove other = (PutMove)obj;
+		return super.equals(obj) && (other.x==x) && (other.y==y);
+	}
 
 	@Override
 	public String toString() {

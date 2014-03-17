@@ -15,19 +15,44 @@ public abstract class Move {
 		player = p;
 		conseq = csq;
 	}
+	
+	/**
+	 * Compares two moves. Fails if obj isn't a move
+	 * @param obj Another move
+	 * @return true if moves are the same
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		Move other = (Move)obj;
+		return (other.game==game) && (other.player==player) && (other.conseq==conseq);
+	}
 
+	/**
+	 * Plays the move and pushes it to the history
+	 */
 	public final void play() {
 		internalPlay();
 		game.history.push(this);
 	}
 	
+	/**
+	 * Undoes the move and pops it from the history
+	 */
 	public final void undo() {
+		//FIXME BUG consequences
 		internalUndo();
 		if (game.history.peek() != this)
 			throw new RuntimeException("Trying to undo something else than the last move !");
 	}
 	
+	/**
+	 * Plays the move (on the board)
+	 */
 	protected abstract void internalPlay();
+	
+	/**
+	 * Undoes the move (on the board)
+	 */
 	protected abstract void internalUndo();
 	public abstract String toString();
 
