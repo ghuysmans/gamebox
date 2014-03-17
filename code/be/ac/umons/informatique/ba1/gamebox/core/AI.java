@@ -15,5 +15,4 @@ public abstract class AI {
 	public abstract int computeNode(Player p);
 	public abstract Move getBest(Player p);
 
-
 }
