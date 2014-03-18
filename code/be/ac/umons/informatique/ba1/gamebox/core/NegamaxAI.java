@@ -17,7 +17,7 @@ public class NegamaxAI extends AI {
 	}
 
 	@Override
-	public Move getBest() {
+	public Move getBest(Player p) {
 		throw new UnsupportedOperationException(); //FIXME
 	}
 
