@@ -31,12 +31,14 @@ class RealMove extends Move {
 	@Override
 	protected void internalPlay() {
 		//TODO
+		game.nextPlayer();
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
 	protected void internalUndo() {
 		//TODO
+		game.nextPlayer();
 		throw new UnsupportedOperationException();
 	}
 

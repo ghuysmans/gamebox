@@ -31,6 +31,8 @@ public abstract class Move {
 	 * Plays the move and pushes it to the history
 	 */
 	public final void play() {
+		if (game.currentPlayer != player)
+			throw new RuntimeException("Trying to cheat? You've been caught...");
 		internalPlay();
 		game.history.push(this);
 	}

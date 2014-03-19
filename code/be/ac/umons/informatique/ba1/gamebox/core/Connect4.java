@@ -21,8 +21,7 @@ public class Connect4 extends TicTacToe {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int x=0; x<board.getWidth(); x++) {
 			for (int y=board.getHeight()-1; y>=0; y--) {
-				if (board.getPiece(x, y) == null)
-				{
+				if (board.getPiece(x, y) == null) {
 					al.add(new PutMove(this, p, x, y));
 					break; //next column
 				}
