@@ -49,7 +49,7 @@ class Board {
 			for (int x=0; x<arr[0].length; x++)
 			{
 				if (arr[y][x] == null)
-					res += "null\t";
+					res += "null\t\t";
 				else
 					res += Integer.toHexString(arr[y][x].owner.hashCode())+"\t";
 			}

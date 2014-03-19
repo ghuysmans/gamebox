@@ -1,5 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
@@ -10,19 +11,34 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 public class Main {
 
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		Game g = new Connect4(7, 6, 4);
 		Player p1 = new HumanPlayer("Guillaume", g);
-		//Player p2 = new HumanPlayer("Mathieu", g);
-		g.players.add(p1);
-		//g.players.add(p2);
-		System.out.print(g.board);
-		ArrayList<Move> mv = g.getLegalMoves(p1);
-		System.out.println("before");
-		for (int k=0; k<mv.size(); k++){
-			System.out.println(mv.get(k));
-			//mv.get(k).play();
+		Player p2 = new HumanPlayer("Mathieu", g);
+		g.setPlayers(p1, p2);
+		do {
+			ArrayList<Move> mv = g.getLegalMoves(g.getCurrentPlayer());
+			for (int k=0; k<mv.size(); k++)
+				System.out.println(mv.get(k));
+			int sel;
+			do {
+				System.out.print("Move? ");
+				sel = sc.nextInt();	
+			} while (sel<0 || sel>mv.size()-1);
+			mv.get(sel).play();
+			System.out.println(g.board);
+		} while (!g.hasFinished());
+		switch (g.getScore(p1)) {
+		case Game.SCORE_DRAW:
+			System.out.println("Draw.");
+			break;
+		case Game.SCORE_LOST:
+			System.out.println("P2 won.");
+			break;
+		case Game.SCORE_WON:
+			System.out.println("P1 won.");
 		}
-		//System.out.println(g.hasFinished());
+		sc.close();
 	}
 
 }
