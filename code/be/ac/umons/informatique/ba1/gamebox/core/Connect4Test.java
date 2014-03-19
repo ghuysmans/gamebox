@@ -15,7 +15,6 @@ public class Connect4Test {
 	public void legalSmoke() {
 		Game g = new Connect4(7, 6, 4);
 		Player p1 = new HumanPlayer("X", g);
-		g.players.add(p1);
 		
 		ArrayList<Move> mv = g.getLegalMoves(p1);
 		String[] strs = {"PutMove by X@0", "PutMove by X@1", 

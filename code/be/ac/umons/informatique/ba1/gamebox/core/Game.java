@@ -12,15 +12,46 @@ public abstract class Game extends Observable {
 	public static final int SCORE_LOST 	= -42;
 	public static final int SCORE_DRAW 	= 0;
 	
-	public Player currentPlayer;
-	public final ArrayList<Player> players;
+	protected Player currentPlayer;
+	public final Player[] players;
 	public final Board board;
 	public final History history;
 
 	public Game(int width, int height) {
 		board = new Board(width, height);
-		players = new ArrayList<Player>();
-		history = new History();
+		history = new History(); //empty
+		players = new Player[2];
+	}
+	
+	/**
+	 * Initializes players and currentPlayer
+	 * @param p1 First player
+	 * @param p2 Second player
+	 */
+	public void setPlayers(Player p1, Player p2) {
+		players[0] = p1;
+		players[1] = p2;
+		//the following behavior could be changed...
+		currentPlayer = p1;
+	}
+	
+	/**
+	 * Select the other player as current one.
+	 */
+	public void nextPlayer() {
+		assert(currentPlayer!=null): "Trying to use an uninitialized Game";
+		if (currentPlayer == players[0])
+			currentPlayer = players[1];
+		else
+			currentPlayer = players[0];
+	}
+	
+	/**
+	 * Returns the player who has to play
+	 * @return Current player
+	 */
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	/**

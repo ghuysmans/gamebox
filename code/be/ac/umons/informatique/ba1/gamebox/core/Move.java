@@ -36,10 +36,9 @@ public abstract class Move {
 	}
 	
 	/**
-	 * Undoes the move and pops it from the history
+	 * Undoes the move, checking the history
 	 */
 	public final void undo() {
-		//FIXME BUG consequences
 		internalUndo();
 		if (game.history.peek() != this)
 			throw new RuntimeException("Trying to undo something else than the last move !");

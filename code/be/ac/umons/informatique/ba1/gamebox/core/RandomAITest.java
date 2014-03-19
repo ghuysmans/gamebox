@@ -11,7 +11,7 @@ public class RandomAITest {
 	public void randomSmoke() {
 		Game g = new Connect4(7, 6, 4);
 		Player p = new HumanPlayer("X", g);
-		g.players.add(p);
+		g.setPlayers(p, null);
 		AI ai = new RandomAI(); 
 		ArrayList<Move> mv = g.getLegalMoves(p);
 		for (int k=0; k<9; k++){

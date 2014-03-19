@@ -1,7 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -20,7 +18,7 @@ public class TicTacToeTest {
 	public void finishedSmoke() {
 		Game g = new TicTacToe(3, 3, 3);
 		Player p1 = new HumanPlayer("X", g);
-		g.players.add(p1);
+		g.setPlayers(p1, null);
 		Assert.assertFalse("Empty not finished", g.hasFinished());
 		
 		ArrayList<Move> mv = g.getLegalMoves(p1);
