@@ -10,10 +10,15 @@ public class ComputerPlayer {
 	
 	/**
 	 * Selects an AI corresponding to the given level
-	 * @param lvl Difficulty level
+	 * @param lvl Difficulty level (0-anything)
 	 */
 	public ComputerPlayer(int lvl) {
-		throw new UnsupportedOperationException(); //TODO
+		if (lvl==0)
+			ai = new AbsentAI();
+		else if (lvl==1)
+			ai = new RandomAI();
+		else
+			ai = new NegamaxAI(lvl-1);
 	}
 
 
