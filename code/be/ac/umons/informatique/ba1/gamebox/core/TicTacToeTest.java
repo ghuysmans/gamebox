@@ -21,12 +21,13 @@ public class TicTacToeTest {
 		Game g = new TicTacToe(3, 3, 3);
 		Player p1 = new HumanPlayer("X", g);
 		g.players.add(p1);
-		Assert.assertEquals("Empty not finished", g.hasFinished(), false);
+		Assert.assertFalse("Empty not finished", g.hasFinished());
 		
 		ArrayList<Move> mv = g.getLegalMoves(p1);
 		for (int k=0; k<mv.size(); k++)
 			mv.get(k).play();
-		Assert.assertEquals("p1 won, finished", g.hasFinished(), true);
+		Assert.assertTrue("p1 finished", g.hasFinished());
+		Assert.assertEquals("p1 won", g.getScore(p1), Game.SCORE_WON);
 	}
 
 }
