@@ -104,7 +104,7 @@ public class TicTacToe extends Game {
 	public boolean hasFinished() {
 		int score = getScore(this.players[0]); //arbitrary choice (could be players[1])
 		//anyway, if any player has won (the first one, for example), it's finished.
-		if (score != SCORE_DRAW)
+		if (score==SCORE_WON || score==SCORE_LOST)
 			return true;
 		//else, let's see whether the board is full
 		for (int y=0; y<board.getHeight(); y++) {
