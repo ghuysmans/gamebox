@@ -17,21 +17,23 @@ public class TicTacToe extends Game {
 	@Override
 	public int getScore(Player p) {
 		//horizontal
-		for (int r=0; r<board.getHeight(); r++) {
+		for (int y=0; y<board.getHeight(); y++) {
 			//for each start cell,
 			for (int x=0; x<=board.getWidth()-required; x++) {
-				Piece v = board.getPiece(x, r);
+				Piece v = board.getPiece(x, y);
 				if (v != null)
 				{
 					boolean skip = false;
-					for (int y=x+1; y<x+required; y++) {
-						Piece cur = board.getPiece(y, x);
+					for (int z=x+1; z<x+required; z++) {
+						Piece cur = board.getPiece(z, y);
 						if (cur==null || v.owner!=cur.owner) {
 							skip = true;
 							break;
 						}
 					}
-					if (!skip) //found!
+					if (!skip)
+						//found a sequence of the required size!
+						//p has either won or lost (there's no draw)
 						return (v.owner == p ? SCORE_WON : SCORE_LOST);
 				}
 			}
@@ -116,6 +118,7 @@ public class TicTacToe extends Game {
 		return true;
 	}
 	
+	//TODO maybe call hasFinished() and return an empty list if true?
 	@Override
 	public ArrayList<Move> getLegalMoves(Player p) {
 		ArrayList<Move> al = new ArrayList<Move>();
