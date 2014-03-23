@@ -74,7 +74,7 @@ public abstract class Game extends Observable {
 	public abstract boolean hasFinished();
 	
 	/**
-	 * Evaluates the score of a given player. Returns :
+	 * Evaluates the score of a given player. Returns (using SCORE_* constants):
 	 * - a negative value if he loses
 	 * - zero if draw (or there's nothing special)
 	 * - a positive value if he wins

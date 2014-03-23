@@ -8,6 +8,11 @@ class Board {
 
 	protected Piece[][] arr;
 
+	/**
+	 * Creates a new rectangular board.
+	 * @param width Width (x)
+	 * @param height Height (y)
+	 */
 	public Board(int width, int height) {
 		arr = new Piece[height][width];
 	}
@@ -24,7 +29,7 @@ class Board {
 	 * Gets the piece using its (X,Y) coordinates.
 	 * @param x X coordinate (0 = left)
 	 * @param y Y coordinate (0 = top)
-	 * @return Piece object
+	 * @return The requested piece (null = empty)
 	 */
 	public Piece getPiece(int x, int y) {
 		return arr[y][x];
@@ -41,21 +46,33 @@ class Board {
 	}
 	
 	/**
+	 * Determines whether the board is empty (full of null)
+	 * @return true if the board is empty.
+	 */
+	public boolean isEmpty() {
+		for (int y=0; y<arr.length; y++)
+			for (int x=0; x<arr[0].length; x++)
+				if (arr[y][x] != null) return false;
+		return true;
+	}
+	
+	/**
 	 * Returns a string representation of the board (for debugging purposes)
 	 */
 	public String toString() {
-		String res = "";
+		StringBuilder sb = new StringBuilder();
 		for (int y=0; y<arr.length; y++) {
 			for (int x=0; x<arr[0].length; x++)
 			{
 				if (arr[y][x] == null)
-					res += "null\t\t";
+					sb.append("null\t");
 				else
-					res += Integer.toHexString(arr[y][x].owner.hashCode())+"\t";
+					sb.append(Integer.toHexString(arr[y][x].owner.hashCode()));
+				sb.append("\t");
 			}
-			res += "\n";
+			sb.append("\n");
 		}
-		return res;
+		return sb.toString();
 	}
 
 
