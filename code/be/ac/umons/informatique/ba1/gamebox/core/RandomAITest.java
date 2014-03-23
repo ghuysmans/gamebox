@@ -14,7 +14,7 @@ public class RandomAITest {
 		g.setPlayers(p, null);
 		AI ai = new RandomAI(); 
 		ArrayList<Move> mv = g.getLegalMoves(p);
-		for (int k=0; k<9; k++){
+		for (int k=0; k<10; k++){
 			Move rand = ai.getBest(p);
 			if (rand == null)
 				Assert.assertEquals("There should be no legalMove", mv.size(), 0);
