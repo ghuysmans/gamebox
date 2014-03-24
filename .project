@@ -18,12 +18,12 @@
 		<link>
 			<name>build</name>
 			<type>2</type>
-			<location>C:/Users/Ghs/Documents/DEV/_java/proj_ba1_ghs/build</location>
+			<location>build</location>
 		</link>
 		<link>
 			<name>code</name>
 			<type>2</type>
-			<location>C:/Users/Ghs/Documents/DEV/_java/proj_ba1_ghs/code</location>
+			<location>code</location>
 		</link>
 	</linkedResources>
 </projectDescription>
