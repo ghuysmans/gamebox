@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" output="build" path="code"/>
-	<classpathentry kind="var" path="JRE_LIB" rootpath="JRE_SRCROOT" sourcepath="JRE_SRC"/>
-	<classpathentry kind="lib" path="C:/Users/Ghs/Documents/DEV/_java/proj_ba1_ghs/lib/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ghs/Documents/DEV/_java/proj_ba1_ghs/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
