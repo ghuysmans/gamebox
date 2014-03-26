@@ -14,22 +14,26 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		Game g = new Connect4(7, 6, 4);
 		Player p1 = new HumanPlayer("Guillaume", g);
-		Player p2 = new HumanPlayer("Mathieu", g);
+		Player p2 = new ComputerPlayer("Mathieu", g, 1);
 		g.setPlayers(p1, p2);
 		do {
-			ArrayList<Move> mv = g.getLegalMoves(g.getCurrentPlayer());
-			for (int k=0; k<mv.size(); k++)
-				System.out.println(mv.get(k));
-			System.out.println(g.history);
-			int sel;
-			do {
-				System.out.print("Move (-1 for undo)? ");
-				sel = sc.nextInt();	
-			} while (sel<-1 || sel>mv.size()-1);
-			if (sel == -1)
-				g.history.undo();
+			if (g.getCurrentPlayer() instanceof HumanPlayer) {
+				ArrayList<Move> mv = g.getLegalMoves(g.getCurrentPlayer());
+				for (int k=0; k<mv.size(); k++)
+					System.out.println(mv.get(k));
+				System.out.println(g.history);
+				int sel;
+				do {
+					System.out.print("Move (-1 for undo)? ");
+					sel = sc.nextInt();	
+				} while (sel<-1 || sel>mv.size()-1);
+				if (sel == -1)
+					g.history.undo();
+				else
+					mv.get(sel).play();	
+			}
 			else
-				mv.get(sel).play();
+				((ComputerPlayer)(g.getCurrentPlayer())).play();
 			System.out.println(g.board);
 		} while (!g.hasFinished());
 		switch (g.getScore(p1)) {
