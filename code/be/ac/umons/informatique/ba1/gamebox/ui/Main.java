@@ -20,12 +20,16 @@ public class Main {
 			ArrayList<Move> mv = g.getLegalMoves(g.getCurrentPlayer());
 			for (int k=0; k<mv.size(); k++)
 				System.out.println(mv.get(k));
+			System.out.println(g.history);
 			int sel;
 			do {
-				System.out.print("Move? ");
+				System.out.print("Move (-1 for undo)? ");
 				sel = sc.nextInt();	
-			} while (sel<0 || sel>mv.size()-1);
-			mv.get(sel).play();
+			} while (sel<-1 || sel>mv.size()-1);
+			if (sel == -1)
+				g.history.undo();
+			else
+				mv.get(sel).play();
 			System.out.println(g.board);
 		} while (!g.hasFinished());
 		switch (g.getScore(p1)) {
@@ -39,6 +43,7 @@ public class Main {
 			System.out.println("P1 won.");
 		}
 		sc.close();
+		
 	}
 
 }
