@@ -22,7 +22,7 @@ public class Connect4 extends TicTacToe {
 		for (int x=0; x<board.getWidth(); x++) {
 			for (int y=board.getHeight()-1; y>=0; y--) {
 				if (board.getPiece(x, y) == null) {
-					al.add(new PutMove(this, p, x, y));
+					al.add(new PutMove(this, x, y));
 					break; //next column
 				}
 			}

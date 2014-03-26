@@ -10,8 +10,8 @@ class TakeMove extends Move {
 	public final int y;
 	protected Player old_player;
 	
-	public TakeMove(Game g, Player p, boolean csq, int x, int y) {
-		super(g, p, csq);
+	public TakeMove(Game g, boolean csq, int x, int y) {
+		super(g, csq);
 		this.x = x;
 		this.y = y;
 	}

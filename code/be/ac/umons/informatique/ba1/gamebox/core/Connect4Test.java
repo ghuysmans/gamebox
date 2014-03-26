@@ -11,7 +11,7 @@ public class Connect4Test {
 		Player p = new HumanPlayer("X", g);
 		g.setPlayers(p, null); //with only one player
 		Object mv[] = g.getLegalMoves(p).toArray();
-		Object exp[] = {new PutMove(g, p, 0, 1), new PutMove(g, p, 1, 1), new PutMove(g, p, 2, 1)};
+		Object exp[] = {new PutMove(g, 0, 1), new PutMove(g, 1, 1), new PutMove(g, 2, 1)};
 		Assert.assertArrayEquals("Moves match", exp, mv);
 	}
 

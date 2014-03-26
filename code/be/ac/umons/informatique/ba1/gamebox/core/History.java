@@ -16,7 +16,8 @@ public class History extends Stack<Move> {
 		while (!empty() && peek().conseq)
 			pop().undo();
 		//real undo
-		pop().undo();
+		peek().undo();
+		pop();
 	}
 
 

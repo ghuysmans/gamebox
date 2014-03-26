@@ -11,8 +11,8 @@ class RealMove extends Move {
 	public final int x2;
 	public final int y2;
 	
-	public RealMove(Game g, Player p, int x1, int y1, int x2, int y2) {
-		super(g, p, false);
+	public RealMove(Game g, int x1, int y1, int x2, int y2) {
+		super(g, false);
 		this.x1 = x1; this.x2 = x2;
 		this.y1 = y1; this.y2 = y2;
 	}

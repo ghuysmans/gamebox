@@ -9,8 +9,8 @@ class PutMove extends Move {
 	public final int x;
 	public final int y;
 	
-	public PutMove(Game g, Player p, int x, int y) {
-		super(g, p, false);
+	public PutMove(Game g, int x, int y) {
+		super(g, false);
 		this.x = x;
 		this.y = y;
 	}
@@ -37,7 +37,6 @@ class PutMove extends Move {
 	protected void internalUndo() {
 		assert (game.board.getPiece(x, y) != null): "Can't undo a PutMove on an empty cell";
 		game.board.setPiece(null, x, y);
-		game.nextPlayer();
 	}
 
 }

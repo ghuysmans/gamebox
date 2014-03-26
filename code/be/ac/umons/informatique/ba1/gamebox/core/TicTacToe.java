@@ -125,7 +125,7 @@ public class TicTacToe extends Game {
 		for (int y=0; y<board.getHeight(); y++) {
 			for (int x=0; x<board.getWidth(); x++) {
 				if (board.getPiece(x, y) == null)
-					al.add(new PutMove(this, p, x, y));
+					al.add(new PutMove(this, x, y));
 			}
 		}
 		return al;

@@ -36,7 +36,7 @@ public abstract class Game extends Observable {
 	}
 	
 	/**
-	 * Select the other player as current one.
+	 * Selects the other player as current one.
 	 */
 	public void nextPlayer() {
 		assert(currentPlayer!=null): "Trying to use an uninitialized Game";
@@ -44,6 +44,14 @@ public abstract class Game extends Observable {
 			currentPlayer = players[1];
 		else
 			currentPlayer = players[0];
+	}
+	
+	/**
+	 * Forces a new current player (used in Move.undo())
+	 * @param p New current player
+	 */
+	public void setCurrentPlayer(Player p) {
+		currentPlayer = p;
 	}
 	
 	/**

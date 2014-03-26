@@ -8,12 +8,13 @@ public abstract class Move {
 
 	protected Game game;
 	protected Player player;
+	protected Player lastPlayer;
 	public final boolean conseq;
 	
-	public Move(Game g, Player p, boolean csq) {
+	public Move(Game g, boolean csq) {
 		game = g;
-		player = p;
 		conseq = csq;
+		player = g.getCurrentPlayer();
 	}
 	
 	/**
@@ -38,12 +39,13 @@ public abstract class Move {
 	}
 	
 	/**
-	 * Undoes the move, checking the history
+	 * Undoes the move, checking the history without modifying it
 	 */
 	public final void undo() {
-		internalUndo();
 		if (game.history.peek() != this)
 			throw new RuntimeException("Trying to undo something else than the last move !");
+		internalUndo();
+		game.setCurrentPlayer(player);
 	}
 	
 	/**
