@@ -24,7 +24,7 @@ class TakeMove extends Move {
 
 	@Override
 	public String toString() {
-		return "TakeMove by "+player.name+"@"+game.getPosStr(x, y);
+		return "TakeMove by "+player.name+"@"+game.posToStr(x, y);
 	}
 
 	@Override

@@ -68,11 +68,34 @@ public abstract class Game extends Observable {
 	 * @param y Y coordinate
 	 * @return A string corresponding to the game
 	 */
-	public String getPosStr(int x, int y) {
+	public String posToStr(int x, int y) {
 		if (board.getWidth() <= 26)
 			return Character.toString((char)('a'+x)) + y;
 		else
 			return x+","+y;
+	}
+	
+	/**
+	 * Converts a given human-readable string to an (x,y) position.
+	 * @param s String to be converted
+	 * @return Array containing x and y coordinates
+	 */
+	public int[] strToPos(String s) {
+		int pos = s.indexOf(",");
+		if (pos == -1)
+			//not found : short format
+			return new int[]{s.toCharArray()[0]-'a', Integer.parseInt(s.substring(1))};
+		else
+			//found : raw format
+			return new int[]{Integer.parseInt(s.substring(0, pos)), Integer.parseInt(s.substring(pos+1))};
+	}
+	
+	/**
+	 * Evaluates the score of the current given player.
+	 * @see #getScore(Player)
+	 */
+	public int getScore() {
+		return getScore(currentPlayer);
 	}
 	
 	/**
@@ -97,6 +120,14 @@ public abstract class Game extends Observable {
 	 * @param p Player
 	 * @return ArrayList with new instances of Move
 	 */
+	//FIXME remove this parameter and fix consequences!
 	public abstract ArrayList<Move> getLegalMoves(Player p);
+	
+	/**
+	 * Creates a move from the given description
+	 * @param desc Move description
+	 * @return Move to be compared to legalMoves, not used directly
+	 */
+	public abstract Move createMove(String desc);
 
 }

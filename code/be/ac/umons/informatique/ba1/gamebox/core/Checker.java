@@ -26,4 +26,9 @@ public class Checker extends Game {
 	public boolean hasFinished() {
 		throw new UnsupportedOperationException();
 	}
+	
+	@Override
+	public Move createMove(String desc) {
+		throw new UnsupportedOperationException();
+	}
 }

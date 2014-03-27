@@ -23,7 +23,7 @@ class PutMove extends Move {
 
 	@Override
 	public String toString() {
-		return "PutMove by "+player.name+"@"+game.getPosStr(x, y);
+		return "PutMove by "+player.name+"@"+game.posToStr(x, y);
 	}
 
 	@Override

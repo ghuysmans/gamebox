@@ -12,8 +12,18 @@ public class Connect4 extends TicTacToe {
 	}
 
 	@Override
-	public String getPosStr(int x, int y) {
+	public String posToStr(int x, int y) {
 		return Integer.toString(x);
+	}
+	
+	@Override
+	public int[] strToPos(String s) {
+		int x=Integer.parseInt(s), y;
+		for (y=board.getHeight()-1; y>=0; y--)
+			if (board.getPiece(x, y)==null)
+				//found
+				return new int[]{x, y};
+		return null; //invalid column
 	}
 	
 	@Override

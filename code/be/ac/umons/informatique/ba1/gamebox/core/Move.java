@@ -40,6 +40,8 @@ public abstract class Move {
 	
 	/**
 	 * Undoes the move, checking the history without modifying it
+	 * Never call this method from the outside!
+	 * @see History#undo()
 	 */
 	public final void undo() {
 		if (game.history.peek() != this)

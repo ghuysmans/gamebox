@@ -25,7 +25,7 @@ class RealMove extends Move {
 
 	@Override
 	public String toString() {
-		return "RealMove by "+player.name+" from "+game.getPosStr(x1, y1)+" to "+game.getPosStr(x2, y2);
+		return "RealMove by "+player.name+" from "+game.posToStr(x1, y1)+" to "+game.posToStr(x2, y2);
 	}
 
 	@Override
