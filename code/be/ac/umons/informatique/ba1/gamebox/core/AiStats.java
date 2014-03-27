@@ -82,9 +82,9 @@ public class AiStats {
 		ComputerPlayer p2 = new ComputerPlayer(g, "B", 1);		
 		AiStats test = new AiStats(p1, p2);
 		test.playGame(g);
-		System.out.println("gagn�: "+test.getWon());
-		System.out.println("egalit�: "+test.getDraw());
-		System.out.println("perdu: "+test.getLost());
+		System.out.println("Won: "+test.getWon());
+		System.out.println("Draw: "+test.getDraw());
+		System.out.println("Lost: "+test.getLost());
 		
 	}
 }
