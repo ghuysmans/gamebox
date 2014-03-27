@@ -1,7 +1,8 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
- * Generic piece  
+ * Generic piece which only contains an owner.
+ * One more attribute (type) would be needed for checkers. 
  */
 
 public class Piece {

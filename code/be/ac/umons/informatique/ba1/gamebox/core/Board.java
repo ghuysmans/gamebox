@@ -1,7 +1,8 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
- * Rectangle which contains all pieces
+ * Rectangle which contains all pieces. It state shouldn't be manipulated without 
+ * using the Move class (and its derived classes) to avoid game corruption.
  */
 
 class Board {

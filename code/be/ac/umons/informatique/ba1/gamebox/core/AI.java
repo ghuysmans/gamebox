@@ -1,7 +1,8 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
- * Generic Artificial Intelligence class.  
+ * Generic Artificial Intelligence class.
+ * This can't be used directly (only through a ComputerPlayer instance).
  */
 
 public abstract class AI {

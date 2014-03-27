@@ -19,6 +19,7 @@ public class NegamaxAI extends AI {
 	/**
 	 * @param p Current player
 	 * @param rec Recursion level
+	 * @see AI#computeNode(Player)
 	 */
 	private int computeNode(Player p, int rec) {
 		//leaf? did someone win?
@@ -48,7 +49,8 @@ public class NegamaxAI extends AI {
 	}
 	
 	/**
-	 * Wrapper to the internal method computeNode(Player p, int rec)
+	 * Wrapper to an internal method.
+	 * @see #computeNode(Player, int)
 	 */
 	@Override
 	public int computeNode(Player p) {
