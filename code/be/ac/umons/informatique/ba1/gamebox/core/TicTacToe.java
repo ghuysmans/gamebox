@@ -121,7 +121,10 @@ public class TicTacToe extends Game {
 	@Override
 	public Move createMove(String desc) {
 		int ret[] = strToPos(desc);
-		return new PutMove(this, ret[0], ret[1]);
+		if (ret == null)
+			return null;
+		else
+			return new PutMove(this, ret[0], ret[1]);
 	}
 	
 	//TODO maybe call hasFinished() and return an empty list if true?
