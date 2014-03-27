@@ -66,13 +66,20 @@ class Board {
 			for (int x=0; x<arr[0].length; x++)
 			{
 				if (arr[y][x] == null)
-					sb.append("null\t");
+					sb.append("+");
 				else
-					sb.append(Integer.toHexString(arr[y][x].owner.hashCode()));
-				sb.append("\t");
+					sb.append(arr[y][x].owner.name);
+					//sb.append(Integer.toHexString(arr[y][x].owner.hashCode()));
+				sb.append(" ");
 			}
 			sb.append("\n");
 		}
+		for (int x=0; x<arr[0].length; x++) {
+			//sb.append(Character.toString((char)(x+'a')));
+			sb.append(x);
+			sb.append(" ");
+		}
+		sb.append("\n");
 		return sb.toString();
 	}
 

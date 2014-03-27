@@ -12,10 +12,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		//Game g = new Connect4(7, 6, 4);
-		Game g = new TicTacToe(3, 3, 3);
-		Player p1 = new HumanPlayer("Guillaume", g);
-		Player p2 = new ComputerPlayer("Mathieu", g, 5);
+		Game g = new Connect4(7, 6, 4);
+		//Game g = new TicTacToe(3, 3, 3);
+		Player p1 = new HumanPlayer("H", g);
+		Player p2 = new ComputerPlayer("A", g, 2);
 		g.setPlayers(p1, p2);
 		
 		do {
