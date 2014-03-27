@@ -90,7 +90,8 @@ public class TicTacToeTest extends GameTestAbstract {
 		for (int x=0; x<g.board.getWidth(); x++) {
 			for (int y=0; y<g.board.getHeight(); y++) {
 				String s = g.posToStr(x, y);
-				Assert.assertEquals("posStr consistency "+g.posToStr(x, y), new int[]{x,y}, g.strToPos(s));
+				int[] a = g.strToPos(s);
+				Assert.assertArrayEquals("posStr consistency "+s, new int[]{x,y}, a);
 			}
 		}
 	}
