@@ -27,9 +27,10 @@ public class AiStats {
 			((ComputerPlayer)(g.getCurrentPlayer())).play();
 			System.out.println(g.board);
 		} while (!g.hasFinished());
-		if (g.getScore() == Game.SCORE_WON)
+		int sc = g.getScore(a1);
+		if (sc == Game.SCORE_WON)
 			ctWon++;
-		else if (g.getScore() == Game.SCORE_LOST)
+		else if (sc == Game.SCORE_LOST)
 			ctLost++;
 		else
 			ctDraw++;
@@ -77,8 +78,8 @@ public class AiStats {
 	public static void main(String[] args) {
 		Game g = new Connect4(7, 6, 4);
 		//Game g = new TicTacToe(3, 3, 3);
-		ComputerPlayer p1 = new ComputerPlayer("LULU", g, 4);
-		ComputerPlayer p2 = new ComputerPlayer("JOJO", g, 1);		
+		ComputerPlayer p1 = new ComputerPlayer("I", g, 4);
+		ComputerPlayer p2 = new ComputerPlayer("B", g, 1);		
 		AiStats test = new AiStats(p1, p2);
 		test.playGame(g);
 		System.out.println("gagné: "+test.getWon());
