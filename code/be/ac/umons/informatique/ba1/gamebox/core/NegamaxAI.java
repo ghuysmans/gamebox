@@ -39,7 +39,7 @@ public class NegamaxAI extends AI {
 			{
 				mv.play();
 				v = -computeNode(otherPlayer, rec+1);
-				mv.undo();
+				p.game.history.undo();
 				if (v > M)
 					M = v; //keep the max
 			}
@@ -68,7 +68,7 @@ public class NegamaxAI extends AI {
 			{
 				mv.play();
 				v = -computeNode(otherPlayer);
-				mv.undo();
+				p.game.history.undo();
 				if (v > bs)
 				{
 					bs = v; //keep the best move 
