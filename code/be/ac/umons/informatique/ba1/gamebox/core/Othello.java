@@ -32,4 +32,9 @@ public class Othello extends Game {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public Move createMove(int x, int y) {
+		throw new UnsupportedOperationException();
+	}
+
 }

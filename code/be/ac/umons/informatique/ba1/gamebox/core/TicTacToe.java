@@ -119,6 +119,11 @@ public class TicTacToe extends Game {
 	}
 	
 	@Override
+	public Move createMove(int x, int y) {
+		return new PutMove(this, x, y);
+	}
+	
+	@Override
 	public Move createMove(String desc) {
 		int ret[] = strToPos(desc);
 		if (ret == null)

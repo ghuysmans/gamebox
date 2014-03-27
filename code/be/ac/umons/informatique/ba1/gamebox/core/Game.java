@@ -130,4 +130,12 @@ public abstract class Game extends Observable {
 	 */
 	public abstract Move createMove(String desc);
 
+	/**
+	 * Creates a move from the given coordinates
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @return Move to be compared to legalMoves, not used directly
+	 */
+	public abstract Move createMove(int x, int y);
+
 }

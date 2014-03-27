@@ -31,4 +31,10 @@ public class Checker extends Game {
 	public Move createMove(String desc) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public Move createMove(int x, int y) {
+		throw new UnsupportedOperationException();
+	}
+
 }
