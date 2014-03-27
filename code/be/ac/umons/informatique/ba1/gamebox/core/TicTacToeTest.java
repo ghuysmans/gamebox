@@ -1,7 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-import java.util.ArrayList;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
