@@ -1,5 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,5 +85,15 @@ public class TicTacToeTest extends GameTestAbstract {
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, p2}, new Player[]{p1, p2, p2}, new Player[]{null, null, p1}});
 		Assert.assertEquals("Dangerous column for 1", Game.SCORE_DRAW, g.getScore(p1));
 		Assert.assertEquals("Dangerous diagonal for 2", Game.SCORE_DRAW, g.getScore(p2));
+	}
+	
+	@Test
+	public void posStr() {
+		for (int x=0; x<g.board.getWidth(); x++) {
+			for (int y=0; y<g.board.getHeight(); y++) {
+				String s = g.posToStr(x, y);
+				Assert.assertEquals("posStr consistency "+g.posToStr(x, y), new int[]{x,y}, g.strToPos(s));
+			}
+		}
 	}
 }
