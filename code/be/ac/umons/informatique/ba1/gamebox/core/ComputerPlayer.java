@@ -12,23 +12,28 @@ public class ComputerPlayer extends Player {
 	 * Selects an AI corresponding to the given level
 	 * @param lvl Difficulty level (0-anything)
 	 */
-	public ComputerPlayer(String n, Game g, int lvl) {
+	public ComputerPlayer(Game g, String n, int lvl) {
 		super(n, g);
 		if (lvl==0)
-			ai = new AbsentAI();
+			ai = new AbsentAI(g);
 		else if (lvl==1)
-			ai = new RandomAI();
+			ai = new RandomAI(g);
 		else
-			ai = new NegamaxAI(lvl-1);
+			ai = new NegamaxAI(g, lvl-1);
 	}
 
 	/**
 	 * Plays the best move for the current player
 	 */
 	public void play() {
-		Move mv = ai.getBest(game.getCurrentPlayer());
+		Move mv = ai.getBest();
 		mv.play();
 	}
 
+	@Override
+	public void setGame(Game g) {
+		super.setGame(g);
+		ai.setGame(g);
+	}
 
 }

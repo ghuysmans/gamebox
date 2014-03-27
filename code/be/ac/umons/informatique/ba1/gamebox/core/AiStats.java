@@ -78,12 +78,12 @@ public class AiStats {
 	public static void main(String[] args) {
 		Game g = new Connect4(7, 6, 4);
 		//Game g = new TicTacToe(3, 3, 3);
-		ComputerPlayer p1 = new ComputerPlayer("I", g, 4);
-		ComputerPlayer p2 = new ComputerPlayer("B", g, 1);		
+		ComputerPlayer p1 = new ComputerPlayer(g, "I", 4);
+		ComputerPlayer p2 = new ComputerPlayer(g, "B", 1);		
 		AiStats test = new AiStats(p1, p2);
 		test.playGame(g);
-		System.out.println("gagné: "+test.getWon());
-		System.out.println("egalité: "+test.getDraw());
+		System.out.println("gagnï¿½: "+test.getWon());
+		System.out.println("egalitï¿½: "+test.getDraw());
 		System.out.println("perdu: "+test.getLost());
 		
 	}

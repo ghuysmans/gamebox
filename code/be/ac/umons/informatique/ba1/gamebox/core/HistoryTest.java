@@ -8,7 +8,7 @@ public class HistoryTest {
 	@Test
 	public void undoSmoke() {
 		Game g = new TicTacToe(3, 3, 3);
-		Player p1 = new HumanPlayer("X", g);
+		Player p1 = new HumanPlayer(g, "X");
 		g.setPlayers(p1, null);
 		g.createMove("a0").play();
 		g.createMove("a1").play();

@@ -11,11 +11,17 @@ public abstract class Player {
 	
 	public Player(String n, Game g) {
 		name = n;
-		setGame(g);
+		//we can't call setGame() here because of ComputerPlayer:
+		//if we do, a NPE will be thrown (the overloaded setGame calls ai.setGame)
+		game = g;
 	}
 	
 	public void setGame(Game g) {
 		game = g;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 
 }

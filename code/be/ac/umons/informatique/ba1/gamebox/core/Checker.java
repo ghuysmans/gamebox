@@ -18,7 +18,7 @@ public class Checker extends Game {
 	}
 
 	@Override
-	public ArrayList<Move> getLegalMoves(Player p) {
+	public ArrayList<Move> getLegalMoves() {
 		throw new UnsupportedOperationException();
 	}
 	

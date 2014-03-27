@@ -27,7 +27,7 @@ public class Connect4 extends TicTacToe {
 	}
 	
 	@Override
-	public ArrayList<Move> getLegalMoves(Player p) {
+	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int x=0; x<board.getWidth(); x++) {
 			for (int y=board.getHeight()-1; y>=0; y--) {

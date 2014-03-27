@@ -14,13 +14,13 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		Game g = new Connect4(7, 6, 4);
 		//Game g = new TicTacToe(3, 3, 3);
-		Player p1 = new HumanPlayer("H", g);
-		Player p2 = new ComputerPlayer("A", g, 2);
+		Player p1 = new HumanPlayer(g, "H");
+		Player p2 = new ComputerPlayer(g, "A", 8);
 		g.setPlayers(p1, p2);
 		
 		do {
 			if (g.getCurrentPlayer() instanceof HumanPlayer) {
-				ArrayList<Move> mvs = g.getLegalMoves(g.getCurrentPlayer());
+				ArrayList<Move> mvs = g.getLegalMoves();
 				System.out.println(g.board);
 				if (!g.history.empty())
 					System.out.println("Last move: "+g.history.peek());
@@ -53,7 +53,7 @@ public class Main {
 				((ComputerPlayer)(g.getCurrentPlayer())).play();
 		} while (!g.hasFinished());
 		
-		switch (g.getScore(p1)) {
+		switch (g.getScore()) {
 		case Game.SCORE_DRAW:
 			System.out.println("Draw.");
 			break;

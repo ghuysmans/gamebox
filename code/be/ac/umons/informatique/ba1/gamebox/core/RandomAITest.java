@@ -10,12 +10,12 @@ public class RandomAITest {
 	@Test
 	public void randomSmoke() {
 		Game g = new Connect4(7, 6, 4);
-		Player p = new HumanPlayer("X", g);
+		Player p = new HumanPlayer(g, "X");
 		g.setPlayers(p, null);
-		AI ai = new RandomAI(); 
-		ArrayList<Move> mv = g.getLegalMoves(p);
+		AI ai = new RandomAI(g); 
+		ArrayList<Move> mv = g.getLegalMoves();
 		for (int k=0; k<10; k++){
-			Move rand = ai.getBest(p);
+			Move rand = ai.getBest();
 			if (rand == null)
 				Assert.assertEquals("There should be no legalMove", mv.size(), 0);
 			else {

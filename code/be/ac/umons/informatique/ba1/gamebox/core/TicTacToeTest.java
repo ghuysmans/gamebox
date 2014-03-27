@@ -15,8 +15,8 @@ public class TicTacToeTest extends GameTestAbstract {
 	 */
 	public void init() {
 		g = new TicTacToe(3, 3, 3);
-		p1 = new HumanPlayer("X", g);
-		p2 = new HumanPlayer("Y", g);
+		p1 = new HumanPlayer(g, "X");
+		p2 = new HumanPlayer(g, "Y");
 		g.setPlayers(p1, p2);
 	}
 

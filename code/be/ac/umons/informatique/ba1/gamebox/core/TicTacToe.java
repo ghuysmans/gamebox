@@ -132,9 +132,8 @@ public class TicTacToe extends Game {
 			return new PutMove(this, ret[0], ret[1]);
 	}
 	
-	//TODO maybe call hasFinished() and return an empty list if true?
 	@Override
-	public ArrayList<Move> getLegalMoves(Player p) {
+	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int y=0; y<board.getHeight(); y++) {
 			for (int x=0; x<board.getWidth(); x++) {

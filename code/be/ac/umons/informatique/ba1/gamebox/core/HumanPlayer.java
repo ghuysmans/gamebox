@@ -9,7 +9,7 @@ public class HumanPlayer extends Player {
 
 	public ArrayList<Event> events;
 	
-	public HumanPlayer(String n, Game g) {
+	public HumanPlayer(Game g, String n) {
 		super(n, g);
 		events = new ArrayList<Event>();
 		//TODO add Achievements here

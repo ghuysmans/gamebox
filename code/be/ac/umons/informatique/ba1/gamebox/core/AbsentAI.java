@@ -8,18 +8,18 @@ import java.util.ArrayList;
 
 public class AbsentAI extends AI {
 	
-	public AbsentAI() {
-		super("Absent AI (always plays the first possible move)");
+	public AbsentAI(Game g) {
+		super(g, "Absent AI (always plays the first possible move)");
 	}
 	
 	@Override
-	public int computeNode(Player p) {
+	public int computeNode() {
 		return Game.SCORE_DRAW;
 	}
 	
 	@Override
-	public Move getBest(Player p) {
-		ArrayList<Move> mv = p.game.getLegalMoves(p);
+	public Move getBest() {
+		ArrayList<Move> mv = game.getLegalMoves();
 		if (mv.size() == 0)
 			return null;
 		else

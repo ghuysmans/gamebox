@@ -8,20 +8,24 @@ import java.util.ArrayList;
 
 public class RandomAI extends AI {
 	
-	public RandomAI() {
-		super("Random AI");
+	public RandomAI(Game g) {
+		super(g, "Random AI");
 	}
 
 	@Override
-	public int computeNode(Player p) {
+	public int computeNode() {
 		return Game.SCORE_DRAW;
 	}
 		
 	@Override
-	public Move getBest(Player p) {
-		ArrayList<Move> mv = p.game.getLegalMoves(p);
-		int rand = (int)(Math.random()*mv.size());
-		return mv.get(rand);
+	public Move getBest() {
+		ArrayList<Move> mv = game.getLegalMoves();
+		if (mv.isEmpty())
+			return null;
+		else {
+			int rand = (int)(Math.random()*mv.size());
+			return mv.get(rand);
+		}
 	}
 	
 
