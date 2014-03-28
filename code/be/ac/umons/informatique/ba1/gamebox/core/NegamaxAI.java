@@ -59,20 +59,29 @@ public class NegamaxAI extends AI {
 	public Move getBest() {
 		ArrayList<Move> mvs = game.getLegalMoves();
 		Move bm = null; //best move (to be returned)
-		if (mvs.size() != 0) //can we do something?
-		{
+		if (mvs.size() != 0) { //can we do something?
 			int bs = Integer.MIN_VALUE; //fake value which will be overwritten
 			int v; //score for current move
-			for (Move mv: mvs)
-			{
+			ArrayList<Move> bms = new ArrayList<Move>();
+			for (Move mv: mvs) {
 				mv.play();
 				v = -computeNode(0);
 				game.history.undo();
-				if (v > bs)
-				{
-					bs = v; //keep the best move 
-					bm = mv; //... and the associated score
+				if (v > bs) {
+					bs = v; //keep the best move
+					//create a new list of best moves
+					bms.clear();
+					bms.add(mv);
 				}
+				else if (v == bs)
+					//yet a possible best move
+					bms.add(mv);
+			}
+			if (bms.isEmpty())
+				return null;
+			else {
+				int rand = (int)(Math.random()*bms.size());
+				return bms.get(rand);
 			}
 		}
 		return bm;
