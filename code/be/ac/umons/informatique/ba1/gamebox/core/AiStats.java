@@ -6,6 +6,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
  */
 public class AiStats {
 	
+	protected ComputerPlayer realA1;
 	protected ComputerPlayer a1;
 	protected ComputerPlayer a2;
 	protected int ctWon = 0;
@@ -13,7 +14,7 @@ public class AiStats {
 	protected int ctDraw = 0;
 
 	public AiStats (ComputerPlayer a1, ComputerPlayer a2) {
-		this.a1 = a1;
+		this.a1 = realA1 = a1;
 		this.a2 = a2;
 	}
 	
@@ -21,19 +22,24 @@ public class AiStats {
 	 * Runs one test 
 	 * @param g Empty game
 	 */
-	public void playGame(Game g) {
+	public void playGame(Game g, boolean dbg) {
 		g.setPlayers(a1, a2);
 		do {
 			((ComputerPlayer)(g.getCurrentPlayer())).play();
-			System.out.println(g.board);
+			if (dbg)
+				System.out.println(g.board); 
 		} while (!g.hasFinished());
-		int sc = g.getScore(a1);
+		int sc = g.getScore(realA1);
 		if (sc == Game.SCORE_WON)
 			ctWon++;
 		else if (sc == Game.SCORE_LOST)
 			ctLost++;
 		else
 			ctDraw++;
+		//swap a1 <-> a2
+		ComputerPlayer cp = a2;
+		a2 = a1; 
+		a1 = cp;
 	}
 	
 	/**
@@ -76,15 +82,23 @@ public class AiStats {
 	}
 	
 	public static void main(String[] args) {
-		Game g = new Connect4(7, 6, 4);
+		
 		//Game g = new TicTacToe(3, 3, 3);
-		ComputerPlayer p1 = new ComputerPlayer(g, "I", 4);
-		ComputerPlayer p2 = new ComputerPlayer(g, "B", 1);		
-		AiStats test = new AiStats(p1, p2);
-		test.playGame(g);
-		System.out.println("Won: "+test.getWon());
-		System.out.println("Draw: "+test.getDraw());
-		System.out.println("Lost: "+test.getLost());
+		ComputerPlayer pA = new ComputerPlayer(null, "I", 5);
+		ComputerPlayer pB = new ComputerPlayer(null, "B", 3);		
+		AiStats test = new AiStats(pA, pB);
+		int ctTest = 10;
+		
+		for (int k=1; k<=ctTest; k++) {
+			Game g = new Connect4(7, 6, 4);
+			pA.setGame(g);
+			pB.setGame(g);
+			System.out.println("Test #"+k);
+			test.playGame(g, true);
+		}
+		System.out.println("Won: "+test.getWon()*100);
+		System.out.println("Draw: "+test.getDraw()*100);
+		System.out.println("Lost: "+test.getLost()*100);
 		
 	}
 }
