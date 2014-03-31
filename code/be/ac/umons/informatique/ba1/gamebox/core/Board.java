@@ -61,6 +61,45 @@ class Board {
 	}
 	
 	/**
+	 * Determines whether the board is full
+	 * @return true if the board is full.
+	 */
+	public boolean isFull() {
+		for (int y=0; y<arr.length; y++)
+			for (int x=0; x<arr[0].length; x++)
+				if (arr[y][x] == null) return false;
+		return true;
+	}
+	
+	/**
+	 * Computes a vector corresponding to a direction
+	 * @param dir North=0... clockwise.
+	 * @return An integer vector
+	 */
+	protected int[] getVector(int dir) {
+		switch (dir) {
+			case 0: //NORTH
+				return new int[]{0, -1};
+			case 1: //NORTH-EAST
+				return new int[]{1, -1};
+			case 2: //EAST
+				return new int[]{1, 0};
+			case 3: //SOUTH-EAST
+				return new int[]{1, 1};
+			case 4: //SOUTH
+				return new int[]{0, 1};
+			case 5: //SOUTH-WEST
+				return new int[]{-1, 1};
+			case 6: //WEST
+				return new int[]{-1, 0};
+			case 7: //NORTH-WEST
+				return new int[]{-1, -1};
+			default:
+				return null;
+		}
+	}
+	
+	/**
 	 * Returns a string representation of the board (for debugging purposes)
 	 */
 	public String toString() {
