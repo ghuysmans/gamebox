@@ -15,7 +15,10 @@ class Board {
 	 * @param height Height (y)
 	 */
 	public Board(int width, int height) {
+		if (width == 0 || height == 0)
+			throw new IllegalArgumentException("Both dimensions must be non-zero!");
 		arr = new Piece[height][width];
+		
 	}
 
 	public int getWidth() {
