@@ -119,20 +119,6 @@ public class TicTacToe extends Game {
 	}
 	
 	@Override
-	public Move createMove(int x, int y) {
-		return new PutMove(this, x, y);
-	}
-	
-	@Override
-	public Move createMove(String desc) {
-		int ret[] = strToPos(desc);
-		if (ret == null)
-			return null;
-		else
-			return new PutMove(this, ret[0], ret[1]);
-	}
-	
-	@Override
 	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int y=0; y<board.getHeight(); y++) {

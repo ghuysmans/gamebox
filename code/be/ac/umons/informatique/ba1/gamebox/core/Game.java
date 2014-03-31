@@ -128,14 +128,22 @@ public abstract class Game extends Observable {
 	 * @param desc Move description
 	 * @return Move to be compared to legalMoves, not used directly
 	 */
-	public abstract Move createMove(String desc);
-
+	public Move createMove(String desc) {
+		int ret[] = strToPos(desc);
+		if (ret == null)
+			return null;
+		else
+			return new PutMove(this, ret[0], ret[1]);
+	}
+	
 	/**
 	 * Creates a move from the given coordinates
 	 * @param x X coordinate
 	 * @param y Y coordinate
 	 * @return Move to be compared to legalMoves, not used directly
 	 */
-	public abstract Move createMove(int x, int y);
+	public Move createMove(int x, int y) {
+		return new PutMove(this, x, y);
+	}
 
 }
