@@ -34,8 +34,8 @@ public abstract class Move {
 	public final void play() {
 		if (game.currentPlayer != player)
 			throw new RuntimeException("Trying to cheat? You've been caught...");
+		game.history.push(this); //must be done first for OthelloMove's consequences!
 		internalPlay();
-		game.history.push(this);
 	}
 	
 	/**
