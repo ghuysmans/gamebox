@@ -12,10 +12,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Game g = new Connect4(7, 6, 4);
-		//Game g = new TicTacToe(3, 3, 3);
+		Game g = new Othello(8, 8);
+		//Game g = new TicTacToe(8, 8, 3);
 		Player p1 = new HumanPlayer(g, "H");
-		Player p2 = new ComputerPlayer(g, "A", 8);
+		Player p2 = new HumanPlayer(g, "A");
 		g.setPlayers(p1, p2);
 		
 		do {
@@ -24,6 +24,9 @@ public class Main {
 				System.out.println(g.board);
 				if (!g.history.empty())
 					System.out.println("Last move: "+g.history.peek());
+				for (Move mv: mvs) {
+					System.out.println(mv);
+				}
 				boolean undo = false;
 				Move sel = null;
 				String typed;
@@ -34,15 +37,25 @@ public class Main {
 						undo = true;
 					else
 					{
-						sel = g.createMove(typed);
-						if (!mvs.contains(sel))
+						try {
+							sel = g.createMove(typed);
+							if (!mvs.contains(sel))
+								sel = null;
+						}
+						catch (Exception e) {
 							sel = null;
+						}
 					}
 				} while (!undo && sel==null);
 				if (undo)
 				{
-					g.history.undo(); //current player
-					g.history.undo(); //other player
+					try {
+						g.history.undo(); //current player
+						g.history.undo(); //other player
+					}
+					catch (Exception e) {
+						System.out.println("Undo operation has failed.");
+					}
 				}
 				else
 					//a legal move has been selected
