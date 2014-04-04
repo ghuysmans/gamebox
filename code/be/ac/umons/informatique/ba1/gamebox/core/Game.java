@@ -133,7 +133,7 @@ public abstract class Game extends Observable {
 		if (ret == null)
 			return null;
 		else
-			return new PutMove(this, ret[0], ret[1]);
+			return createMove(ret[0], ret[1]);
 	}
 	
 	/**
