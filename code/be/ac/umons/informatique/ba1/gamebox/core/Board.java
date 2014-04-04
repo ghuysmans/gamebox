@@ -105,24 +105,35 @@ class Board {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int y=0; y<arr.length; y++) {
+			sb.append(y);
+			sb.append("| ");
 			for (int x=0; x<arr[0].length; x++)
 			{
 				if (arr[y][x] == null)
 					sb.append("+");
 				else
 					sb.append(arr[y][x].owner.name);
-					//sb.append(Integer.toHexString(arr[y][x].owner.hashCode()));
 				sb.append(" ");
 			}
 			sb.append("\n");
 		}
+		sb.append(" | ");
 		for (int x=0; x<arr[0].length; x++) {
 			//sb.append(Character.toString((char)(x+'a')));
-			sb.append(x);
+			sb.append(Character.toString((char)('a'+x)));
 			sb.append(" ");
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+
+	/**
+	 * Checks coordinates against bounds
+	 * @param pos (X,Y) coordinates
+	 * @return true means they're valid
+	 */
+	public boolean isValid(int[] pos) {
+		return (pos[0]>=0 && pos[0]<arr[0].length && pos[1]>=0 && pos[1]<arr.length);
 	}
 
 
