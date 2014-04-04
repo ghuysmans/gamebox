@@ -14,7 +14,22 @@ public class Othello extends Game {
 		else if (width%2 !=0 || height%2 != 0 )
 			throw new IllegalArgumentException("Dimensions must be even!");
 	}
-
+	
+	/**
+	 * Initializes players and currentPlayer
+	 * @param p1 First player (black)
+	 * @param p2 Second player (white)
+	 */
+	@Override
+	public void setPlayers(Player p1, Player p2) {
+		super.setPlayers(p1, p2);
+		int hh=board.getHeight()/2, hw=board.getWidth()/2;
+		board.setPiece(new Piece(p1), hw, hh-1); //black
+		board.setPiece(new Piece(p1), hw-1, hh); //black2
+		board.setPiece(new Piece(p2), hw-1, hh-1); //white
+		board.setPiece(new Piece(p2), hw, hh); //white2
+	}
+	
 	@Override
 	public int getScore(Player p) {
 		int count = 0;
@@ -27,19 +42,26 @@ public class Othello extends Game {
 		}
 		return count;
 	}
+	
+	//The other method mustn't be overloaded (it calls this one)
+	@Override
+	public Move createMove(int x, int y) {
+		return new OthelloMove(this, x, y);
+	}
 
 	@Override
 	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
-		for (int y=0; y<board.getHeight(); y++) {
-			for (int x=0; x<=board.getWidth(); x++) {
+		for (int y=0; y<board.getHeight()-1; y++) {
+			for (int x=0; x<board.getWidth()-1; x++) {
 				if (board.getPiece(x, y) == null) {
 					boolean[] dirs = getEnemyNeighbors(x, y);
-					for (int i=0; i<dirs.length; i++) {
+					//getEnemyNeighbors's result is always the same size
+					for (int i=0; i<7; i++) {
 						if (dirs[i]) {
 							int[] v = board.getVector(i);
 							if (detectOther(x, y, v[0], v[1]))
-								al.add(new PutMove(this, x, y));
+								al.add(new OthelloMove(this, x, y));
 						}
 					}
 				}
@@ -56,7 +78,7 @@ public class Othello extends Game {
 	 * @param stepY Y step (increment)
 	 * @return true if another piece exists
 	 */
-	private boolean detectOther(int x, int y, int stepX, int stepY) {
+	public boolean detectOther(int x, int y, int stepX, int stepY) {
 		while (x>0 && x<board.getHeight()-1 && y>0 && y<board.getHeight()-1) {
 			x += stepX;
 			y += stepY;
@@ -76,23 +98,13 @@ public class Othello extends Game {
 	 * @return A simple boolean array
 	 */
 	protected boolean[] getEnemyNeighbors(int x, int y) {
-		//Bounds check
-		boolean north, south, east, west;
-		north = (y > 0);
-		south = (y < board.getHeight()-1);
-		east = (x < board.getWidth()-1);
-		west = (x > 0);
-		//Real work (faster than calling getVector and checking bounds...)
 		boolean ret[] = new boolean[8];
-		ret[0] = (north && board.getPiece(x, y-1).owner!=currentPlayer && board.getPiece(x, y-1).owner!=null);
-		ret[1] = (north && east && board.getPiece(x+1, y-1).owner!=currentPlayer && board.getPiece(x+1, y-1).owner!=null);
-		ret[2] = (east && board.getPiece(x+1, y).owner!=currentPlayer && board.getPiece(x+1, y).owner!=null);
-		ret[3] = (south && east && board.getPiece(x+1, y+1).owner!=currentPlayer && board.getPiece(x+1, y+1).owner!=null);
-		ret[4] = (south && board.getPiece(x, y+1).owner!=currentPlayer && board.getPiece(x, y+1).owner!=null);	
-		ret[5] = (south && west && board.getPiece(x-1, y+1).owner!=currentPlayer && board.getPiece(x-1, y+1).owner!=null);
-		ret[6] = (west && board.getPiece(x-1, y).owner!=currentPlayer && board.getPiece(x-1, y).owner!=null);
-		ret[7] = (north && west && board.getPiece(x-1, y-1).owner!=currentPlayer && board.getPiece(x-1, y-1).owner!=null);
-		//Done!
+		for (int i=0; i<8; i++) {
+			int[] pos = board.getVector(i);
+			pos[0] += x; pos[1] += y;
+			Piece pc = (board.isValid(pos) ? board.getPiece(pos[0], pos[1]) : null);
+			ret[i] = (pc!=null && pc.owner!=currentPlayer);
+		}
 		return ret;
 	}
 
