@@ -1,7 +1,8 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
- * Move consisting of a piece taken (replaced) by another one  
+ * Move consisting of a piece taken (replaced) by another one
+ * currentPlayer isn't altered by this kind of move.
  */
 
 class TakeMove extends Move {
@@ -32,8 +33,7 @@ class TakeMove extends Move {
 		Piece pc = game.board.getPiece(x, y);
 		old_player = pc.getOwner();
 		assert (player != old_player): "Can't play the same move twice";
-		pc.setOwner(player);
-		game.nextPlayer();
+		game.board.getPiece(x, y).owner = player;
 	}
 	
 	@Override
