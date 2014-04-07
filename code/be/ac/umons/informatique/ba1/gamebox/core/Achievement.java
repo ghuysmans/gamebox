@@ -5,24 +5,22 @@ package be.ac.umons.informatique.ba1.gamebox.core;
  * These are saved for each player, independently. 
  */
 
-public class Achievement extends Event {
+public class Achievement extends TextMessage {
 
-	protected int threshold;
+	public final boolean icon;
 	
-	public Achievement(String n, int thr) {
-		super(n);
-		threshold = thr;
-		//FIXME initial count
+	/**
+	 * Creates an achievement
+	 * @param g Game to subscribe to
+	 * @param m Message displayed on screen
+	 * @param d User-readable description
+	 * @param i Icon?
+	 * @param n Name (to be used in Game's subclasses)
+	 * @param t Threshold
+	 */
+	public Achievement(Game g, String m, String d, boolean i, String n, int t) {
+		super(g, m, d, n, t, false);
+		icon = i;
 	}
-
-	@Override
-	public String toString() {
-		//FIXME initial count
-		if (threshold == 1)
-			return name;
-		else
-			return name+" ("+  "1"  +"/"+threshold+")";
-	}
-
 
 }
