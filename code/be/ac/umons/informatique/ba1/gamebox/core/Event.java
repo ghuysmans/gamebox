@@ -1,6 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
-import java.util.Observer;
 import java.util.Observable;
 
 /** 

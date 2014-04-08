@@ -39,9 +39,18 @@ class TextMessage extends Event {
 		message = m;
 	}
 	
+	/**
+	 * A way to keep a full String description
+	 * @return Full description
+	 * @see Event#toString()
+	 */
+	protected String fullString() {
+		return super.toString();
+	}
+	
 	@Override
 	public String toString() {
-		return name;
+		return message;
 	}
 
 }
