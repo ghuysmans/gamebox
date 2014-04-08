@@ -12,29 +12,29 @@ public abstract class Event extends Condition {
 	
 	/**
 	 * Creates an event without conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
+	 * @param obs Observable object
+	 * @param desc User-readable description
+	 * @param nm Name (to be used in Game's subclasses)
+	 * @param thr Threshold
+	 * @param rst Auto-reset
 	 */
-	public Event(Observable o, String d, String n, int t, boolean r) {
-		super(o, null, d, n, t, r);
+	public Event(Observable obs, String desc, String nm, int thr, boolean rst) {
+		super(obs, null, desc, nm, thr, rst);
 		conditions = new ArrayList<Condition>();
 	}
 	
 	/**
 	 * Creates an event with conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
-	 * @param c Conditions
+	 * @param obs Observable object
+	 * @param desc User-readable description
+	 * @param nm Name (to be used in Game's subclasses)
+	 * @param thr Threshold
+	 * @param rst Auto-reset
+	 * @param cond Conditions
 	 */
-	public Event(Observable o, String d, String n, int t, boolean r, Condition... c) {
-		this(o, d, n, t, r);
-		for (Condition x: c) {
+	public Event(Observable obs, String desc, String nm, int thr, boolean rst, Condition... cond) {
+		this(obs, desc, nm, thr, rst);
+		for (Condition x: cond) {
 			x.setParent(this);
 			conditions.add(x);
 		}

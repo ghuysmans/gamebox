@@ -12,31 +12,31 @@ class TextMessage extends Event {
 	
 	/**
 	 * Creates an event without conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param m Message displayed on screen
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
+	 * @param obs  Observable object
+	 * @param desc User-readable description
+	 * @param msg  Message displayed on screen
+	 * @param nm   Name (to be used in Game's subclasses)
+	 * @param thr  Threshold
+	 * @param rst  Auto-reset
 	 */
-	public TextMessage(Observable o, String d, String m, String n, int t, boolean r) {
-		super(o, d, n, t, r);
-		message = m;
+	public TextMessage(Observable obs, String desc, String msg, String nm, int thr, boolean rst) {
+		super(obs, desc, nm, thr, rst);
+		message = msg;
 	}
 	
 	/**
 	 * Creates an event with conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param m Message displayed on screen
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
-	 * @param c Conditions
+	 * @param obs  Observable object
+	 * @param desc User-readable description
+	 * @param msg  Message displayed on screen
+	 * @param nm   Name (to be used in Game's subclasses)
+	 * @param thr  Threshold
+	 * @param rst  Auto-reset
+	 * @param cond Conditions
 	 */
-	public TextMessage(Observable o, String d, String m, String n, int t, boolean r, Condition... c) {
-		super(o, d, n, t, r, c);
-		message = m;
+	public TextMessage(Observable obs, String desc, String msg, String nm, int thr, boolean rst, Condition... cond) {
+		super(obs, desc, nm, thr, rst, cond);
+		message = msg;
 	}
 	
 	/**

@@ -13,31 +13,33 @@ public class Achievement extends TextMessage {
 	
 	/**
 	 * Creates an achievement without conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param m Message displayed on screen
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
+	 * @param obs  Observable object
+	 * @param desc User-readable description
+	 * @param msg  Message displayed on screen
+	 * @param nm   Name (to be used in Game's subclasses)
+	 * @param thr  Threshold
+	 * @param rst  Auto-reset
+	 * @param ico  Icon?
 	 */
-	public Achievement(Observable o, String d, String m, String n, int t, boolean r, boolean i) {
-		super(o, d, m, n, t, r);
-		icon = i;
+	public Achievement(Observable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
+		super(obs, desc, msg, nm, thr, rst);
+		icon = ico;
 	}
 	
 	/**
 	 * Creates an achievement with conditions
-	 * @param o Observable object
-	 * @param d User-readable description
-	 * @param m Message displayed on screen
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param t Threshold
-	 * @param r Auto-reset
-	 * @param c Conditions
+	 * @param obs  Observable object
+	 * @param desc User-readable description
+	 * @param msg  Message displayed on screen
+	 * @param nm   Name (to be used in Game's subclasses)
+	 * @param thr  Threshold
+	 * @param rst  Auto-reset
+	 * @param ico  Icon?
+	 * @param cond Conditions
 	 */
-	public Achievement(Observable o, String d, String m, String n, int t, boolean r, boolean i, Condition... c) {
-		super(o, d, m, n, t, r, c);
-		icon = i;
+	public Achievement(Observable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico, Condition... cond) {
+		super(obs, desc, msg, nm, thr, rst, cond);
+		icon = ico;
 	}
 	
 	@Override

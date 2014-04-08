@@ -18,21 +18,21 @@ class Condition implements Observer {
 	
 	/**
 	 * Creates a named condition.
-	 * @param o Observable object
-	 * @param p Parent to notify when completed
-	 * @param d User-readable description
-	 * @param n Name (to be used in Game's subclasses)
-	 * @param m Maximum count
-	 * @param a Automatic reset flag
+	 * @param obs Observable object
+	 * @param par Parent to notify when completed
+	 * @param desc User-readable description
+	 * @param nm Name (to be used in Game's subclasses)
+	 * @param max Maximum count
+	 * @param rst Automatic reset flag
 	 */
-	public Condition(Observable o, Event p, String d, String n, int m, boolean a) {
+	public Condition(Observable obs, Event par, String desc, String nm, int max, boolean rst) {
 		count = 0;
-		description = d;
-		name = n;
-		maximum = m;
-		autoreset = a;
-		parent = p;
-		o.addObserver(this);
+		description = desc;
+		name = nm;
+		maximum = max;
+		autoreset = rst;
+		parent = par;
+		obs.addObserver(this);
 	}
 
 	/**
