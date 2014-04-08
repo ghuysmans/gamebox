@@ -30,8 +30,7 @@ public class Othello extends Game {
 		board.setPiece(new Piece(p2), hw, hh); //white2
 	}
 	
-	@Override
-	public int getScore(Player p) {
+	protected int getScore_internal(Player p) {
 		int count = 0;
 		for (int y=0; y<board.getHeight(); y++) {
 			for (int x=0; x<board.getWidth(); x++) {
@@ -43,6 +42,26 @@ public class Othello extends Game {
 		return count;
 	}
 	
+	@Override
+	public int getScore(Player p) {
+		int count = getScore_internal(players[0]);
+		int count2 = getScore_internal(players[1]);
+		int ct = 0;
+		if (hasFinished() && ((p==players[0] && count>=count2) || (p==players[1] && count<=count2))) {
+			for (int y=0; y<board.getHeight(); y++) {
+				for (int x=0; x<board.getWidth(); x++) {
+					Piece v = board.getPiece(x, y);
+					if (v == null)
+						ct++;
+				}
+			}
+		}
+		if (p==players[0])
+			return count+ct;
+		else
+			return count2+ct;
+	}
+	
 	//The other method mustn't be overloaded (it calls this one)
 	@Override
 	public Move createMove(int x, int y) {
@@ -50,14 +69,15 @@ public class Othello extends Game {
 	}
 
 	@Override
+	//FIXME BUG 4x4 no legal moves..
 	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
-		for (int y=0; y<board.getHeight()-1; y++) {
-			for (int x=0; x<board.getWidth()-1; x++) {
+		for (int y=0; y<board.getHeight(); y++) {
+			for (int x=0; x<board.getWidth(); x++) {
 				if (board.getPiece(x, y) == null) {
 					boolean[] dirs = getEnemyNeighbors(x, y);
 					//getEnemyNeighbors's result is always the same size
-					for (int i=0; i<7; i++) {
+					for (int i=0; i<8; i++) {
 						if (dirs[i]) {
 							int[] v = board.getVector(i);
 							if (detectOther(x, y, v[0], v[1]))
@@ -110,11 +130,28 @@ public class Othello extends Game {
 
 	@Override
 	public boolean hasFinished() {
-		int scoreP1 = getScore(this.players[0]);
-		int scoreP2 = getScore(this.players[1]);
+		int scoreP1 = getScore_internal(this.players[0]);
+		int scoreP2 = getScore_internal(this.players[1]);
 		if (scoreP1==0 || scoreP2==0 || board.isFull() )
 			return true;
-		else
-			return false;
+		else {
+			//Has the current player any legal move?
+			if (getLegalMoves().isEmpty()) {
+				//No. Same question for the next one...
+				//We need to restore currentPlayer afterwards!
+				nextPlayer();
+				if (getLegalMoves().isEmpty()) {
+					nextPlayer();
+					return true;
+				}
+				else {
+					nextPlayer();
+					return false;
+				}
+			}
+			else
+				//Yes? The game hasn't finished!
+				return false;
+		}
 	}
 }
