@@ -36,6 +36,7 @@ public abstract class Move {
 			throw new RuntimeException("Trying to cheat? You've been caught...");
 		game.history.push(this); //must be done first for OthelloMove's consequences!
 		internalPlay();
+		game.notifyEvent("mv");
 	}
 	
 	/**
@@ -48,6 +49,7 @@ public abstract class Move {
 			throw new RuntimeException("Trying to undo something else than the last move !");
 		internalUndo();
 		game.setCurrentPlayer(player);
+		game.notifyEvent("ud");
 	}
 	
 	/**

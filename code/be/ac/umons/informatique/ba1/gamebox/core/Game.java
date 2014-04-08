@@ -16,11 +16,13 @@ public abstract class Game extends Observable {
 	public final Player[] players;
 	public final Board board;
 	public final History history;
+	public final ArrayList<Event> events;
 
 	public Game(int width, int height) {
 		board = new Board(width, height);
 		history = new History(); //empty
 		players = new Player[2];
+		events = new ArrayList<Event>();
 	}
 	
 	/**
@@ -99,6 +101,41 @@ public abstract class Game extends Observable {
 	}
 	
 	/**
+	 * Creates a move from the given description
+	 * @param desc Move description
+	 * @return Move to be compared to legalMoves, not used directly
+	 */
+	public Move createMove(String desc) {
+		int ret[] = strToPos(desc);
+		if (ret == null)
+			return null;
+		else
+			return createMove(ret[0], ret[1]);
+	}
+	
+	/**
+	 * Creates a move from the given coordinates
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @return Move to be compared to legalMoves, not used directly
+	 */
+	public Move createMove(int x, int y) {
+		return new PutMove(this, x, y);
+	}
+	
+	/**
+	 * Notifies all events corresponding to name
+	 * @param name Event name
+	 */
+	public void notifyEvent(String name) {
+		setChanged();
+		notifyObservers(name);
+		for (Player p: players)
+			if (p == currentPlayer)
+				p.notifyEvent(name);
+	}
+
+	/**
 	 * Determines whether the game has finished
 	 * @return true if the game has finished (can't play OR somebody has won)
 	 */
@@ -122,28 +159,5 @@ public abstract class Game extends Observable {
 	 * @return ArrayList with new instances of Move
 	 */
 	public abstract ArrayList<Move> getLegalMoves();
-	
-	/**
-	 * Creates a move from the given description
-	 * @param desc Move description
-	 * @return Move to be compared to legalMoves, not used directly
-	 */
-	public Move createMove(String desc) {
-		int ret[] = strToPos(desc);
-		if (ret == null)
-			return null;
-		else
-			return createMove(ret[0], ret[1]);
-	}
-	
-	/**
-	 * Creates a move from the given coordinates
-	 * @param x X coordinate
-	 * @param y Y coordinate
-	 * @return Move to be compared to legalMoves, not used directly
-	 */
-	public Move createMove(int x, int y) {
-		return new PutMove(this, x, y);
-	}
 
 }
