@@ -155,7 +155,6 @@ public abstract class Game extends Observable {
 	/**
 	 * Gets a set of legal moves to be played by the current player.
 	 * Note: this method will return moves even isFinished()==true!
-	 * @param p Player
 	 * @return ArrayList with new instances of Move
 	 */
 	public abstract ArrayList<Move> getLegalMoves();

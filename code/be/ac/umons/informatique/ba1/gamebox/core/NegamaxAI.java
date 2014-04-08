@@ -18,7 +18,7 @@ public class NegamaxAI extends AI {
 	
 	/**
 	 * @param rec Recursion level
-	 * @see AI#computeNode(Player)
+	 * @see AI#computeNode()
 	 */
 	private int computeNode(int rec) {
 		//leaf? did someone win?
@@ -48,7 +48,7 @@ public class NegamaxAI extends AI {
 	
 	/**
 	 * Wrapper to an internal method.
-	 * @see #computeNode(Player, int)
+	 * @see #computeNode(int)
 	 */
 	@Override
 	public int computeNode() {
