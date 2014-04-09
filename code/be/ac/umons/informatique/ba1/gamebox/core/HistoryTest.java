@@ -9,7 +9,8 @@ public class HistoryTest {
 	public void undoSmoke() {
 		Game g = new TicTacToe(3, 3, 3);
 		Player p1 = new HumanPlayer(g, "X");
-		g.setPlayers(p1, null);
+		Player p2 = new HumanPlayer(g, "Y");
+		g.setPlayers(p1, p2);
 		g.createMove("a0").play();
 		g.createMove("a1").play();
 		g.history.undo();
