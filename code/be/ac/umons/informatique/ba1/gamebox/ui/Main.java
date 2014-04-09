@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Game g = new Othello(8, 8);
+		Game g = new Othello(4, 4);
 		//Game g = new TicTacToe(8, 8, 3);
 		Player p1 = new HumanPlayer(g, "H");
 		Player p2 = new HumanPlayer(g, "A");
@@ -24,19 +24,18 @@ public class Main {
 				System.out.println(g.board);
 				if (!g.history.empty())
 					System.out.println("Last move: "+g.history.peek());
-				for (Move mv: mvs) {
-					System.out.println(mv);
-				}
 				boolean undo = false;
 				Move sel = null;
 				String typed;
 				do {
-					System.out.print("@"+g.getCurrentPlayer().name+": your move (u for undo)? ");
+					System.out.print("@"+g.getCurrentPlayer().name+": your move (u=undo, m=moves)? ");
 					typed = sc.nextLine();
 					if (typed.equals("u"))
 						undo = true;
-					else
-					{
+					else if (typed.equals("m"))
+						for (Move mv: mvs)
+							System.out.println(mv);
+					else {
 						try {
 							sel = g.createMove(typed);
 							if (!mvs.contains(sel))
@@ -47,8 +46,7 @@ public class Main {
 						}
 					}
 				} while (!undo && sel==null);
-				if (undo)
-				{
+				if (undo) {
 					try {
 						g.history.undo(); //current player
 						g.history.undo(); //other player
@@ -67,14 +65,14 @@ public class Main {
 		} while (!g.hasFinished());
 		
 		switch (g.getScore()) {
-		case Game.SCORE_DRAW:
-			System.out.println("Draw.");
-			break;
-		case Game.SCORE_LOST:
-			System.out.println(p2.name+" won.");
-			break;
-		case Game.SCORE_WON:
-			System.out.println(p1.name+" won.");
+			case Game.SCORE_DRAW:
+				System.out.println("Draw.");
+				break;
+			case Game.SCORE_LOST:
+				System.out.println(p2.name+" won.");
+				break;
+			case Game.SCORE_WON:
+				System.out.println(p1.name+" won.");
 		}
 		System.out.println("Last move: "+g.history.peek());
 		System.out.println(g.board);
