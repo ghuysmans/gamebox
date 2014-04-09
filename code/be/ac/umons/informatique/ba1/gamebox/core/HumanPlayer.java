@@ -7,11 +7,8 @@ import java.util.ArrayList;
 
 public class HumanPlayer extends Player {
 
-	public ArrayList<Event> events;
-	
 	public HumanPlayer(Game g, String n) {
 		super(n, g);
-		events = new ArrayList<Event>();
 		
 		events.add(new Achievement(this, "Premier mouvement", "Vous avez joué votre premier coup !   --> "+name, "1stmv", 1, true, true, 
 			new Condition(this, null, "Mouvement joué", "mv", 1, false)));
@@ -27,6 +24,11 @@ public class HumanPlayer extends Player {
 	public void notifyEvent(String name) {
 		setChanged();
 		notifyObservers(name);
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }
