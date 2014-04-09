@@ -1,83 +1,58 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-import be.ac.umons.informatique.ba1.gamebox.core.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 /** 
  * Main class launched by the JVM  
  */
 
-public class Main {
+public class Main extends JFrame {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		Game g = new Othello(4, 4);
-		//Game g = new TicTacToe(8, 8, 3);
-		Player p1 = new HumanPlayer(g, "H");
-		Player p2 = new HumanPlayer(g, "A");
-		g.setPlayers(p1, p2);
+	protected final JMenuBar menubar = new JMenuBar();
+	
+	protected final JMenu games = new JMenu("Jeux");
+	protected final JMenu p1 = new JMenu("Joueur 1");
+	protected final JMenu p2 = new JMenu("Joueur 2");
+	protected final JMenu stats = new JMenu("Statistiques");
+	
+	protected final JMenuItem ttt = new JMenuItem("Tic-Tac-Toe");
+	protected final JMenuItem fiar = new JMenuItem("Puissance 4");
+	protected final JMenuItem oth = new JMenuItem("Othello");
+	
+	protected final JMenu hmn1 = new JMenu("Humain");
+	protected final JMenu ai1 = new JMenu("Ai");
+	protected final JMenu hmn2 = new JMenu("Humain");
+	protected final JMenu ai2 = new JMenu("Ai");
+
+	
+	public Main() {
 		
-		do {
-			if (g.getCurrentPlayer() instanceof HumanPlayer) {
-				ArrayList<Move> mvs = g.getLegalMoves();
-				System.out.println(g.board);
-				if (!g.history.empty())
-					System.out.println("Last move: "+g.history.peek());
-				boolean undo = false;
-				Move sel = null;
-				String typed;
-				do {
-					System.out.print("@"+g.getCurrentPlayer().name+": your move (u=undo, m=moves)? ");
-					typed = sc.nextLine();
-					if (typed.equals("u"))
-						undo = true;
-					else if (typed.equals("m"))
-						for (Move mv: mvs)
-							System.out.println(mv);
-					else {
-						try {
-							sel = g.createMove(typed);
-							if (!mvs.contains(sel))
-								sel = null;
-						}
-						catch (Exception e) {
-							sel = null;
-						}
-					}
-				} while (!undo && sel==null);
-				if (undo) {
-					try {
-						g.history.undo(); //current player
-						g.history.undo(); //other player
-					}
-					catch (Exception e) {
-						System.out.println("Undo operation has failed.");
-					}
-				}
-				else
-					//a legal move has been selected
-					sel.play();	
-			}
-			else
-				//it should work (there are no other classes than ComputerPlayer and HumanPlayer)
-				((ComputerPlayer)(g.getCurrentPlayer())).play();
-		} while (!g.hasFinished());
+		setSize(800, 600);
+		setVisible(true);
+		setTitle("Game box");
+		setContentPane(new BoardPanel());
 		
-		switch (g.getScore()) {
-			case Game.SCORE_DRAW:
-				System.out.println("Draw.");
-				break;
-			case Game.SCORE_LOST:
-				System.out.println(p2.name+" won.");
-				break;
-			case Game.SCORE_WON:
-				System.out.println(p1.name+" won.");
-		}
-		System.out.println("Last move: "+g.history.peek());
-		System.out.println(g.board);
 		
-		sc.close();
 	}
 
+	
+	
+	public static void main(String[] args) {
+		Main wnd = new Main();
+	}
+	
+	class BoardPanel extends JPanel {
+		public void paintComponent(Graphics g){ 
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			
+		}
+		
+	}
 }
