@@ -70,7 +70,6 @@ public class Othello extends Game {
 	}
 
 	@Override
-	//FIXME BUG 4x4 no legal moves..
 	public ArrayList<Move> getLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int y=0; y<board.getHeight(); y++) {
@@ -80,8 +79,7 @@ public class Othello extends Game {
 					//getEnemyNeighbors's result is always the same size
 					for (int i=0; i<8; i++) {
 						if (dirs[i]) {
-							int[] v = board.getVector(i);
-							if (detectOther(x, y, v[0], v[1]))
+							if (detectOther(x, y, Board.vectors[i][0], Board.vectors[i][1]))
 								al.add(new OthelloMove(this, x, y));
 						}
 					}
@@ -115,13 +113,13 @@ public class Othello extends Game {
 	 * Computes a list of enemy neighbors (true means there's one)
 	 * @param x X coordinate
 	 * @param y Y coordinate
-	 * @see Board#getVector(int)
+	 * @see Board#vectors
 	 * @return A simple boolean array
 	 */
 	protected boolean[] getEnemyNeighbors(int x, int y) {
 		boolean ret[] = new boolean[8];
 		for (int i=0; i<8; i++) {
-			int[] pos = board.getVector(i);
+			int[] pos = Board.vectors[i].clone();
 			pos[0] += x; pos[1] += y;
 			Piece pc = (board.isValid(pos) ? board.getPiece(pos[0], pos[1]) : null);
 			ret[i] = (pc!=null && pc.owner!=currentPlayer);

@@ -24,7 +24,7 @@ public class OthelloTest extends GameTestAbstract {
 	public void legalSmoke() {
 		Object mv [] = g.getLegalMoves().toArray();
 		Object exp[] = {new OthelloMove(g, 0, 1), new OthelloMove(g, 1, 0), new OthelloMove(g, 2, 3), new OthelloMove(g, 3, 2)};
-		Assert.assertArrayEquals("moves match", exp, mv);
+		Assert.assertArrayEquals("Moves match", exp, mv);
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class OthelloTest extends GameTestAbstract {
 		System.out.println(g.board);
 		g.createMove(1, 0).play();
 		System.out.println(g.board);
-		Assert.assertEquals("have flipped?", p1, g.board.getPiece(1, 1).getOwner());
+		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());
 	}
 	
 }

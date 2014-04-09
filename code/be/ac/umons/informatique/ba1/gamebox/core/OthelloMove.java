@@ -16,7 +16,7 @@ public class OthelloMove extends PutMove {
 		game.nextPlayer(); //still the same player!
 		//Play TakeMove consequences
 		for (int i=0; i<7; i++) {
-			int[] vect = game.board.getVector(i);
+			int[] vect = Board.vectors[i];
 			if (((Othello)game).detectOther(x, y, vect[0], vect[1])) {
 				int pX=x+vect[0], pY=y+vect[1];
 				//no need to check for null!

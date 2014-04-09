@@ -7,7 +7,17 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 class Board {
 
+	/**
+	 * Internal array holding pieces, accessed by dedicated methods.
+	 * @see Board#getPiece(int, int)
+	 * @see Board#setPiece(Piece, int, int)
+	 */
 	protected Piece[][] arr;
+	
+	/**
+	 * Direction vectors, starting from the North, clockwise.
+	 */
+	public static final int[][] vectors = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
 	/**
 	 * Creates a new rectangular board.
@@ -72,34 +82,6 @@ class Board {
 	}
 	
 	/**
-	 * Computes a vector corresponding to a direction
-	 * @param dir North=0... clockwise.
-	 * @return An integer vector
-	 */
-	protected int[] getVector(int dir) {
-		switch (dir) {
-			case 0: //NORTH
-				return new int[]{0, -1};
-			case 1: //NORTH-EAST
-				return new int[]{1, -1};
-			case 2: //EAST
-				return new int[]{1, 0};
-			case 3: //SOUTH-EAST
-				return new int[]{1, 1};
-			case 4: //SOUTH
-				return new int[]{0, 1};
-			case 5: //SOUTH-WEST
-				return new int[]{-1, 1};
-			case 6: //WEST
-				return new int[]{-1, 0};
-			case 7: //NORTH-WEST
-				return new int[]{-1, -1};
-			default:
-				return null;
-		}
-	}
-	
-	/**
 	 * Returns a string representation of the board (for debugging purposes)
 	 */
 	public String toString() {
@@ -135,6 +117,5 @@ class Board {
 	public boolean isValid(int[] pos) {
 		return (pos[0]>=0 && pos[0]<arr[0].length && pos[1]>=0 && pos[1]<arr.length);
 	}
-
 
 }
