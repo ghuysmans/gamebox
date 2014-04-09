@@ -8,7 +8,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
  * Main class launched by the JVM  
  */
 
-public class Main {
+public class Debug {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

@@ -1,7 +1,11 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -12,9 +16,9 @@ import javax.swing.JPanel;
  * Main class launched by the JVM  
  */
 
-public class Main extends JFrame {
+public class Main extends JFrame implements ActionListener {
 
-	protected final JMenuBar menubar = new JMenuBar();
+	protected final JMenuBar menuBar = new JMenuBar();
 	
 	protected final JMenu games = new JMenu("Jeux");
 	protected final JMenu p1 = new JMenu("Joueur 1");
@@ -30,21 +34,48 @@ public class Main extends JFrame {
 	protected final JMenu hmn2 = new JMenu("Humain");
 	protected final JMenu ai2 = new JMenu("Ai");
 
+	protected final JMenuItem dbg = new JMenuItem("DEBUG");
+	
 	
 	public Main() {
-		
 		setSize(800, 600);
-		setVisible(true);
 		setTitle("Game box");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
 		setContentPane(new BoardPanel());
 		
+		games.add(ttt);
+		games.add(fiar);
+		games.add(oth);
+		menuBar.add(games);
 		
+		p1.add(hmn1);
+		p1.add(ai1);
+		menuBar.add(p1);
+		
+		p2.add(hmn2);
+		p2.add(ai2);
+		menuBar.add(p2);
+		
+		/*stats.add(res);
+		stats.add(graph);
+		stats.add(itv);*/
+		menuBar.add(stats);
+		//menuBar.add(appd);
+		menuBar.add(dbg);
+		
+		dbg.addActionListener(this);
+		setJMenuBar(menuBar);
+		
+		setVisible(true);
 	}
 
-	
-	
-	public static void main(String[] args) {
-		Main wnd = new Main();
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == dbg) {
+			AchievementsDialog ad = new AchievementsDialog(this, "Titre", true);
+		}
+		else
+			System.out.println(e.getSource());
 	}
 	
 	class BoardPanel extends JPanel {
@@ -55,4 +86,10 @@ public class Main extends JFrame {
 		}
 		
 	}
+	
+	
+	public static void main(String[] args) {
+		Main wnd = new Main();
+	}
+
 }
