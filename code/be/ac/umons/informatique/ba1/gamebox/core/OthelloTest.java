@@ -48,6 +48,14 @@ public class OthelloTest extends GameTestAbstract {
 	}
 	
 	@Test
+	public void doubleFlip () {
+		fillBoard(g, new Player[][]{new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, null, null, null}});
+		g.createMove(3, 2).play();
+		Assert.assertEquals("Has flipped 1", p1, g.board.getPiece(2, 1).getOwner());
+		Assert.assertEquals("Has flipped 2", p1, g.board.getPiece(2, 2).getOwner());
+	}
+	
+	@Test
 	public void moveSmoke () {
 		g.createMove(1, 0).play();
 		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());

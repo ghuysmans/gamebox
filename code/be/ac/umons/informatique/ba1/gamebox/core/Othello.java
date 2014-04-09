@@ -99,7 +99,7 @@ public class Othello extends Game {
 	 */
 	public boolean detectOther(int x, int y, int stepX, int stepY) {
 		x += stepX; y += stepY;
-		while (x>0 && x<board.getWidth() && y>0 && y<board.getHeight()) {
+		while (x>=0 && x<board.getWidth() && y>=0 && y<board.getHeight()) {
 			if (board.getPiece(x, y) == null)
 				return false;
 			else if (board.getPiece(x, y).owner == currentPlayer)
