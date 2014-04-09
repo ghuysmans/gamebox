@@ -24,7 +24,7 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenu p1 = new JMenu("Joueur 1");
 	protected final JMenu p2 = new JMenu("Joueur 2");
 	protected final JMenu stats = new JMenu("Statistiques");
-	
+	protected final JMenu help = new JMenu("Aide");
 	protected final JMenuItem ttt = new JMenuItem("Tic-Tac-Toe");
 	protected final JMenuItem fiar = new JMenuItem("Puissance 4");
 	protected final JMenuItem oth = new JMenuItem("Othello");
@@ -34,6 +34,13 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenu hmn2 = new JMenu("Humain");
 	protected final JMenu ai2 = new JMenu("Ai");
 
+	protected final JMenuItem res = new JMenuItem("Résultats");
+	protected final JMenuItem graph = new JMenuItem("Graphique");
+	protected final JMenuItem itv = new JMenuItem("Interactif");
+	
+	protected final JMenuItem manual = new JMenuItem("Manuel");
+	protected final JMenuItem about = new JMenuItem("À propos de...");
+	
 	protected final JMenuItem dbg = new JMenuItem("DEBUG");
 	
 	
@@ -56,11 +63,15 @@ public class Main extends JFrame implements ActionListener {
 		p2.add(ai2);
 		menuBar.add(p2);
 		
-		/*stats.add(res);
+		stats.add(res);
 		stats.add(graph);
-		stats.add(itv);*/
+		stats.add(itv);
 		menuBar.add(stats);
-		//menuBar.add(appd);
+		
+		help.add(manual);
+		help.add(about);
+		menuBar.add(help);
+		
 		menuBar.add(dbg);
 		
 		dbg.addActionListener(this);
