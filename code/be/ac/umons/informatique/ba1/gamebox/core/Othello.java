@@ -76,6 +76,13 @@ public class Othello extends Game {
 			for (int x=0; x<board.getWidth(); x++) {
 				if (board.getPiece(x, y) == null) {
 					boolean[] dirs = getEnemyNeighbors(x, y);
+					//FIXME debug
+					/*
+					System.out.print(this.posToStr(x, y)+": dirs ");
+					for (int i=0; i<8; i++)
+						System.out.print(dirs[i] ? "1" : "0");
+					System.out.println();
+					*/
 					//getEnemyNeighbors's result is always the same size
 					for (int i=0; i<8; i++) {
 						if (dirs[i]) {
@@ -98,13 +105,13 @@ public class Othello extends Game {
 	 * @return true if another piece exists
 	 */
 	public boolean detectOther(int x, int y, int stepX, int stepY) {
-		while (x>0 && x<board.getHeight()-1 && y>0 && y<board.getHeight()-1) {
-			x += stepX;
-			y += stepY;
+		x += stepX; y += stepY;
+		while (x>0 && x<board.getWidth() && y>0 && y<board.getHeight()) {
 			if (board.getPiece(x, y) == null)
 				return false;
 			else if (board.getPiece(x, y).owner == currentPlayer)
 				return true;
+			x += stepX; y += stepY;
 		}
 		return false;
 	}

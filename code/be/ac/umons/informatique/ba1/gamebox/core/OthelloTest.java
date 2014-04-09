@@ -23,36 +23,49 @@ public class OthelloTest extends GameTestAbstract {
 	@Test
 	public void legalSmoke() {
 		Object mv [] = g.getLegalMoves().toArray();
-		Object exp[] = {new OthelloMove(g, 0, 1), new OthelloMove(g, 1, 0), new OthelloMove(g, 2, 3), new OthelloMove(g, 3, 2)};
+		Object exp[] = {new OthelloMove(g, 1, 0), new OthelloMove(g, 0, 1), new OthelloMove(g, 3, 2), new OthelloMove(g, 2, 3)};
 		Assert.assertArrayEquals("Moves match", exp, mv);
 	}
 
 	@Test
 	public void scoreFull() {
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}});
-		Assert.assertEquals("p1 won", 16, g.getScore(p1));
-		Assert.assertEquals("p2 lost", 0, g.getScore(p2));
+		Assert.assertEquals("P1 won", 16, g.getScore(p1));
+		Assert.assertEquals("P2 lost", 0, g.getScore(p2));
 	}
 	
 	@Test
 	public void scoreEmpty() {
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{null, null, null, null}});
 		Assert.assertTrue(g.hasFinished());
-		Assert.assertEquals("score p1", 16, g.getScore(p1));
-		Assert.assertEquals("score p2", 0, g.getScore(p2));
+		Assert.assertEquals("Score p1", 16, g.getScore(p1));
+		Assert.assertEquals("Score p2", 0, g.getScore(p2));
 	
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, null, null}, new Player[]{p2, p1, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p2, p2, p2}});
 		Assert.assertTrue(g.hasFinished());
-		Assert.assertEquals("score p1", 4, g.getScore(p1));
-		Assert.assertEquals("score p2", 12, g.getScore(p2));
+		Assert.assertEquals("Score p1", 4, g.getScore(p1));
+		Assert.assertEquals("Score p2", 12, g.getScore(p2));
 	}
 	
 	@Test
 	public void moveSmoke () {
-		System.out.println(g.board);
+		//System.out.println(g.board);
 		g.createMove(1, 0).play();
-		System.out.println(g.board);
+		//System.out.println(g.board);
 		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());
+	}
+	
+	@Test
+	public void enemyNeighbors() {
+		int[][] data = {{0,0,16}, {1,0,8}, {2,0,4}, {3,0,0}, {0,1,32}, {3,1,4}, 
+						{0,2,64}, {3,2,2}, {0,3,0}, {1,3,64}, {2,3,128}, {3,3,1}};
+		for (int i=0; i<data.length; i++) {
+			int pack = 0;
+			boolean[] res = g.getEnemyNeighbors(data[i][0], data[i][1]);
+			for (int j=7, k=1; j>=0; j--, k<<=1)
+				if (res[j]) pack += k;
+			Assert.assertEquals("Enemy neighbours for "+g.posToStr(data[i][0], data[i][1]), data[i][2], pack);
+		}
 	}
 	
 }
