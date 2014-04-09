@@ -7,6 +7,9 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public abstract class AI {
 
+	public static final int LEVEL_MIN = 0;  
+	public static final int LEVEL_MAX = 10;
+	
 	public final String desc;
 	protected Game game;
 

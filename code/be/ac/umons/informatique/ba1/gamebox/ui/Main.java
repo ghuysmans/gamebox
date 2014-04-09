@@ -5,6 +5,7 @@ import java.awt.Dialog;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -12,12 +13,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
+import be.ac.umons.informatique.ba1.gamebox.core.Game;
+import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
+import be.ac.umons.informatique.ba1.gamebox.core.Othello;
+import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
+
 /** 
  * Main class launched by the JVM  
  */
 
 public class Main extends JFrame implements ActionListener {
-
+	
+	protected Game game;
+	protected ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer> ();
 	protected final JMenuBar menuBar = new JMenuBar();
 	
 	protected final JMenu games = new JMenu("Jeux");
@@ -25,14 +34,21 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenu p2 = new JMenu("Joueur 2");
 	protected final JMenu stats = new JMenu("Statistiques");
 	protected final JMenu help = new JMenu("Aide");
-	protected final JMenuItem ttt = new JMenuItem("Tic-Tac-Toe");
-	protected final JMenuItem fiar = new JMenuItem("Puissance 4");
-	protected final JMenuItem oth = new JMenuItem("Othello");
+	protected final JMenu ttt = new JMenu("Tic-Tac-Toe");
+	protected final JMenu fiar = new JMenu("Puissance 4");
+	protected final JMenu oth = new JMenu("Othello");
 	
+	protected final JMenuItem trd1 = new JMenuItem("Traditionnel");
+	protected final JMenuItem pers1 = new JMenuItem("Personnalisé");
+	protected final JMenuItem trd2 = new JMenuItem("Traditionnel");
+	protected final JMenuItem pers2 = new JMenuItem("Personnalisé");
+	protected final JMenuItem trd3 = new JMenuItem("Traditionnel");
+	protected final JMenuItem pers3 = new JMenuItem("Personnalisé");
+
 	protected final JMenu hmn1 = new JMenu("Humain");
-	protected final JMenu ai1 = new JMenu("Ai");
+	protected final JMenuItem ai1 = new JMenuItem("Ai");
 	protected final JMenu hmn2 = new JMenu("Humain");
-	protected final JMenu ai2 = new JMenu("Ai");
+	protected final JMenuItem ai2 = new JMenuItem("Ai");
 
 	protected final JMenuItem res = new JMenuItem("Résultats");
 	protected final JMenuItem graph = new JMenuItem("Graphique");
@@ -44,6 +60,13 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenuItem dbg = new JMenuItem("DEBUG");
 	
 	
+	
+	public void fillPlayersMenu (JMenu m) {
+		for (HumanPlayer h: humans) {
+			m.add(new JMenuItem(h.toString()));
+		}
+	}
+	
 	public Main() {
 		setSize(800, 600);
 		setTitle("Game box");
@@ -51,17 +74,31 @@ public class Main extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
 		setContentPane(new BoardPanel());
 		
+		humans.add(new HumanPlayer(null,"Mathieu"));
+		humans.add(new HumanPlayer(null,"Guillaume"));
+		humans.add(new HumanPlayer(null,"Charlotte"));
+		humans.add(new HumanPlayer(null,"Antoine"));
+		
+		ttt.add(trd1); trd1.addActionListener(this);
+		ttt.add(pers1);
+		fiar.add(trd2); trd2.addActionListener(this);
+		fiar.add(pers2);
+		oth.add(trd3); trd3.addActionListener(this);
+		oth.add(pers3);
+		
 		games.add(ttt);
 		games.add(fiar);
 		games.add(oth);
 		menuBar.add(games);
 		
 		p1.add(hmn1);
-		p1.add(ai1);
+		fillPlayersMenu(hmn1);
+		p1.add(ai1); ai1.addActionListener(this);
 		menuBar.add(p1);
 		
 		p2.add(hmn2);
-		p2.add(ai2);
+		fillPlayersMenu(hmn2);
+		p2.add(ai2); ai2.addActionListener(this);
 		menuBar.add(p2);
 		
 		stats.add(res);
@@ -73,9 +110,9 @@ public class Main extends JFrame implements ActionListener {
 		help.add(about);
 		menuBar.add(help);
 		
-		menuBar.add(dbg);
+		menuBar.add(dbg); dbg.addActionListener(this);
 		
-		dbg.addActionListener(this);
+		
 		setJMenuBar(menuBar);
 		
 		setVisible(true);
@@ -84,7 +121,24 @@ public class Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == dbg) {
+			System.out.println(game);
 			AchievementsDialog ad = new AchievementsDialog(this, true);
+		}
+		//tic-tac-toe (3,3,3)
+		else if (e.getSource() == trd1) {
+			game = new TicTacToe(3, 3, 3);
+		}
+		//connect 4 (7,6,4)
+		else if (e.getSource() == trd2) {
+			game = new Connect4(7, 6, 4);
+		}
+		//Othello (8,8)
+		else if (e.getSource() == trd3) {
+			game = new Othello(8,8);
+		}
+		if (e.getSource() == ai1) {
+			//System.out.println(game);
+			AiDialog aiDial = new AiDialog(this, true);
 		}
 		else
 			System.out.println(e.getSource());
