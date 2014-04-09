@@ -49,9 +49,7 @@ public class OthelloTest extends GameTestAbstract {
 	
 	@Test
 	public void moveSmoke () {
-		//System.out.println(g.board);
 		g.createMove(1, 0).play();
-		//System.out.println(g.board);
 		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());
 	}
 	

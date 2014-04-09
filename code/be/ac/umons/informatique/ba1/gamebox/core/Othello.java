@@ -76,13 +76,6 @@ public class Othello extends Game {
 			for (int x=0; x<board.getWidth(); x++) {
 				if (board.getPiece(x, y) == null) {
 					boolean[] dirs = getEnemyNeighbors(x, y);
-					//FIXME debug
-					/*
-					System.out.print(this.posToStr(x, y)+": dirs ");
-					for (int i=0; i<8; i++)
-						System.out.print(dirs[i] ? "1" : "0");
-					System.out.println();
-					*/
 					//getEnemyNeighbors's result is always the same size
 					for (int i=0; i<8; i++) {
 						if (dirs[i]) {
