@@ -47,6 +47,7 @@ public class Main extends JFrame implements ActionListener {
 	public Main() {
 		setSize(800, 600);
 		setTitle("Game box");
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
 		setContentPane(new BoardPanel());
 		
@@ -83,7 +84,7 @@ public class Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == dbg) {
-			AchievementsDialog ad = new AchievementsDialog(this, "Titre", true);
+			AchievementsDialog ad = new AchievementsDialog(this, true);
 		}
 		else
 			System.out.println(e.getSource());

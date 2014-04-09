@@ -12,10 +12,10 @@ public class AchievementsDialog extends JDialog {
 	
 	protected ArrayList<Player> players; //FIXME
 
-	public AchievementsDialog(JFrame parent, String title, boolean modal) {
-		super(parent, title, modal);
+	public AchievementsDialog(JFrame parent, boolean modal) {
+		super(parent, "Succès débloqués", modal);
+		setSize(500, 400);
 		setLocationRelativeTo(parent);
-		setSize(100, 100);
 		setVisible(true);
 	}
 	
