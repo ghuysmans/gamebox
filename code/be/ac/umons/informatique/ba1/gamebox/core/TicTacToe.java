@@ -2,7 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
 
 /** 
- * Traditional tic tac toe game  
+ * Traditional tic-tac-toe game  
  */
 
 public class TicTacToe extends Game {
