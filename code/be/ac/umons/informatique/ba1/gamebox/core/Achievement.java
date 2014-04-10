@@ -8,7 +8,6 @@ import java.util.Observable;
  */
 
 public class Achievement extends TextMessage {
-
 	public final boolean icon;
 	
 	/**

@@ -8,7 +8,7 @@ import java.util.Observable;
 
 class TextMessage extends Event {
 
-	protected final String message;
+	public final String message;
 	
 	/**
 	 * Creates an event without conditions

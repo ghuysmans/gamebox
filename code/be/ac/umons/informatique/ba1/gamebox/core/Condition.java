@@ -67,7 +67,9 @@ class Condition implements Observer {
 	}
 	
 	/**
-	 * Updates the counter and notifies the parent Event when needed
+	 * Updates the counter and notifies the parent Event when needed.
+	 * @param g     Game object
+	 * @param param String identifier
 	 */
 	public void update(Observable g, Object param) {
 		if (name.equals(param)) {
