@@ -1,7 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +29,10 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenuBar menuBar = new JMenuBar();
 	
 	protected final JMenu games = new JMenu("Jeux");
+	protected final JMenu pls = new JMenu("Joueurs");
 	protected final JMenu p1 = new JMenu("Joueur 1");
 	protected final JMenu p2 = new JMenu("Joueur 2");
+	protected final JMenuItem ach = new JMenuItem("Succès");
 	protected final JMenu stats = new JMenu("Statistiques");
 	protected final JMenu help = new JMenu("Aide");
 	protected final JMenu ttt = new JMenu("Tic-Tac-Toe");
@@ -94,12 +95,15 @@ public class Main extends JFrame implements ActionListener {
 		p1.add(hmn1);
 		fillPlayersMenu(hmn1);
 		p1.add(ai1); ai1.addActionListener(this);
-		menuBar.add(p1);
+		pls.add(p1);
 		
 		p2.add(hmn2);
 		fillPlayersMenu(hmn2);
 		p2.add(ai2); ai2.addActionListener(this);
-		menuBar.add(p2);
+		pls.add(p2);
+		
+		pls.add(ach);
+		menuBar.add(pls);
 		
 		stats.add(res);
 		stats.add(graph);
@@ -124,11 +128,11 @@ public class Main extends JFrame implements ActionListener {
 			System.out.println(game);
 			AchievementsDialog ad = new AchievementsDialog(this, true);
 		}
-		//tic-tac-toe (3,3,3)
+		//Tic-Tac-Toe (3,3,3)
 		else if (e.getSource() == trd1) {
 			game = new TicTacToe(3, 3, 3);
 		}
-		//connect 4 (7,6,4)
+		//Connect 4 (7,6,4)
 		else if (e.getSource() == trd2) {
 			game = new Connect4(7, 6, 4);
 		}
@@ -136,8 +140,7 @@ public class Main extends JFrame implements ActionListener {
 		else if (e.getSource() == trd3) {
 			game = new Othello(8,8);
 		}
-		if (e.getSource() == ai1) {
-			//System.out.println(game);
+		else if (e.getSource() == ai1) {
 			AiDialog aiDial = new AiDialog(this, true);
 		}
 		else
