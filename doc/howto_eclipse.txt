@@ -1,0 +1,1 @@
+Use Sysinternal's Junction tool (or something else, it doesn't matter) to create a symbolic link from /code/res to /res... That's easier than trying to configure this complicated IDE.
