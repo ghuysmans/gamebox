@@ -35,7 +35,6 @@ public abstract class Game extends Observable implements Serializable {
 	public void setPlayers(Player p1, Player p2) {
 		players[0] = p1;
 		players[1] = p2;
-		//the following behavior could be changed...
 		currentPlayer = p1;
 	}
 	

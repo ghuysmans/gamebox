@@ -7,6 +7,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 public class ComputerPlayer extends Player {
 
 	private static final long serialVersionUID = 2817118917278891230L;
+	protected Game game;
 	protected final AI ai;
 	
 	/**
@@ -14,7 +15,8 @@ public class ComputerPlayer extends Player {
 	 * @param lvl Difficulty level (0-anything)
 	 */
 	public ComputerPlayer(Game g, String n, int lvl) {
-		super(n, g);
+		super(n);
+		game = g;
 		if (lvl==0)
 			ai = new AbsentAI(g);
 		else if (lvl==1)
@@ -31,9 +33,8 @@ public class ComputerPlayer extends Player {
 		mv.play();
 	}
 
-	@Override
 	public void setGame(Game g) {
-		super.setGame(g);
+		game = g;
 		ai.setGame(g);
 	}
 

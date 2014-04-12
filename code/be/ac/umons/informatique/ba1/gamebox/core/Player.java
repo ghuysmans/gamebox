@@ -13,22 +13,10 @@ public abstract class Player extends Observable implements Serializable {
 	private static final long serialVersionUID = -2969901121702177313L;
 	public final String name;
 	public final ArrayList<Event> events;
-	protected Game game;
 	
-	public Player(String n, Game g) {
+	public Player(String n) {
 		name = n;
 		events = new ArrayList<Event>();
-		//we can't call setGame() here because of ComputerPlayer:
-		//if we do, a NPE will be thrown (the overloaded setGame calls ai.setGame)
-		game = g;
-	}
-	
-	public void setGame(Game g) {
-		game = g;
-	}
-	
-	public Game getGame() {
-		return game;
 	}
 	
 	/**
