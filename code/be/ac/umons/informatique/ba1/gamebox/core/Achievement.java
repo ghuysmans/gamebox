@@ -44,7 +44,7 @@ public class Achievement extends TextMessage {
 	
 	@Override
 	protected void performAction() {
-		System.out.println("Achievement unlocked: "+this.toString());
+		System.out.println("Achievement unlocked: "+this.message);
 	}
 	
 	@Override

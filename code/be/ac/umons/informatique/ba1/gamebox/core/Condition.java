@@ -20,17 +20,15 @@ class Condition implements Observer, Serializable {
 	/**
 	 * Creates a named condition.
 	 * @param obs Observable object
-	 * @param par Parent to notify when completed
 	 * @param desc User-readable description
 	 * @param nm Name (to be used in Game's subclasses)
 	 * @param max Maximum count
 	 */
-	public Condition(Observable obs, Event par, String desc, String nm, int max) {
+	public Condition(Observable obs, String desc, String nm, int max) {
 		count = 0;
 		description = desc;
 		name = nm;
 		maximum = max;
-		parent = par;
 		obs.addObserver(this);
 	}
 
@@ -77,7 +75,7 @@ class Condition implements Observer, Serializable {
 				if (count==maximum) {
 					performAction();
 					if (parent != null)
-						parent.update(g, param);
+						parent.update(g, parent.name); //force
 				}
 			}
 		}

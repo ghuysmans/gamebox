@@ -8,6 +8,7 @@ import java.util.Observable;
 
 public abstract class Event extends Condition {
 
+	private static final long serialVersionUID = -2874813841580806619L;
 	public final boolean autoreset;
 	public final ArrayList<Condition> conditions;
 	
@@ -20,7 +21,7 @@ public abstract class Event extends Condition {
 	 * @param rst  Auto-reset
 	 */
 	public Event(Observable obs, String desc, String nm, int thr, boolean rst) {
-		super(obs, null, desc, nm, thr);
+		super(obs, desc, nm, thr);
 		autoreset = rst;
 		conditions = new ArrayList<Condition>();
 	}
@@ -44,16 +45,22 @@ public abstract class Event extends Condition {
 	
 	@Override
 	public void update(Observable g, Object param) {
-		for (Condition c: conditions) {
-			if (!c.isMet()) 
-				//all conditions aren't met
-				return;
+		if (name.equals(param)) {
+			for (Condition c: conditions) {
+				if (!c.isMet()) 
+					//all conditions aren't met
+					return;
+			}
+			//all conditions are met... update the global counter.
+			//this will also trigger performAction() if it's required.
+			super.update(g, name);
+			//reset conditions counters
+			for (Condition c: conditions)
+				c.reset();
+			//handle auto-reset
+			if (count==maximum && autoreset)
+				count = 0;
 		}
-		//all conditions are met... update the global counter
-		super.update(g, name);
-		//reset conditions counters
-		for (Condition c: conditions)
-			c.reset();
 	}
 	
 	@Override
