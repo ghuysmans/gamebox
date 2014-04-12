@@ -126,15 +126,14 @@ public abstract class Game extends Observable implements Serializable {
 	}
 	
 	/**
-	 * Notifies all events corresponding to name
+	 * Notifies all events corresponding to name.
+	 * Only the current player will be notified.
 	 * @param name Event name
 	 */
 	public void notifyEvent(String name) {
 		setChanged();
 		notifyObservers(name);
-		for (Player p: players)
-			if (p == currentPlayer)
-				p.notifyEvent(name);
+		currentPlayer.notifyEvent(name);
 	}
 
 	/**
