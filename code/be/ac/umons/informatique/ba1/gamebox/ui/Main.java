@@ -140,7 +140,6 @@ public class Main extends JFrame implements ActionListener {
 				else if (e.getSource() == trd2) game = new Connect4(7, 6, 4);
 				else if (e.getSource() == trd3) game = new Othello(8, 8);
 				
-				System.out.println(e);
 				//FIXME
 				game.setPlayers(humans.get(0), humans.get(1));
 				game.getLegalMoves().get(0).play();

@@ -3,6 +3,7 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import be.ac.umons.informatique.ba1.gamebox.core.ComputerPlayer;
 import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
+import be.ac.umons.informatique.ba1.gamebox.core.Othello;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /**
@@ -90,7 +91,7 @@ public class AiStats {
 		
 		if (args.length!=4 && args.length!=5) {
 			System.out.println("Usage: AiStats [-d|-g] game levelA levelB count");
-			System.out.println("Available games: 0=tic tac toe; 1=four in a row; 2=othello");
+			System.out.println("Available games: 0=tic-tac-toe; 1=four in a row; 2=othello");
 		}
 		else {
 			int gn; //selected game
@@ -117,17 +118,18 @@ public class AiStats {
 			for (int k=1; k<=count; k++) {
 				Game g;
 				switch (gn) {
-				case 0:
-					g = new TicTacToe(3, 3, 3);
-					break;
-				case 1:
-					g = new Connect4(7, 6, 4);
-					break;
-				case 2:
-					//FIXME implement this and add a break
-				default:
-					g = null;
-					break;
+					case 0:
+						g = new TicTacToe(3, 3, 3);
+						break;
+					case 1:
+						g = new Connect4(7, 6, 4);
+						break;
+					case 2:
+						g = new Othello(8, 8);
+						break;
+					default:
+						g = null;
+						break;
 				}
 				pA.setGame(g);
 				pB.setGame(g);
