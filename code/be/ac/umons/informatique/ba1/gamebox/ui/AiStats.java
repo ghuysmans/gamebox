@@ -6,8 +6,9 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /**
- * Allows comparing performances of two ComputerPlayer (AI)
+ * Allows comparing performances of two ComputerPlayer (AI) via a CLI.
  */
+
 public class AiStats {
 	
 	protected ComputerPlayer realA1;

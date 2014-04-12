@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class Checker extends Game {
 
+	private static final long serialVersionUID = -7112917098715520399L;
+
 	public Checker(int width, int height) {
 		super(width, height);
 	}

@@ -1,11 +1,14 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.io.Serializable;
+
 /** 
  * Generic move  
  */
 
-public abstract class Move {
+public abstract class Move implements Serializable {
 
+	private static final long serialVersionUID = -966257986224879076L;
 	protected Game game;
 	protected Player player;
 	protected Player lastPlayer;

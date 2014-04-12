@@ -6,6 +6,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public class ComputerPlayer extends Player {
 
+	private static final long serialVersionUID = 2817118917278891230L;
 	protected final AI ai;
 	
 	/**

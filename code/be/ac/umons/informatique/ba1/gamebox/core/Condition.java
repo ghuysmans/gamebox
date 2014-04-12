@@ -1,5 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -7,8 +8,9 @@ import java.util.Observer;
  * Conditions triggered by subclasses of Game using their name.
  */
 
-class Condition implements Observer {
+class Condition implements Observer, Serializable {
 
+	private static final long serialVersionUID = -6277076554051997918L;
 	protected int count;
 	protected Event parent;
 	public final int maximum;

@@ -6,6 +6,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 class PutMove extends Move {
 
+	private static final long serialVersionUID = -4556784597590146899L;
 	public final int x;
 	public final int y;
 	

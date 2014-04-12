@@ -7,6 +7,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 class TakeMove extends Move {
 
+	private static final long serialVersionUID = 5249874706758381550L;
 	public final int x;
 	public final int y;
 	protected Player old_player;

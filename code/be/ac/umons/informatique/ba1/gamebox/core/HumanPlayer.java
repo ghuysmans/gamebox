@@ -6,6 +6,8 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public class HumanPlayer extends Player {
 
+	private static final long serialVersionUID = -7712335606322413655L;
+
 	public HumanPlayer(Game g, String n) {
 		super(n, g);
 		

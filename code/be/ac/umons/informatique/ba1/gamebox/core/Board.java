@@ -1,11 +1,15 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.io.Serializable;
+
 /** 
  * Rectangle which contains all pieces. It state shouldn't be manipulated without 
  * using the Move class (and its derived classes) to avoid game corruption.
  */
 
-public class Board {
+public class Board implements Serializable {
+
+	private static final long serialVersionUID = -7488430075749452263L;
 
 	/**
 	 * Internal array holding pieces, accessed by dedicated methods.

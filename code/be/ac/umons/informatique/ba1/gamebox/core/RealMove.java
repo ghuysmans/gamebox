@@ -6,6 +6,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 class RealMove extends Move {
 
+	private static final long serialVersionUID = -7264989044570179083L;
 	public final int x1;
 	public final int y1;
 	public final int x2;

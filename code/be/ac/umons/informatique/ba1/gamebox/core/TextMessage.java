@@ -8,6 +8,7 @@ import java.util.Observable;
 
 class TextMessage extends Event {
 
+	private static final long serialVersionUID = -4923366138731817906L;
 	public final String message;
 	
 	/**

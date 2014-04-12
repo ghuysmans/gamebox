@@ -1,4 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.ArrayList;
 
@@ -6,8 +7,9 @@ import java.util.ArrayList;
  * Generic game  
  */
 
-public abstract class Game extends Observable {
+public abstract class Game extends Observable implements Serializable {
 
+	private static final long serialVersionUID = -535116433524494964L;
 	public static final int SCORE_WON 	= 42;
 	public static final int SCORE_LOST 	= -42;
 	public static final int SCORE_DRAW 	= 0;

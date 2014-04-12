@@ -8,6 +8,8 @@ import java.util.Observable;
 
 class SoundMessage extends TextMessage {
 
+	private static final long serialVersionUID = 4265207200352892074L;
+
 	/**
 	 * Creates a sound message without conditions.
 	 * The filename is determined from the name parameter.

@@ -8,6 +8,7 @@ import java.util.Observable;
  */
 
 public class Achievement extends TextMessage {
+	private static final long serialVersionUID = -830995388511588828L;
 	public final boolean icon;
 	
 	/**

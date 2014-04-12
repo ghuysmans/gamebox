@@ -19,7 +19,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.Event;
 import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
 
 @SuppressWarnings("serial")
-public class AchievementsDialog extends JDialog implements ActionListener {
+class AchievementsDialog extends JDialog implements ActionListener {
 	
 	protected static final int COMPLETION_RESOLUTION = 1000;
 	protected ArrayList<HumanPlayer> players;

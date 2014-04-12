@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import be.ac.umons.informatique.ba1.gamebox.core.AI;
 
 @SuppressWarnings("serial")
-public class AiDialog extends JDialog {
+class AiDialog extends JDialog {
 	//FIXME margins
 	
 	protected final JTextField jtf;

@@ -6,6 +6,8 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 public class OthelloMove extends PutMove {
 
+	private static final long serialVersionUID = 5266511445370915560L;
+
 	public OthelloMove(Othello g, int x, int y) {
 		super(g, x, y);
 	}

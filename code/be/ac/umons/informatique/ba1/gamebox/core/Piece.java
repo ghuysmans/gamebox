@@ -1,12 +1,15 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.io.Serializable;
+
 /** 
  * Generic piece which only contains an owner.
  * One more attribute (type) would be needed for checkers. 
  */
 
-public class Piece {
+public class Piece implements Serializable {
 
+	private static final long serialVersionUID = -6098480530792767275L;
 	protected Player owner;
 
 	public Piece(Player owner) {

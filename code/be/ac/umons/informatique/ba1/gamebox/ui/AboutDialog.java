@@ -4,7 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class AboutDialog extends JDialog {
+class AboutDialog extends JDialog {
 	public AboutDialog(JFrame parent, boolean modal) {
 		super(parent, "À propos de...", modal);
 		setSize(400, 400);
