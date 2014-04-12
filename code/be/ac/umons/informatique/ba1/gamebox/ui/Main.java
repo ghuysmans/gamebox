@@ -1,11 +1,16 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,7 +29,10 @@ import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 public class Main extends JFrame implements ActionListener {
 	
+	protected static final int PIECE_SIZE = 100;
+	
 	protected Game game;
+	protected ActionListener newGame;
 	protected ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer> ();
 	protected final JMenuBar menuBar = new JMenuBar();
 	
@@ -40,11 +48,11 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenu oth = new JMenu("Othello");
 	
 	protected final JMenuItem trd1 = new JMenuItem("Traditionnel");
-	protected final JMenuItem pers1 = new JMenuItem("Personnalisé");
+	protected final JMenuItem cus1 = new JMenuItem("Personnalisé");
 	protected final JMenuItem trd2 = new JMenuItem("Traditionnel");
-	protected final JMenuItem pers2 = new JMenuItem("Personnalisé");
+	protected final JMenuItem cus2 = new JMenuItem("Personnalisé");
 	protected final JMenuItem trd3 = new JMenuItem("Traditionnel");
-	protected final JMenuItem pers3 = new JMenuItem("Personnalisé");
+	protected final JMenuItem cus3 = new JMenuItem("Personnalisé");
 
 	protected final JMenu hmn1 = new JMenu("Humain");
 	protected final JMenuItem ai1 = new JMenuItem("Ai");
@@ -68,24 +76,13 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	
-	public Main() {
-		setSize(800, 600);
-		setTitle("Game box");
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
-		setContentPane(new BoardPanel());
-		
-		humans.add(new HumanPlayer(null,"Mathieu"));
-		humans.add(new HumanPlayer(null,"Guillaume"));
-		humans.add(new HumanPlayer(null,"Charlotte"));
-		humans.add(new HumanPlayer(null,"Antoine"));
-		
-		ttt.add(trd1); trd1.addActionListener(this);
-		ttt.add(pers1);
-		fiar.add(trd2); trd2.addActionListener(this);
-		fiar.add(pers2);
-		oth.add(trd3); trd3.addActionListener(this);
-		oth.add(pers3);
+	private void initMenus() {
+		ttt.add(trd1); trd1.addActionListener(newGame);
+		ttt.add(cus1); trd1.addActionListener(newGame);
+		fiar.add(trd2); trd2.addActionListener(newGame);
+		fiar.add(cus2); trd2.addActionListener(newGame);
+		oth.add(trd3); trd3.addActionListener(newGame);
+		oth.add(cus3); trd3.addActionListener(newGame);
 		
 		games.add(ttt);
 		games.add(fiar);
@@ -111,47 +108,84 @@ public class Main extends JFrame implements ActionListener {
 		menuBar.add(stats);
 		
 		help.add(manual);
-		help.add(about);
+		help.add(about); about.addActionListener(this);
 		menuBar.add(help);
 		
 		menuBar.add(dbg); dbg.addActionListener(this);
-		
-		
+
 		setJMenuBar(menuBar);
+	}
+	
+	public Main() {
+		setSize(800, 600);
+		setTitle("Game box");
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
+		
+		newGame = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == trd1) game = new TicTacToe(3, 3, 3);
+				else if (e.getSource() == trd2) game = new Connect4(7, 6, 4);
+				else if (e.getSource() == trd3) game = new Othello(8, 8);
+				
+				//FIXME
+				game.setPlayers(humans.get(0), humans.get(1));
+				game.getLegalMoves().get(0).play();
+
+				setContentPane(new BoardPanel());
+				revalidate();
+			}
+		};
+		initMenus();
+		
+		humans.add(new HumanPlayer(null,"Mathieu"));
+		humans.add(new HumanPlayer(null,"Guillaume"));
+		humans.add(new HumanPlayer(null,"Charlotte"));
+		humans.add(new HumanPlayer(null,"Antoine"));
 		
 		setVisible(true);
+	}
+	
+	protected void selectAI(int pid) {
+		//TODO complete this
+		new AiDialog(this, true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == dbg) {
-			System.out.println(game);
-			AchievementsDialog ad = new AchievementsDialog(this, true);
-		}
-		//Tic-Tac-Toe (3,3,3)
-		else if (e.getSource() == trd1) {
-			game = new TicTacToe(3, 3, 3);
-		}
-		//Connect 4 (7,6,4)
-		else if (e.getSource() == trd2) {
-			game = new Connect4(7, 6, 4);
-		}
-		//Othello (8,8)
-		else if (e.getSource() == trd3) {
-			game = new Othello(8,8);
-		}
-		else if (e.getSource() == ai1) {
-			AiDialog aiDial = new AiDialog(this, true);
-		}
-		else
-			System.out.println(e.getSource());
+		if (e.getSource() == dbg)
+			new AchievementsDialog(humans, this, true);
+		else if (e.getSource() == ai1)
+			selectAI(1);
+		else if (e.getSource() == about)
+			new AboutDialog(this, true);
+
 	}
 	
 	class BoardPanel extends JPanel {
+		protected Image getImage(String name) throws URISyntaxException, IOException {
+			File file = new File(getClass().getResource("/res/"+name+".png").toURI());
+			return ImageIO.read(file);
+		}
+		
 		public void paintComponent(Graphics g){ 
-			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
-			
+			super.paintComponent(g); //paint the background
+			try {
+				//FIXME preload in a convenient structure
+				for (int x=0; x<game.board.getWidth(); x++) {
+					for (int y=0; y<game.board.getHeight(); y++) {
+						if (game.board.getPiece(x, y) != null) {
+							Image img = (game.board.getPiece(x, y).getOwner()==game.players[0] ? getImage("fiar/yellow") : getImage("fiar/red"));
+							g.drawImage(img, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+						}
+						g.drawImage(getImage("fiar/board"), x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+					}
+				}
+			} catch (Exception e) {
+				//FIXME
+				e.printStackTrace();
+			}
 		}
 		
 	}
