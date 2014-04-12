@@ -11,7 +11,6 @@ class Condition implements Observer {
 
 	protected int count;
 	protected Event parent;
-	public final boolean autoreset;
 	public final int maximum;
 	public final String name;
 	public final String description;
@@ -23,14 +22,12 @@ class Condition implements Observer {
 	 * @param desc User-readable description
 	 * @param nm Name (to be used in Game's subclasses)
 	 * @param max Maximum count
-	 * @param rst Automatic reset flag
 	 */
-	public Condition(Observable obs, Event par, String desc, String nm, int max, boolean rst) {
+	public Condition(Observable obs, Event par, String desc, String nm, int max) {
 		count = 0;
 		description = desc;
 		name = nm;
 		maximum = max;
-		autoreset = rst;
 		parent = par;
 		obs.addObserver(this);
 	}

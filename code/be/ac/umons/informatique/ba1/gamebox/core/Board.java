@@ -5,7 +5,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
  * using the Move class (and its derived classes) to avoid game corruption.
  */
 
-class Board {
+public class Board {
 
 	/**
 	 * Internal array holding pieces, accessed by dedicated methods.

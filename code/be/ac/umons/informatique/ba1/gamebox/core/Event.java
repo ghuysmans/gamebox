@@ -7,8 +7,8 @@ import java.util.Observable;
  */
 
 public abstract class Event extends Condition {
-	//TODO remove autoreset from Condition and implement this from here
-	
+
+	public final boolean autoreset;
 	public final ArrayList<Condition> conditions;
 	
 	/**
@@ -20,7 +20,8 @@ public abstract class Event extends Condition {
 	 * @param rst  Auto-reset
 	 */
 	public Event(Observable obs, String desc, String nm, int thr, boolean rst) {
-		super(obs, null, desc, nm, thr, rst);
+		super(obs, null, desc, nm, thr);
+		autoreset = rst;
 		conditions = new ArrayList<Condition>();
 	}
 	
