@@ -12,9 +12,9 @@ public class HumanPlayer extends Player {
 		super(n, g);
 		
 		events.add(new Achievement(this, "Vous avez joué votre premier coup !", "Ma première fois", "1stmv", 1, false, true, 
-			new Condition(this, null, "Mouvement joué", "mv", 1)));
+			new Condition(this, "Mouvement joué", "mv", 1)));
 		events.add(new Achievement(this, "Vous avez défait un de vos mouvements...", "Confiance en soi", "1stud", 1, false, true, 
-			new Condition(this, null, "Mouvement joué", "ud", 1)));
+			new Condition(this, "Mouvement joué", "ud", 1)));
 	}
 
 	/**

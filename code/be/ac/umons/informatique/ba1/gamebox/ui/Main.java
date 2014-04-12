@@ -4,8 +4,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -78,11 +82,11 @@ public class Main extends JFrame implements ActionListener {
 	
 	private void initMenus() {
 		ttt.add(trd1); trd1.addActionListener(newGame);
-		ttt.add(cus1); trd1.addActionListener(newGame);
+		ttt.add(cus1); cus1.addActionListener(newGame);
 		fiar.add(trd2); trd2.addActionListener(newGame);
-		fiar.add(cus2); trd2.addActionListener(newGame);
+		fiar.add(cus2); cus2.addActionListener(newGame);
 		oth.add(trd3); trd3.addActionListener(newGame);
-		oth.add(cus3); trd3.addActionListener(newGame);
+		oth.add(cus3); cus3.addActionListener(newGame);
 		
 		games.add(ttt);
 		games.add(fiar);
@@ -99,7 +103,7 @@ public class Main extends JFrame implements ActionListener {
 		p2.add(ai2); ai2.addActionListener(this);
 		pls.add(p2);
 		
-		pls.add(ach);
+		pls.add(ach); ach.addActionListener(this);
 		menuBar.add(pls);
 		
 		stats.add(res);
@@ -120,7 +124,14 @@ public class Main extends JFrame implements ActionListener {
 		setSize(800, 600);
 		setTitle("Game box");
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //FIXME save
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				//FIXME save data
+				System.out.println("Window closing...");
+			}
+		});
 		
 		newGame = new ActionListener() {
 			@Override
@@ -129,6 +140,7 @@ public class Main extends JFrame implements ActionListener {
 				else if (e.getSource() == trd2) game = new Connect4(7, 6, 4);
 				else if (e.getSource() == trd3) game = new Othello(8, 8);
 				
+				System.out.println(e);
 				//FIXME
 				game.setPlayers(humans.get(0), humans.get(1));
 				game.getLegalMoves().get(0).play();
@@ -152,9 +164,24 @@ public class Main extends JFrame implements ActionListener {
 		new AiDialog(this, true);
 	}
 
+	private void doDebug() {
+		System.out.println("doDebug()");
+		try {
+			FileOutputStream fos = new FileOutputStream("savegame.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(game);
+			oos.close(); fos.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == dbg)
+			doDebug();
+		else if (e.getSource() == ach)
 			new AchievementsDialog(humans, this, true);
 		else if (e.getSource() == ai1)
 			selectAI(1);
