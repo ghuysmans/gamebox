@@ -22,7 +22,9 @@ import be.ac.umons.informatique.ba1.gamebox.core.Player;
 
 public class AchievementsDialog extends JDialog implements ActionListener {
 	
-	protected ArrayList<Player> players; //FIXME
+	protected static final int COMPLETION_RESOLUTION = 1000;
+	
+	protected ArrayList<HumanPlayer> players;
 	protected JPanel list;
 	protected JComboBox<Object> cmbPlayer;
 
@@ -40,19 +42,12 @@ public class AchievementsDialog extends JDialog implements ActionListener {
 		populateList(cmbPlayer.getSelectedIndex());
 	}
 	
-	public AchievementsDialog(Main parent, boolean modal) {
+	public AchievementsDialog(ArrayList<HumanPlayer> humans, Main parent, boolean modal) {
 		super(parent, "Succès débloqués", modal);
 		setSize(500, 400);
 		setLocationRelativeTo(parent);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		
-		//FIXME
-		players = new ArrayList<Player>();
-		players.add(new HumanPlayer(null, "Mathieu"));
-		players.get(0).notifyEvent("mv");
-		players.add(new HumanPlayer(null, "Guillaume"));
-		players.add(new HumanPlayer(null, "Antoine"));
-		players.add(new HumanPlayer(null, "Charlotte"));
+		players = humans;
 		
 		Box sup = Box.createHorizontalBox();
 		sup.add(Box.createHorizontalGlue());
@@ -78,8 +73,8 @@ public class AchievementsDialog extends JDialog implements ActionListener {
 			txt.add(new ZoomedLabel(ach.message, 1.5F));
 			txt.add(new JLabel(ach.description));
 			txt.add(Box.createVerticalStrut(5));
-			JProgressBar pgr = new JProgressBar(0, 1000);
-			pgr.setValue((int)(ach.getCompletion()*1000));
+			JProgressBar pgr = new JProgressBar(0, COMPLETION_RESOLUTION);
+			pgr.setValue((int)(ach.getCompletion()*COMPLETION_RESOLUTION));
 			pgr.setString(Math.round(ach.getCompletion()*100)+" %");
 			pgr.setStringPainted(true);
 			txt.add(pgr);
