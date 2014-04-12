@@ -2,6 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -9,8 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+
 import be.ac.umons.informatique.ba1.gamebox.core.AI;
 
+@SuppressWarnings("serial")
 public class AiDialog extends JDialog {
 	//FIXME margins
 	

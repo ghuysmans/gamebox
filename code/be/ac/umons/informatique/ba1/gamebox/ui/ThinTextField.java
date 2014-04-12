@@ -1,10 +1,9 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Dimension;
-
 import javax.swing.JTextField;
-import javax.swing.text.Document;
 
+@SuppressWarnings("serial")
 public class ThinTextField extends JTextField {
 
 	public ThinTextField(String arg0) {

@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,6 +26,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
  * Main class launched by the JVM  
  */
 
+@SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
 	
 	protected static final int PIECE_SIZE = 100;
@@ -192,7 +192,7 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	public static void main(String[] args) {
-		Main wnd = new Main();
+		new Main();
 	}
 
 }

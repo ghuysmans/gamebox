@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -18,12 +17,11 @@ import javax.swing.JScrollPane;
 import be.ac.umons.informatique.ba1.gamebox.core.Achievement;
 import be.ac.umons.informatique.ba1.gamebox.core.Event;
 import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
-import be.ac.umons.informatique.ba1.gamebox.core.Player;
 
+@SuppressWarnings("serial")
 public class AchievementsDialog extends JDialog implements ActionListener {
 	
 	protected static final int COMPLETION_RESOLUTION = 1000;
-	
 	protected ArrayList<HumanPlayer> players;
 	protected JPanel list;
 	protected JComboBox<Object> cmbPlayer;

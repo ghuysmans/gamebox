@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
+@SuppressWarnings("serial")
 public class ThinCombo<E> extends JComboBox<E> {
 
 	public ThinCombo(E[] arr) {
