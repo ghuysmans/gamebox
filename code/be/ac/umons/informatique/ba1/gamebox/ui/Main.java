@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -215,8 +214,7 @@ public class Main extends JFrame implements ActionListener {
 		protected boolean reversed;
 		
 		protected Image getImage(String name) throws URISyntaxException, IOException {
-			File file = new File(getClass().getResource("/res/"+name+".png").toURI());
-			return ImageIO.read(file);
+			return ImageIO.read(getClass().getResourceAsStream("/res/"+name+".png"));
 		}
 		
 		public BoardPanel(String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {

@@ -9,6 +9,7 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 <project name="Game box">
 	<property name="src.dir" value="code" />
 	<property name="res.dir" value="res" />
+	<property name="res.filter" value="${res.dir}/**/*.png ${res.dir}/**/*.wav" />
 	<property name="build.dir" value="build" />
 	<property name="doc.dir" value="doc/java" />
 	<property name="reports.dir" value="reports" />
@@ -45,8 +46,8 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 	</target>
 	<target name="jar" depends="build">
 		<jar destfile="${jar.name}">
-			<fileset dir="${build.dir}" excludes="${test.bin}" />
-			<fileset dir="." includes="${res.dir}/*.*" excludes="*.psd" />
+			<fileset dir="${build.dir}" excludes="${test.bin} ${res.dir}/**/*.*" />
+			<fileset dir="." includes="${res.filter}" />
 			<manifest>
 				<attribute name="main-class" value="${main-class}"/>
 			</manifest>

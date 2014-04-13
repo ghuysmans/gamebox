@@ -22,9 +22,7 @@ public class Picture extends JLabel {
 	public Picture(String name, int width, int height) {
 		super();
 		try {
-			File file = new File(getClass().getResource("/res/"+name+".png").toURI());
-			BufferedImage image = ImageIO.read(file);
-			setIcon(new ImageIcon(image));
+			setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/res/"+name+".png"))));
 		} catch (Exception e) {
 			setBackground(Color.MAGENTA);
 			setOpaque(true);
