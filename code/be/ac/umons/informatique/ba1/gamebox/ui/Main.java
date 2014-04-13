@@ -1,9 +1,12 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -18,11 +21,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
 import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
+import be.ac.umons.informatique.ba1.gamebox.core.Move;
 import be.ac.umons.informatique.ba1.gamebox.core.Othello;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
@@ -39,6 +44,8 @@ public class Main extends JFrame implements ActionListener {
 	protected ActionListener newGame;
 	protected ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer> ();
 	protected final JMenuBar menuBar = new JMenuBar();
+	protected ArrayList<Move> legal;
+	protected boolean showLegal;
 	
 	protected final JMenu games = new JMenu("Jeux");
 	protected final JMenu pls = new JMenu("Joueurs");
@@ -152,12 +159,12 @@ public class Main extends JFrame implements ActionListener {
 					
 					//FIXME
 					game.setPlayers(humans.get(0), humans.get(1));
-					game.getLegalMoves().get(0).play();
+					legal = game.getLegalMoves();
 	
 					revalidate();
 				}
 				catch (Exception ex) {
-					//FIXME?
+					//FIXME better exception handling?
 					ex.printStackTrace();
 				}
 			}
@@ -203,7 +210,7 @@ public class Main extends JFrame implements ActionListener {
 
 	}
 	
-	abstract class BoardPanel extends JPanel {
+	abstract class BoardPanel extends JPanel implements MouseListener {
 		protected Image imgBoard, imgP1, imgP2;
 		protected boolean reversed;
 		
@@ -213,6 +220,7 @@ public class Main extends JFrame implements ActionListener {
 		}
 		
 		public BoardPanel(String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {
+			addMouseListener(this);
 			imgBoard = getImage(b);
 			imgP1 = getImage(p1);
 			imgP2 = getImage(p2);
@@ -230,6 +238,7 @@ public class Main extends JFrame implements ActionListener {
 			g.drawImage(imgBoard, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
 		}
 		
+		@Override
 		public void paintComponent(Graphics g){ 
 			super.paintComponent(g); //paint the background
 			for (int x=0; x<game.board.getWidth(); x++) {
@@ -242,18 +251,61 @@ public class Main extends JFrame implements ActionListener {
 						paintBoard(g, x, y);
 						paintPiece(g, x, y);
 					}
+					if (legal.contains(game.createMove(x, y)) && showLegal) {
+						g.setColor(Color.GREEN);
+						g.fillOval(x*PIECE_SIZE+10, y*PIECE_SIZE+10, PIECE_SIZE-20, PIECE_SIZE-20);
+					}
+				}
+			}
+		}
+
+		@Override public void mouseReleased(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON3) {
+				showLegal = false;
+				repaint();
+			}
+		}
+		
+		@Override public void mousePressed(MouseEvent e) {
+			if (e.getButton() == MouseEvent.BUTTON3) {
+				showLegal = true;
+				repaint();
+			}
+		}
+		
+		@Override public void mouseExited(MouseEvent arg0) {}
+		@Override public void mouseEntered(MouseEvent arg0) {}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getButton()==MouseEvent.BUTTON1 && !game.hasFinished()) {
+				Move mv = game.createMove(e.getPoint().x/PIECE_SIZE, e.getPoint().y/PIECE_SIZE);
+				if (legal.contains(mv)) {
+					mv.play();
+					repaint();
+					legal = game.getLegalMoves();
+					if (game.hasFinished()) {
+						if (game.getScore(game.players[0]) == Game.SCORE_WON)
+							JOptionPane.showMessageDialog(null, game.players[0].name+" a gagné !");
+						else if (game.getScore(game.players[1]) == Game.SCORE_WON)
+							JOptionPane.showMessageDialog(null, game.players[1].name+" a gagné !");
+						else
+							JOptionPane.showMessageDialog(null, "Match nul !");
+					}
 				}
 			}
 		}
 		
 	}
 	
+	//FIXME do we really need to use 3 different objects?
+	
 	class FiarBoardPanel extends BoardPanel {
 
 		public FiarBoardPanel() throws URISyntaxException, IOException {
 			super("fiar/board", "fiar/yellow", "fiar/red", true);
 		}
-		
+
 	}
 	
 	class TttBoardPanel extends BoardPanel {
@@ -261,12 +313,15 @@ public class Main extends JFrame implements ActionListener {
 		public TttBoardPanel() throws URISyntaxException, IOException {
 			super("ttt/board", "ttt/o", "ttt/x", false);
 		}
+
 	}
 	
 	class OthBoardPanel extends BoardPanel {
+		
 		public OthBoardPanel() throws URISyntaxException, IOException {
 			super("oth/board", "oth/black", "oth/white", false);
 		}
+
 	}
 	
 	public static void main(String[] args) {
