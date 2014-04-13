@@ -63,8 +63,11 @@ class AchievementsDialog extends JDialog implements ActionListener {
 		list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
 		populateList(0);
 		
+		JScrollPane jsp = new JScrollPane(list);
+		jsp.setBorder(null);
+		
 		add(sup);
-		add(new JScrollPane(list));
+		add(jsp);
 		
 		setVisible(true);
 	}

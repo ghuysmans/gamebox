@@ -13,8 +13,12 @@ public class HumanPlayer extends Player {
 		
 		events.add(new Achievement(this, "Vous avez joué votre premier coup !", "Ma première fois", "1stmv", 1, false, true, 
 			new Condition(this, "Mouvement joué", "mv", 1)));
-		events.add(new Achievement(this, "Vous avez défait un de vos mouvements...", "Confiance en soi", "1stud", 1, false, true, 
+		events.add(new Achievement(this, "Vous avez gagné votre première partie !", "Le début de la gloire", "1stwin", 1, false, true, 
+			new Condition(this, "Victoire", "won", 1)));
+		events.add(new Achievement(this, "Vous avez défait un de vos mouvements...", "Manque de confiance en soi", "1stud", 1, false, true, 
 			new Condition(this, "Mouvement joué", "ud", 1)));
+		events.add(new Achievement(this, "Vous avez gagné 10 parties d'othello", "Othellier fou", "croth", 1, false, true, 
+			new Condition(this, "Victoire à Othello", "won-oth", 10)));
 	}
 
 	/**
