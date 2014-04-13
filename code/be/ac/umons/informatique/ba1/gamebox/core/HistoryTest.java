@@ -8,8 +8,8 @@ public class HistoryTest extends GameTestAbstract {
 	@Test
 	public void undoOthello() {
 		Game g = new Othello(4, 4);
-		Player p1 = new HumanPlayer(g, "X");
-		Player p2 = new HumanPlayer(g, "Y");
+		Player p1 = new HumanPlayer("X");
+		Player p2 = new HumanPlayer("Y");
 		g.setPlayers(p1, p2);
 		fillBoard(g, new Player[][]{new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, null, null, null}});
 		g.createMove(3, 2).play();
@@ -21,8 +21,8 @@ public class HistoryTest extends GameTestAbstract {
 	@Test
 	public void undoSmoke() {
 		Game g = new TicTacToe(3, 3, 3);
-		Player p1 = new HumanPlayer(g, "X");
-		Player p2 = new HumanPlayer(g, "Y");
+		Player p1 = new HumanPlayer("X");
+		Player p2 = new HumanPlayer("Y");
 		g.setPlayers(p1, p2);
 		g.createMove("a0").play();
 		g.createMove("a1").play();

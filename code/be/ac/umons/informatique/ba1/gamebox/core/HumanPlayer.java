@@ -8,7 +8,7 @@ public class HumanPlayer extends Player {
 
 	private static final long serialVersionUID = -7712335606322413655L;
 
-	public HumanPlayer(Game g, String n) {
+	public HumanPlayer(String n) {
 		super(n);
 		
 		events.add(new Achievement(this, "Vous avez joué votre premier coup !", "Ma première fois", "1stmv", 1, false, true, 

@@ -10,7 +10,7 @@ public class RandomAITest {
 	@Test
 	public void randomSmoke() {
 		Game g = new Connect4(7, 6, 4);
-		Player p = new HumanPlayer(g, "X");
+		Player p = new HumanPlayer("X");
 		g.setPlayers(p, null);
 		AI ai = new RandomAI(g); 
 		ArrayList<Move> mv = g.getLegalMoves();

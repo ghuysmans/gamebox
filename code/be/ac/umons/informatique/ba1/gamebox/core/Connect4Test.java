@@ -8,7 +8,7 @@ public class Connect4Test {
 	@Test
 	public void legalSmoke() {
 		Game g = new Connect4(3, 2, 4); //a small one
-		Player p = new HumanPlayer(g, "X");
+		Player p = new HumanPlayer("X");
 		g.setPlayers(p, null); //with only one player
 		Object mv[] = g.getLegalMoves().toArray();
 		Object exp[] = {new PutMove(g, 0, 1), new PutMove(g, 1, 1), new PutMove(g, 2, 1)};
@@ -18,8 +18,8 @@ public class Connect4Test {
 	@Test
 	public void posStr() {
 		Game g = new Connect4(3, 2, 4); //a small one
-		Player p1 = new HumanPlayer(g, "X");
-		Player p2 = new HumanPlayer(g, "Y");
+		Player p1 = new HumanPlayer("X");
+		Player p2 = new HumanPlayer("Y");
 		g.setPlayers(p1, p2);
 		for (int x=0; x<g.board.getWidth(); x++) {
 			for (int y=g.board.getHeight()-1; y>=0; y--) {

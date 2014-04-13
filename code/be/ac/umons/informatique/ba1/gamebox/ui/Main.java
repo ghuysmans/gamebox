@@ -150,10 +150,10 @@ public class Main extends JFrame implements ActionListener {
 		};
 		initMenus();
 		
-		humans.add(new HumanPlayer(null,"Mathieu"));
-		humans.add(new HumanPlayer(null,"Guillaume"));
-		humans.add(new HumanPlayer(null,"Charlotte"));
-		humans.add(new HumanPlayer(null,"Antoine"));
+		humans.add(new HumanPlayer("Mathieu"));
+		humans.add(new HumanPlayer("Guillaume"));
+		humans.add(new HumanPlayer("Charlotte"));
+		humans.add(new HumanPlayer("Antoine"));
 		
 		setVisible(true);
 	}

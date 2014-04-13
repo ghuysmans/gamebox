@@ -14,8 +14,8 @@ public class Debug {
 		Scanner sc = new Scanner(System.in);
 		Game g = new Othello(4, 4);
 		//Game g = new TicTacToe(8, 8, 3);
-		Player p1 = new HumanPlayer(g, "H");
-		Player p2 = new HumanPlayer(g, "A");
+		Player p1 = new HumanPlayer("H");
+		Player p2 = new HumanPlayer("A");
 		g.setPlayers(p1, p2);
 		
 		do {
