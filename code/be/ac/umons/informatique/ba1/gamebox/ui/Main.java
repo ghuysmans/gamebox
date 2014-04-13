@@ -27,7 +27,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.Othello;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /** 
- * Main class launched by the JVM  
+ * Main application window.
  */
 
 @SuppressWarnings("serial")

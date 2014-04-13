@@ -9,6 +9,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+/**
+ * Picture object to be integrated in a JPanel.
+ * @see AchievementsDialog
+ */
+
 @SuppressWarnings("serial")
 public class Picture extends JLabel {
 

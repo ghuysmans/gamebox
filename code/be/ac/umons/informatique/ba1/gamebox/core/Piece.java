@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 /** 
  * Generic piece which only contains an owner.
- * One more attribute (type) would be needed for checkers. 
  */
 
 public class Piece implements Serializable {

@@ -7,7 +7,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.Othello;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /**
- * Allows comparing performances of two ComputerPlayer (AI) via a CLI.
+ * CLI tool allowing comparison between two ComputerPlayer of (optionally) different levels.
  */
 
 public class AiStats {

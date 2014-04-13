@@ -4,6 +4,10 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
+/**
+ * ComboBox with the smallest possible height
+ */
+
 @SuppressWarnings("serial")
 public class ThinCombo<E> extends JComboBox<E> {
 

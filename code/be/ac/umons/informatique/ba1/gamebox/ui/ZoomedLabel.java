@@ -2,6 +2,10 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import javax.swing.JLabel;
 
+/**
+ * Label with a zoom feature (applied to the Font)
+ */
+
 @SuppressWarnings("serial")
 public class ZoomedLabel extends JLabel {
 

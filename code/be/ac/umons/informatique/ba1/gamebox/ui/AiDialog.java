@@ -13,6 +13,10 @@ import javax.swing.JTextField;
 
 import be.ac.umons.informatique.ba1.gamebox.core.AI;
 
+/**
+ * AI selection dialog featuring a JSlider
+ */
+
 @SuppressWarnings("serial")
 class AiDialog extends JDialog {
 	//FIXME margins

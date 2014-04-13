@@ -3,6 +3,10 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 
+/**
+ * TextField with the smallest possible height
+ */
+
 @SuppressWarnings("serial")
 public class ThinTextField extends JTextField {
 

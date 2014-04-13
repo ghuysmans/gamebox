@@ -5,7 +5,7 @@ import java.util.Scanner;
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /** 
- * Main class launched by the JVM  
+ * Debug CLI for AI and History. Compatible with virtually any TTY...
  */
 
 public class Debug {
