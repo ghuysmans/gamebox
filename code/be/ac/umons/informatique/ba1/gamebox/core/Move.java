@@ -38,8 +38,9 @@ public abstract class Move implements Serializable {
 		if (game.currentPlayer != player)
 			throw new RuntimeException("Trying to cheat? You've been caught...");
 		game.history.push(this); //must be done first for OthelloMove's consequences!
-		internalPlay();
 		game.notifyEvent("mv");
+		internalPlay();
+		game.notifyEvent("amv");
 	}
 	
 	/**
