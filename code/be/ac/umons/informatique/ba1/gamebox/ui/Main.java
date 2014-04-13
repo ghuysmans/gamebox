@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -28,6 +30,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
 import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
 import be.ac.umons.informatique.ba1.gamebox.core.Move;
 import be.ac.umons.informatique.ba1.gamebox.core.Othello;
+import be.ac.umons.informatique.ba1.gamebox.core.Piece;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /** 
@@ -36,8 +39,6 @@ import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
-	
-	protected static final int PIECE_SIZE = 100;
 	
 	protected Game game;
 	protected ActionListener newGame;
@@ -143,23 +144,26 @@ public class Main extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					BoardPanel bp = null;
+					
 					if (e.getSource() == trd1) {
 						game = new TicTacToe(3, 3, 3);
-						setContentPane(new TttBoardPanel());
+						setContentPane(bp = new TttBoardPanel());
 					}
 					else if (e.getSource() == trd2) {
 						game = new Connect4(7, 6, 4);
-						setContentPane(new FiarBoardPanel());
+						setContentPane(bp = new FiarBoardPanel());
 					}
 					else if (e.getSource() == trd3) {
 						game = new Othello(8, 8);
-						setContentPane(new OthBoardPanel());
+						setContentPane(bp = new OthBoardPanel());
 					}
 					
 					//FIXME
 					game.setPlayers(humans.get(0), humans.get(1));
 					legal = game.getLegalMoves();
 	
+					setSize(bp.pieceSize*game.board.getWidth()+50, bp.pieceSize*game.board.getHeight()+80);
 					revalidate();
 				}
 				catch (Exception ex) {
@@ -210,6 +214,9 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 	abstract class BoardPanel extends JPanel implements MouseListener {
+		private static final int PIECE_MAX_SIZE = 100;
+
+		protected int pieceSize = PIECE_MAX_SIZE;
 		protected Image imgBoard, imgP1, imgP2;
 		protected boolean reversed;
 		
@@ -219,21 +226,27 @@ public class Main extends JFrame implements ActionListener {
 		
 		public BoardPanel(String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {
 			addMouseListener(this);
+			addComponentListener(new ComponentAdapter() {
+				@Override
+				public void componentResized(ComponentEvent arg0) {
+					computeSize();
+				}
+			});
 			imgBoard = getImage(b);
 			imgP1 = getImage(p1);
 			imgP2 = getImage(p2);
 			reversed = r;
 		}
 		
-		private void paintPiece(Graphics g, int x, int y) {
-			if (game.board.getPiece(x, y) != null) {
-				Image img = (game.board.getPiece(x, y).getOwner()==game.players[0] ? imgP1 : imgP2);
-				g.drawImage(img, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+		private void paintPiece(Graphics g, Piece pc, int x, int y) {
+			if (pc != null) {
+				Image img = (pc.getOwner()==game.players[0] ? imgP1 : imgP2);
+				g.drawImage(img, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
 			}
 		}
 		
 		private void paintBoard(Graphics g, int x, int y) {
-			g.drawImage(imgBoard, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+			g.drawImage(imgBoard, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
 		}
 		
 		@Override
@@ -241,17 +254,24 @@ public class Main extends JFrame implements ActionListener {
 			super.paintComponent(g); //paint the background
 			for (int x=0; x<game.board.getWidth(); x++) {
 				for (int y=0; y<game.board.getHeight(); y++) {
+					boolean lm = legal.contains(game.createMove(x, y)) && showLegal;
+					Piece pc = game.board.getPiece(x, y);
+					//If we have a legal move to show, use a fake piece
+					if (lm)
+						pc = new Piece(game.getCurrentPlayer());
+					//Display in the right order
 					if (reversed) {
-						paintPiece(g, x, y);
+						paintPiece(g, pc, x, y);
 						paintBoard(g, x, y);
 					}
 					else {
 						paintBoard(g, x, y);
-						paintPiece(g, x, y);
+						paintPiece(g, pc, x, y);
 					}
-					if (legal.contains(game.createMove(x, y)) && showLegal) {
+					//Add a green circle if we drew a legal move
+					if (lm) {
 						g.setColor(Color.GREEN);
-						g.fillOval(x*PIECE_SIZE+10, y*PIECE_SIZE+10, PIECE_SIZE-20, PIECE_SIZE-20);
+						g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30);
 					}
 				}
 			}
@@ -277,7 +297,7 @@ public class Main extends JFrame implements ActionListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getButton()==MouseEvent.BUTTON1 && !game.hasFinished()) {
-				Move mv = game.createMove(e.getPoint().x/PIECE_SIZE, e.getPoint().y/PIECE_SIZE);
+				Move mv = game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
 				if (legal.contains(mv)) {
 					mv.play();
 					repaint();
@@ -292,6 +312,11 @@ public class Main extends JFrame implements ActionListener {
 					}
 				}
 			}
+		}
+		
+		public void computeSize() {
+			//if (pieceSize*game.board.getWidth()>getWidth() || pieceSize*game.board.getHeight()>getHeight())
+			pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/game.board.getWidth(), getHeight()/game.board.getHeight()));
 		}
 		
 	}
