@@ -136,16 +136,30 @@ public class Main extends JFrame implements ActionListener {
 		newGame = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == trd1) game = new TicTacToe(3, 3, 3);
-				else if (e.getSource() == trd2) game = new Connect4(7, 6, 4);
-				else if (e.getSource() == trd3) game = new Othello(8, 8);
-				
-				//FIXME
-				game.setPlayers(humans.get(0), humans.get(1));
-				game.getLegalMoves().get(0).play();
-
-				setContentPane(new BoardPanel());
-				revalidate();
+				try {
+					if (e.getSource() == trd1) {
+						game = new TicTacToe(3, 3, 3);
+						setContentPane(new TttBoardPanel());
+					}
+					else if (e.getSource() == trd2) {
+						game = new Connect4(7, 6, 4);
+						setContentPane(new FiarBoardPanel());
+					}
+					else if (e.getSource() == trd3) {
+						game = new Othello(8, 8);
+						setContentPane(new OthBoardPanel());
+					}
+					
+					//FIXME
+					game.setPlayers(humans.get(0), humans.get(1));
+					game.getLegalMoves().get(0).play();
+	
+					revalidate();
+				}
+				catch (Exception ex) {
+					//FIXME?
+					ex.printStackTrace();
+				}
 			}
 		};
 		initMenus();
@@ -189,33 +203,71 @@ public class Main extends JFrame implements ActionListener {
 
 	}
 	
-	class BoardPanel extends JPanel {
+	abstract class BoardPanel extends JPanel {
+		protected Image imgBoard, imgP1, imgP2;
+		protected boolean reversed;
+		
 		protected Image getImage(String name) throws URISyntaxException, IOException {
 			File file = new File(getClass().getResource("/res/"+name+".png").toURI());
 			return ImageIO.read(file);
 		}
 		
+		public BoardPanel(String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {
+			imgBoard = getImage(b);
+			imgP1 = getImage(p1);
+			imgP2 = getImage(p2);
+			reversed = r;
+		}
+		
+		private void paintPiece(Graphics g, int x, int y) {
+			if (game.board.getPiece(x, y) != null) {
+				Image img = (game.board.getPiece(x, y).getOwner()==game.players[0] ? imgP1 : imgP2);
+				g.drawImage(img, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+			}
+		}
+		
+		private void paintBoard(Graphics g, int x, int y) {
+			g.drawImage(imgBoard, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+		}
+		
 		public void paintComponent(Graphics g){ 
 			super.paintComponent(g); //paint the background
-			try {
-				//FIXME preload in a convenient structure
-				for (int x=0; x<game.board.getWidth(); x++) {
-					for (int y=0; y<game.board.getHeight(); y++) {
-						if (game.board.getPiece(x, y) != null) {
-							Image img = (game.board.getPiece(x, y).getOwner()==game.players[0] ? getImage("fiar/yellow") : getImage("fiar/red"));
-							g.drawImage(img, x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
-						}
-						g.drawImage(getImage("fiar/board"), x*PIECE_SIZE, y*PIECE_SIZE, (x+1)*PIECE_SIZE, (y+1)*PIECE_SIZE, 0, 0, PIECE_SIZE, PIECE_SIZE, null);
+			for (int x=0; x<game.board.getWidth(); x++) {
+				for (int y=0; y<game.board.getHeight(); y++) {
+					if (reversed) {
+						paintPiece(g, x, y);
+						paintBoard(g, x, y);
+					}
+					else {
+						paintBoard(g, x, y);
+						paintPiece(g, x, y);
 					}
 				}
-			} catch (Exception e) {
-				//FIXME
-				e.printStackTrace();
 			}
 		}
 		
 	}
 	
+	class FiarBoardPanel extends BoardPanel {
+
+		public FiarBoardPanel() throws URISyntaxException, IOException {
+			super("fiar/board", "fiar/yellow", "fiar/red", true);
+		}
+		
+	}
+	
+	class TttBoardPanel extends BoardPanel {
+
+		public TttBoardPanel() throws URISyntaxException, IOException {
+			super("ttt/board", "ttt/o", "ttt/x", false);
+		}
+	}
+	
+	class OthBoardPanel extends BoardPanel {
+		public OthBoardPanel() throws URISyntaxException, IOException {
+			super("oth/board", "oth/black", "oth/white", false);
+		}
+	}
 	
 	public static void main(String[] args) {
 		new Main();
