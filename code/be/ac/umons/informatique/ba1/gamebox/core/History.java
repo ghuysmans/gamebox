@@ -13,8 +13,10 @@ public class History extends Stack<Move> {
 	 */
 	public final void undo() {
 		//undo consequences
-		while (!empty() && peek().conseq)
-			pop().undo();
+		while (!empty() && peek().conseq) {
+			peek().undo();
+			pop();
+		}
 		//real undo
 		peek().undo();
 		pop();
