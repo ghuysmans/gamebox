@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 class AboutDialog extends JDialog {
 	
-	//TODO
+	//TODO "Allez, Mathieu, vas-y !"
 	
 	public AboutDialog(JFrame parent, boolean modal) {
 		super(parent, "À propos de...", modal);
