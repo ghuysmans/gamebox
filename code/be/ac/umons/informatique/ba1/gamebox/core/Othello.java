@@ -18,19 +18,13 @@ public class Othello extends Game {
 			throw new IllegalArgumentException("Dimensions must be even!");
 	}
 	
-	/**
-	 * Initializes players and currentPlayer
-	 * @param p1 First player (black)
-	 * @param p2 Second player (white)
-	 */
 	@Override
-	public void setPlayers(Player p1, Player p2) {
-		super.setPlayers(p1, p2);
+	public void setup() {
 		int hh=board.getHeight()/2, hw=board.getWidth()/2;
-		board.setPiece(new Piece(p1), hw, hh-1); //black
-		board.setPiece(new Piece(p1), hw-1, hh); //black2
-		board.setPiece(new Piece(p2), hw-1, hh-1); //white
-		board.setPiece(new Piece(p2), hw, hh); //white2
+		board.setPiece(new Piece(players[0]), hw, hh-1); //black
+		board.setPiece(new Piece(players[0]), hw-1, hh); //black2
+		board.setPiece(new Piece(players[1]), hw-1, hh-1); //white
+		board.setPiece(new Piece(players[1]), hw, hh); //white2
 	}
 	
 	protected int getScore_internal(Player p) {
@@ -72,7 +66,7 @@ public class Othello extends Game {
 	}
 
 	@Override
-	public ArrayList<Move> getLegalMoves() {
+	protected ArrayList<Move> computeLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int y=0; y<board.getHeight(); y++) {
 			for (int x=0; x<board.getWidth(); x++) {

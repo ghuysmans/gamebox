@@ -1,4 +1,3 @@
-update private doc to match changes on paper
 non-boolean getScore() for C4 and TTT
-create packaging script using Python
+create packaging script using Python (or Ant?)
 credits via a special Game! numbered pieces, etc. BY MLQ

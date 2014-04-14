@@ -120,7 +120,7 @@ public class TicTacToe extends Game {
 	}
 	
 	@Override
-	public ArrayList<Move> getLegalMoves() {
+	public ArrayList<Move> computeLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();
 		for (int y=0; y<board.getHeight(); y++) {
 			for (int x=0; x<board.getWidth(); x++) {

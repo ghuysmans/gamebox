@@ -42,9 +42,9 @@ public class OthelloTest extends GameTestAbstract {
 		Assert.assertEquals("Score p2", 0, g.getScore(p2));
 	
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, null, null}, new Player[]{p2, p1, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p2, p2, p2}});
-		Assert.assertTrue(g.hasFinished());
+		Assert.assertFalse(g.hasFinished());
 		Assert.assertEquals("Score p1", 4, g.getScore(p1));
-		Assert.assertEquals("Score p2", 12, g.getScore(p2));
+		Assert.assertEquals("Score p2", 10, g.getScore(p2));
 	}
 	
 	@Test

@@ -19,6 +19,7 @@ public abstract class Game extends Observable implements Serializable {
 	public final Board board;
 	public final History history;
 	public final ArrayList<Event> events;
+	public ArrayList<Move> legalMoves;
 
 	public Game(int width, int height) {
 		board = new Board(width, height);
@@ -32,36 +33,45 @@ public abstract class Game extends Observable implements Serializable {
 	 * @param p1 First player
 	 * @param p2 Second player
 	 */
-	public void setPlayers(Player p1, Player p2) {
+	public final void setPlayers(Player p1, Player p2) {
 		players[0] = p1;
 		players[1] = p2;
-		currentPlayer = p1;
+		setup(); //must be here for Othello
+		setCurrentPlayer(p1);
+	}
+	
+	/**
+	 * Creates the initial game state.
+	 */
+	public void setup() {
+		return;
 	}
 	
 	/**
 	 * Selects the other player as current one.
 	 */
-	public void nextPlayer() {
+	public final void nextPlayer() {
 		assert(currentPlayer!=null): "Trying to use an uninitialized Game";
 		if (currentPlayer == players[0])
-			currentPlayer = players[1];
+			setCurrentPlayer(players[1]);
 		else
-			currentPlayer = players[0];
+			setCurrentPlayer(players[0]);
 	}
 	
 	/**
-	 * Forces a new current player (used in Move.undo())
+	 * Forces a new current player (used in {@link Move#undo()}).
 	 * @param p New current player
 	 */
-	public void setCurrentPlayer(Player p) {
+	public final void setCurrentPlayer(Player p) {
 		currentPlayer = p;
+		legalMoves = computeLegalMoves();
 	}
 	
 	/**
-	 * Returns the player who has to play
+	 * Returns the player who has to play.
 	 * @return Current player
 	 */
-	public Player getCurrentPlayer() {
+	public final Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 
@@ -97,12 +107,12 @@ public abstract class Game extends Observable implements Serializable {
 	 * Evaluates the score of the current given player.
 	 * @see #getScore(Player)
 	 */
-	public int getScore() {
+	public final int getScore() {
 		return getScore(currentPlayer);
 	}
 	
 	/**
-	 * Creates a move from the given description
+	 * Creates a move from the given description.
 	 * @param desc Move description
 	 * @return Move to be compared to legalMoves, not used directly
 	 */
@@ -129,10 +139,19 @@ public abstract class Game extends Observable implements Serializable {
 	 * Only the current player will be notified.
 	 * @param name Event name
 	 */
-	public void notifyEvent(String name) {
+	public final void notifyEvent(String name) {
 		setChanged();
 		notifyObservers(name);
 		currentPlayer.notifyEvent(name);
+	}
+	
+	/**
+	 * Returns a set of legal moves to be played by the current player.
+	 * Note: this method will return moves even isFinished()==true!
+	 * @return ArrayList with new instances of Move
+	 */
+	public final ArrayList<Move> getLegalMoves() {
+		return legalMoves;
 	}
 
 	/**
@@ -153,10 +172,9 @@ public abstract class Game extends Observable implements Serializable {
 	public abstract int getScore(Player p);
 	
 	/**
-	 * Gets a set of legal moves to be played by the current player.
-	 * Note: this method will return moves even isFinished()==true!
-	 * @return ArrayList with new instances of Move
+	 * Computes legal moves; called internally.
+	 * @see getLegalMoves()
 	 */
-	public abstract ArrayList<Move> getLegalMoves();
+	protected abstract ArrayList<Move> computeLegalMoves();
 
 }

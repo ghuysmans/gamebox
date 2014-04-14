@@ -1,7 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
-import java.util.ArrayList;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /** 
@@ -20,7 +19,6 @@ public class Debug {
 		
 		do {
 			if (g.getCurrentPlayer() instanceof HumanPlayer) {
-				ArrayList<Move> mvs = g.getLegalMoves();
 				System.out.println(g.board);
 				if (!g.history.empty())
 					System.out.println("Last move: "+g.history.peek());
@@ -33,12 +31,12 @@ public class Debug {
 					if (typed.equals("u"))
 						undo = true;
 					else if (typed.equals("m"))
-						for (Move mv: mvs)
+						for (Move mv: g.getLegalMoves())
 							System.out.println(mv);
 					else {
 						try {
 							sel = g.createMove(typed);
-							if (!mvs.contains(sel))
+							if (!g.getLegalMoves().contains(sel))
 								sel = null;
 						}
 						catch (Exception e) {
