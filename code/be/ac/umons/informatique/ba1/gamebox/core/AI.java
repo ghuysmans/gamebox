@@ -1,12 +1,15 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+import java.io.Serializable;
+
 /** 
  * Generic Artificial Intelligence class.
  * This can't be used directly (only through a ComputerPlayer instance).
  */
 
-public abstract class AI {
+public abstract class AI implements Serializable {
 
+	private static final long serialVersionUID = 2932487869213658719L;
 	public static final int LEVEL_MIN = 0;  
 	public static final int LEVEL_MAX = 10;
 	

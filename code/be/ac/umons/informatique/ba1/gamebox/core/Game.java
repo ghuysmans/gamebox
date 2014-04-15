@@ -1,13 +1,12 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.io.Serializable;
-import java.util.Observable;
 import java.util.ArrayList;
 
 /** 
  * Generic game  
  */
 
-public abstract class Game extends Observable implements Serializable {
+public abstract class Game extends MyObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
 	public static final int SCORE_WON 	= 42;
@@ -140,6 +139,7 @@ public abstract class Game extends Observable implements Serializable {
 	 * @param name Event name
 	 */
 	public final void notifyEvent(String name) {
+		Logging.getLogger(getClass()).fine("notifyEvent: "+name+" to "+currentPlayer.name);
 		setChanged();
 		notifyObservers(name);
 		currentPlayer.notifyEvent(name);

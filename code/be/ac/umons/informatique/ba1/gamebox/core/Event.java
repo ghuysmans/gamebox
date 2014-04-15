@@ -1,6 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
-import java.util.Observable;
 
 /** 
  * Generic event doing something after a specific (set of) conditions is met  
@@ -20,7 +19,7 @@ public abstract class Event extends Condition {
 	 * @param thr  Threshold
 	 * @param rst  Auto-reset
 	 */
-	public Event(Observable obs, String desc, String nm, int thr, boolean rst) {
+	public Event(MyObservable obs, String desc, String nm, int thr, boolean rst) {
 		super(obs, desc, nm, thr);
 		autoreset = rst;
 		conditions = new ArrayList<Condition>();
@@ -35,7 +34,7 @@ public abstract class Event extends Condition {
 	 * @param rst  Auto-reset
 	 * @param cond Conditions
 	 */
-	public Event(Observable obs, String desc, String nm, int thr, boolean rst, Condition... cond) {
+	public Event(MyObservable obs, String desc, String nm, int thr, boolean rst, Condition... cond) {
 		this(obs, desc, nm, thr, rst);
 		for (Condition x: cond) {
 			x.setParent(this);
@@ -44,7 +43,7 @@ public abstract class Event extends Condition {
 	}
 	
 	@Override
-	public void update(Observable g, Object param) {
+	public void update(MyObservable g, Object param) {
 		if (name.equals(param)) {
 			for (Condition c: conditions) {
 				if (!c.isMet()) 

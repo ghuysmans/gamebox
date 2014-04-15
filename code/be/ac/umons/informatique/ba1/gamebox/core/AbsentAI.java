@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class AbsentAI extends AI {
 	
+	private static final long serialVersionUID = 96049451940952826L;
+
 	public AbsentAI(Game g) {
 		super(g, "Absent AI (always plays the first possible move)");
 	}

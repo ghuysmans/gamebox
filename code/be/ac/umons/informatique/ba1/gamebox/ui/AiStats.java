@@ -1,10 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
-import be.ac.umons.informatique.ba1.gamebox.core.ComputerPlayer;
-import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
-import be.ac.umons.informatique.ba1.gamebox.core.Game;
-import be.ac.umons.informatique.ba1.gamebox.core.Othello;
-import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
+import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
  * CLI tool allowing comparison between two ComputerPlayer of (optionally) different levels.

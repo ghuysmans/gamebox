@@ -14,9 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
-import be.ac.umons.informatique.ba1.gamebox.core.Achievement;
-import be.ac.umons.informatique.ba1.gamebox.core.Event;
-import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
+import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
  * Displays achievements earned by human players: computer players don't have any.

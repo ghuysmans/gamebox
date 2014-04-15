@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class NegamaxAI extends AI {
 	
+	private static final long serialVersionUID = 3102809303323977852L;
 	protected final int max_recursion;
 
 	public NegamaxAI(Game g, int max_rec) {
@@ -36,9 +37,9 @@ public class NegamaxAI extends AI {
 			int v; //score for current move
 			for (Move mv: mvs)
 			{
-				mv.play();
+				mv.play(false);
 				v = -computeNode(rec+1);
-				game.history.undo();
+				game.history.undo(false);
 				if (v > M)
 					M = v; //keep the max
 			}
@@ -64,9 +65,9 @@ public class NegamaxAI extends AI {
 			int v; //score for current move
 			ArrayList<Move> bms = new ArrayList<Move>();
 			for (Move mv: mvs) {
-				mv.play();
+				mv.play(false);
 				v = -computeNode(0);
-				game.history.undo();
+				game.history.undo(false);
 				if (v > bs) {
 					bs = v; //keep the best move
 					//create a new list of best moves

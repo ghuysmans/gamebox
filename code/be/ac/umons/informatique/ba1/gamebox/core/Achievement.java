@@ -1,7 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-import java.util.Observable;
-
 /** 
  * Like classical achievements, displays a message when a particular action is done.
  * These are saved for each player, independently. 
@@ -21,7 +19,7 @@ public class Achievement extends TextMessage {
 	 * @param rst  Auto-reset
 	 * @param ico  Icon?
 	 */
-	public Achievement(Observable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
+	public Achievement(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
 		super(obs, desc, msg, nm, thr, rst);
 		icon = ico;
 	}
@@ -37,7 +35,7 @@ public class Achievement extends TextMessage {
 	 * @param ico  Icon?
 	 * @param cond Conditions
 	 */
-	public Achievement(Observable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico, Condition... cond) {
+	public Achievement(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico, Condition... cond) {
 		super(obs, desc, msg, nm, thr, rst, cond);
 		icon = ico;
 	}

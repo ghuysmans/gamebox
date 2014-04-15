@@ -28,6 +28,14 @@ public class OthelloTest extends GameTestAbstract {
 	}
 
 	@Test
+	public void legalDuplicates() {
+		fillBoard(g, new Player[][]{new Player[]{p2, p2, p2, p1}, new Player[]{p2, p2, p1, p1}, new Player[]{p2, p2, p2, p2}, new Player[]{p1, p2, null, null}});
+		Object mv [] = g.getLegalMoves().toArray();
+		Object exp[] = {new OthelloMove(g, 2, 3), new OthelloMove(g, 3, 3)};
+		Assert.assertArrayEquals("No duplicates", exp, mv);
+	}
+
+	@Test
 	public void scoreFull() {
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}});
 		Assert.assertEquals("P1 won", 16, g.getScore(p1));
@@ -42,25 +50,28 @@ public class OthelloTest extends GameTestAbstract {
 		Assert.assertEquals("Score p2", 0, g.getScore(p2));
 	
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, null, null}, new Player[]{p2, p1, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p2, p2, p2}});
-		Assert.assertFalse(g.hasFinished());
+		Assert.assertTrue(g.hasFinished());
 		Assert.assertEquals("Score p1", 4, g.getScore(p1));
-		Assert.assertEquals("Score p2", 10, g.getScore(p2));
+		Assert.assertEquals("Score p2", 12, g.getScore(p2));
 	}
 	
 	@Test
 	public void doubleFlip () {
 		fillBoard(g, new Player[][]{new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, p1, p2, null}, new Player[]{null, null, null, null}});
-		g.createMove(3, 2).play();
+		g.createMove(3, 2).play(true);
 		Assert.assertEquals("Has flipped 1", p1, g.board.getPiece(2, 1).getOwner());
 		Assert.assertEquals("Has flipped 2", p1, g.board.getPiece(2, 2).getOwner());
 	}
 	
 	@Test
 	public void moveSmoke () {
-		g.createMove(1, 0).play();
+		g.createMove(1, 0).play(true);
 		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());
 	}
 	
+	/**
+	 * Enemy neighbors lists are tested using binary-encoded values.
+	 */
 	@Test
 	public void enemyNeighbors() {
 		int[][] data = {{0,0,16}, {1,0,8}, {2,0,4}, {3,0,0}, {0,1,32}, {3,1,4}, 

@@ -24,7 +24,7 @@ public class OthelloMove extends PutMove {
 				//no need to check for null, already checked by detectOther()!
 				while (game.board.getPiece(pX, pY).owner != game.currentPlayer) {
 					Move csq = new TakeMove(game, true, pX, pY);
-					csq.play();
+					csq.play(false); //consequences are not counted
 					pX += vect[0]; pY += vect[1];
 				}
 			}

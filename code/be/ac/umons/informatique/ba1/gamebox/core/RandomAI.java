@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class RandomAI extends AI {
 	
+	private static final long serialVersionUID = 1244871909804694383L;
+
 	public RandomAI(Game g) {
 		super(g, "Random AI");
 	}

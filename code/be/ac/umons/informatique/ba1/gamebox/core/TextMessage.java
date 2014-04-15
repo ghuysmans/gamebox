@@ -1,7 +1,5 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
-import java.util.Observable;
-
 /** 
  * Displays a text message  
  */
@@ -20,7 +18,7 @@ class TextMessage extends Event {
 	 * @param thr  Threshold
 	 * @param rst  Auto-reset
 	 */
-	public TextMessage(Observable obs, String desc, String msg, String nm, int thr, boolean rst) {
+	public TextMessage(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst) {
 		super(obs, desc, nm, thr, rst);
 		message = msg;
 	}
@@ -35,7 +33,7 @@ class TextMessage extends Event {
 	 * @param rst  Auto-reset
 	 * @param cond Conditions
 	 */
-	public TextMessage(Observable obs, String desc, String msg, String nm, int thr, boolean rst, Condition... cond) {
+	public TextMessage(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, Condition... cond) {
 		super(obs, desc, nm, thr, rst, cond);
 		message = msg;
 	}

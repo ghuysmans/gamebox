@@ -75,8 +75,12 @@ public class Othello extends Game {
 					//getEnemyNeighbors's result is always the same size
 					for (int i=0; i<8; i++) {
 						if (dirs[i]) {
-							if (detectOther(x, y, Board.vectors[i][0], Board.vectors[i][1]))
-								al.add(new OthelloMove(this, x, y));
+							if (detectOther(x, y, Board.vectors[i][0], Board.vectors[i][1])) {
+								OthelloMove tmp = new OthelloMove(this, x, y);
+								//avoid duplicates!
+								if (!al.contains(tmp))
+									al.add(tmp);
+							}
 						}
 					}
 				}

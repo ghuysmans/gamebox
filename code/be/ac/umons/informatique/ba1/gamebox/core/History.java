@@ -11,14 +11,14 @@ public class History extends Stack<Move> {
 	/**
 	 * Undoes the last move and its consequences.
 	 */
-	public final void undo() {
+	public final void undo(boolean notify) {
 		//undo consequences
 		while (!empty() && peek().conseq) {
-			peek().undo();
+			peek().undo(notify);
 			pop();
 		}
 		//real undo
-		peek().undo();
+		peek().undo(notify);
 		pop();
 	}
 

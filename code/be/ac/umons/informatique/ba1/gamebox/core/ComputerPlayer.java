@@ -30,7 +30,7 @@ public class ComputerPlayer extends Player {
 	 */
 	public void play() {
 		Move mv = ai.getBest();
-		mv.play();
+		mv.play(true);
 	}
 
 	public void setGame(Game g) {

@@ -32,6 +32,7 @@ public abstract class GameTestAbstract {
 					g.board.setPiece(null, x, y);
 				else
 					g.board.setPiece(new Piece(pl[y][x]), x, y);
+		g.setCurrentPlayer(g.getCurrentPlayer());
 	}
 
 }

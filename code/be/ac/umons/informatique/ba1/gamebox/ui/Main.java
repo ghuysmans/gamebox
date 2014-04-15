@@ -11,27 +11,21 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.Timer;
 
-import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
-import be.ac.umons.informatique.ba1.gamebox.core.Game;
-import be.ac.umons.informatique.ba1.gamebox.core.HumanPlayer;
-import be.ac.umons.informatique.ba1.gamebox.core.Move;
-import be.ac.umons.informatique.ba1.gamebox.core.Othello;
-import be.ac.umons.informatique.ba1.gamebox.core.Piece;
-import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
+import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /** 
  * Main application window.
@@ -40,17 +34,19 @@ import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
 	
-	protected Game game;
-	protected ActionListener newGame;
-	protected ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer> ();
+	protected final GameContext context;
 	protected final JMenuBar menuBar = new JMenuBar();
-	protected ArrayList<Move> legal;
+	protected ActionListener newGame;
 	protected boolean showLegal;
+	protected boolean debug;
+	protected Timer tmrPlay;
+	//protected Timer tmrClock;
 	
 	protected final JMenu games = new JMenu("Jeux");
 	protected final JMenu pls = new JMenu("Joueurs");
-	protected final JMenu p1 = new JMenu("Joueur 1");
-	protected final JMenu p2 = new JMenu("Joueur 2");
+	protected final HumanPlayerMenu p1, p2;
+	protected final JMenuItem valPls = new JMenuItem("Lancer le jeu");
+	protected final JMenuItem mngPls = new JMenuItem("Gérer");
 	protected final JMenuItem ach = new JMenuItem("Succès");
 	protected final JMenu stats = new JMenu("Statistiques");
 	protected final JMenu help = new JMenu("Aide");
@@ -65,11 +61,6 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenuItem trd3 = new JMenuItem("Traditionnel");
 	protected final JMenuItem cus3 = new JMenuItem("Personnalisé");
 
-	protected final JMenu hmn1 = new JMenu("Humain");
-	protected final JMenuItem ai1 = new JMenuItem("Ai");
-	protected final JMenu hmn2 = new JMenu("Humain");
-	protected final JMenuItem ai2 = new JMenuItem("Ai");
-
 	protected final JMenuItem res = new JMenuItem("Résultats");
 	protected final JMenuItem graph = new JMenuItem("Graphique");
 	protected final JMenuItem itv = new JMenuItem("Interactif");
@@ -81,13 +72,21 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	
-	public void fillPlayersMenu (JMenu m) {
-		for (HumanPlayer h: humans) {
-			m.add(new JMenuItem(h.toString()));
-		}
+	/**
+	 * Sets the enabled state of menus used for player selection
+	 * @param e True for enabled
+	 */
+	protected void enablePlayersSelection(boolean e) {
+		p1.setVisible(e);
+		p2.setVisible(e);
+		valPls.setVisible(e);
 	}
 	
+	/**
+	 * Initializes menus
+	 */
 	private void initMenus() {
+		//FIXME implement GameMenu and GameMenuItem...
 		ttt.add(trd1); trd1.addActionListener(newGame);
 		ttt.add(cus1); cus1.addActionListener(newGame);
 		fiar.add(trd2); trd2.addActionListener(newGame);
@@ -100,15 +99,11 @@ public class Main extends JFrame implements ActionListener {
 		games.add(oth);
 		menuBar.add(games);
 		
-		p1.add(hmn1);
-		fillPlayersMenu(hmn1);
-		p1.add(ai1); ai1.addActionListener(this);
-		pls.add(p1);
+		pls.add(p1); pls.add(p2);
+		pls.add(valPls); valPls.addActionListener(this);
+		pls.add(mngPls); mngPls.addActionListener(this);
 		
-		p2.add(hmn2);
-		fillPlayersMenu(hmn2);
-		p2.add(ai2); ai2.addActionListener(this);
-		pls.add(p2);
+		enablePlayersSelection(false);
 		
 		pls.add(ach); ach.addActionListener(this);
 		menuBar.add(pls);
@@ -118,25 +113,51 @@ public class Main extends JFrame implements ActionListener {
 		stats.add(itv);
 		menuBar.add(stats);
 		
+		if (debug) {
+			help.add(dbg);
+			dbg.addActionListener(this);
+		}
 		help.add(manual);
 		help.add(about); about.addActionListener(this);
 		menuBar.add(help);
-		
-		menuBar.add(dbg); dbg.addActionListener(this);
 
 		setJMenuBar(menuBar);
 	}
 	
-	public Main() {
+	/**
+	 * Loads a board panel, displays it and resizes the JFrame.
+	 * Both exception are declared to avoid ignoring an NPE thrown because of an unknown game.
+	 * @throws URISyntaxException Invalid texture path
+	 * @throws IOException        Can't read a texture
+	 */
+	private void loadBoardPanel() throws URISyntaxException, IOException {
+		BoardPanel bp = null;
+		if (context.game instanceof Connect4)
+			setContentPane(bp = new BoardPanel("fiar/board", "fiar/yellow", "fiar/red", true));
+		else if (context.game instanceof TicTacToe)
+			setContentPane(bp = new BoardPanel("ttt/board", "ttt/o", "ttt/x", false));
+		else if (context.game instanceof Othello)
+			setContentPane(bp = new BoardPanel("oth/board", "oth/black", "oth/white", false));
+		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80);
+		revalidate();
+	}
+	
+	public Main(boolean dbg) {
+		debug = dbg;
 		setSize(800, 600);
 		setTitle("Game box");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				//FIXME save data
-				System.out.println("Window closing...");
+				try {
+					context.saveContext("savegame.dat");
+				} catch (Exception e) {
+					Logging.getGlobal().severe("Couldn't save the context!");
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -144,92 +165,252 @@ public class Main extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					BoardPanel bp = null;
-					
-					if (e.getSource() == trd1) {
-						game = new TicTacToe(3, 3, 3);
-						setContentPane(bp = new TttBoardPanel());
-					}
-					else if (e.getSource() == trd2) {
-						game = new Connect4(7, 6, 4);
-						setContentPane(bp = new FiarBoardPanel());
-					}
-					else if (e.getSource() == trd3) {
-						game = new Othello(8, 8);
-						setContentPane(bp = new OthBoardPanel());
-					}
-					
-					//FIXME
-					game.setPlayers(humans.get(0), humans.get(1));
-					legal = game.getLegalMoves();
-	
-					setSize(bp.pieceSize*game.board.getWidth()+50, bp.pieceSize*game.board.getHeight()+80);
-					revalidate();
+					if (e.getSource() == trd1)
+						context.game = new TicTacToe(3, 3, 3);
+					else if (e.getSource() == trd2)
+						context.game = new Connect4(7, 6, 4);
+					else if (e.getSource() == trd3)
+						context.game = new Othello(8, 8);
+					enablePlayersSelection(true);
+					loadBoardPanel();
 				}
-				catch (Exception ex) {
-					//FIXME better exception handling?
+				catch (URISyntaxException|IOException ex) {
+					//FIXME better exception handling? logging?
 					ex.printStackTrace();
 				}
 			}
 		};
+		
+		context = GameContext.loadContext("savegame.dat");
+		//this must be done here because these constructors need a valid context
+		p1 = new HumanPlayerMenu(this, "Joueur 1", 0);
+		p2 = new HumanPlayerMenu(this, "Joueur 2", 1);
 		initMenus();
 		
-		humans.add(new HumanPlayer("Mathieu"));
-		humans.add(new HumanPlayer("Guillaume"));
-		humans.add(new HumanPlayer("Charlotte"));
-		humans.add(new HumanPlayer("Antoine"));
+		if (context.game != null)
+			try {
+				loadBoardPanel();
+			} catch (URISyntaxException | IOException ex) {
+				//FIXME better exception handling? logging?
+				ex.printStackTrace();
+			}
+		
+		tmrPlay = new Timer(800, this);
 		
 		setVisible(true);
 	}
-	
-	protected void selectAI(int pid) {
-		//TODO complete this
-		new AiDialog(this, true);
-	}
 
+	/**
+	 * Computer autoplay if we're in the right mode 
+	 */
+	private void doPlay() {
+		if (context.mode==GameMode.DEMO_AUTOMATIC && (context.game.getCurrentPlayer() instanceof ComputerPlayer) && !context.game.hasFinished())
+				((ComputerPlayer)context.game.getCurrentPlayer()).play();
+	}
+	
+	/**
+	 * Debug menu action...
+	 */
 	private void doDebug() {
 		System.out.println("doDebug()");
-		try {
-			FileOutputStream fos = new FileOutputStream("savegame.dat");
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(game);
-			oos.close(); fos.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == dbg)
-			doDebug();
-		else if (e.getSource() == ach)
-			new AchievementsDialog(humans, this, true);
-		else if (e.getSource() == ai1)
-			selectAI(1);
-		else if (e.getSource() == about)
-			new AboutDialog(this, true);
-
 	}
 	
-	abstract class BoardPanel extends JPanel implements MouseListener {
+	/**
+	 * Shows the achievements dialog
+	 */
+	private void showAchievements() {
+		if (context.humans.isEmpty())
+			JOptionPane.showMessageDialog(this, "Il n'existe aucun profil de joueur !");
+		else
+			new AchievementsDialog(context.humans, this, true);
+	}
+	
+	/**
+	 * Validates the players selection
+	 */
+	private void doValPlayersSel() {
+		if (context.isPlayerSelectionValid()) {
+			enablePlayersSelection(false);
+			context.game.setPlayers(context.selPlayers[0], context.selPlayers[1]);
+		}
+		else
+			JOptionPane.showMessageDialog(this, "Veuillez sélectionner deux joueurs distincts...", "Attention", JOptionPane.WARNING_MESSAGE);
+	}
+
+	/**
+	 * Shows players management dialog and refreshes menus after it's closed
+	 */
+	private void showPlayers() {
+		new PlayersDialog(context, this, true);
+		p1.refresh();
+		p2.refresh();
+	}
+	
+	/**
+	 * Shows the about dialog
+	 */
+	private void showAbout() {
+		new AboutDialog(this, true);
+	}
+
+	/**
+	 * Handles timers and some menus, always calls private methods?
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == tmrPlay) doPlay();
+		else if (e.getSource() == dbg) doDebug();
+		else if (e.getSource() == ach) showAchievements();
+		else if (e.getSource() == valPls) doValPlayersSel();
+		else if (e.getSource() == mngPls) showPlayers();
+		else if (e.getSource() == about) showAbout();
+	}
+	
+	
+	
+	/**
+	 * Menu presenting a list of human players for selection.
+	 */
+	class HumanPlayerMenu extends JMenu {
+		protected JFrame frame;
+		protected int id;
+		protected ButtonGroup grp;
+		
+		/**
+		 * Creates a player(s) menu
+		 * @param caption Displayed text
+		 * @param id      Player index (in context.selPlayers)
+		 */
+		public HumanPlayerMenu(JFrame frm, String caption, int id) {
+			super(caption);
+			frame = frm;
+			this.id = id;
+			refresh();
+		}
+		
+		/**
+		 * (Re)populates the menu with human players and a special AI menu
+		 */
+		public void refresh() {
+			//reverse order to avoid shift when removing items
+			for (int i=getItemCount()-1; i>=0; i--)
+				remove(i);
+			//populate it
+			PlayerMenuItem it;
+			grp = new ButtonGroup();
+			for (HumanPlayer p: context.humans) {
+				it = new PlayerMenuItem(frame, p.toString(), id, p); 
+				grp.add(it);
+				add(it);
+			}
+			//special item
+			it = new PlayerMenuItem(frame, "[IA]", id, null);
+			grp.add(it);
+			add(it);
+		}
+	}
+
+	
+	
+	/**
+	 * Menu item holding informations about a player object and/or id.
+	 */
+	class PlayerMenuItem extends JRadioButtonMenuItem implements ActionListener {
+		public final Player player;
+		public final int id;
+		protected final JFrame frame;
+		
+		/**
+		 * Creates a player menu item
+		 * @param frm     Parent frame
+		 * @param caption Displayed text
+		 * @param id      Player index (in context.selPlayers)
+		 * @param p       Human player OR null if this item is used to select an AI
+		 */
+		public PlayerMenuItem(JFrame frm, String caption, int id, HumanPlayer p) {
+			super(caption);
+			this.id = id;
+			player = p;
+			frame = frm;
+			addActionListener(this);
+			//the following alternative could be shortened into one line but it would be less readable
+			if (p == null)
+				setSelected(context.selPlayers[id] instanceof ComputerPlayer);
+			else
+				setSelected(context.selPlayers[id] == p);
+		}
+
+		/**
+		 * Handles player selection (shows the AI window if needed)
+		 */
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (player == null) {
+				//AI selection dialog
+				AiDialog dlg = new AiDialog(frame, true);
+				if (!dlg.getCancelled())
+					context.selPlayers[id] = new ComputerPlayer(null, dlg.getName(), dlg.getDifficulty());
+				else
+					//cancel selection!
+					setSelected(false);
+			}
+			else {
+				//Direct selection of a human player
+				context.selPlayers[id] = player;
+			}
+		}
+	}
+
+	
+	
+	/**
+	 * Responsible for making a game playable.
+	 * We'll need to use different classes later if we want to handle animations.
+	 */
+	class BoardPanel extends JPanel implements MouseListener {
+		/**
+		 * Maximum piece size, in pixels. Corresponds to a tile's size.
+		 * This constant avoids displaying ugly "overzoomed" tiles...
+		 */
 		private static final int PIECE_MAX_SIZE = 100;
 
+		/**
+		 * Current size of tiles
+		 */
 		protected int pieceSize = PIECE_MAX_SIZE;
+		
+		/**
+		 * Preloaded images
+		 */
 		protected Image imgBoard, imgP1, imgP2;
+		
+		/**
+		 * Do we need to display the piece in the background? 
+		 */
 		protected boolean reversed;
 		
+		/**
+		 * Loads an image from the res folder. Typically called from the constructor.
+		 * @param name Image name, without extension nor absolute path
+		 * @return Usable Image object
+		 */
 		protected Image getImage(String name) throws URISyntaxException, IOException {
 			return ImageIO.read(getClass().getResourceAsStream("/res/"+name+".png"));
 		}
 		
+		/**
+		 * Registers listeners and preloads images
+		 * @param b  Board image name
+		 * @param p1 Player1's piece name
+		 * @param p2 Player2's piece name
+		 * @param r  Reversed display
+		 */
 		public BoardPanel(String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {
 			addMouseListener(this);
 			addComponentListener(new ComponentAdapter() {
 				@Override
 				public void componentResized(ComponentEvent arg0) {
-					computeSize();
+					adjustSize();
 				}
 			});
 			imgBoard = getImage(b);
@@ -238,27 +419,45 @@ public class Main extends JFrame implements ActionListener {
 			reversed = r;
 		}
 		
+		/**
+		 * Paints a piece using pieceSize and the right image
+		 * @param g  Graphics object (typically given by {@link #paintComponent(Graphics)})
+		 * @param pc Piece to extract the owner from
+		 * @param x  Cell's X coordinate
+		 * @param y  Cell's Y coordinate
+		 */
 		private void paintPiece(Graphics g, Piece pc, int x, int y) {
 			if (pc != null) {
-				Image img = (pc.getOwner()==game.players[0] ? imgP1 : imgP2);
+				Image img = (pc.getOwner()==context.game.players[0] ? imgP1 : imgP2);
 				g.drawImage(img, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
 			}
 		}
 		
+		/**
+		 * Paints a part of the board at the given position
+		 * @param g  Graphics object (typically given by {@link #paintComponent(Graphics)})
+		 * @param x  Cell's X coordinate
+		 * @param y  Cell's Y coordinate
+		 */
 		private void paintBoard(Graphics g, int x, int y) {
 			g.drawImage(imgBoard, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
 		}
 		
+		/**
+		 * Paints the whole board taking account of legal moves (to display or not)
+		 */
 		@Override
 		public void paintComponent(Graphics g){ 
 			super.paintComponent(g); //paint the background
-			for (int x=0; x<game.board.getWidth(); x++) {
-				for (int y=0; y<game.board.getHeight(); y++) {
-					boolean lm = legal.contains(game.createMove(x, y)) && showLegal;
-					Piece pc = game.board.getPiece(x, y);
+			for (int x=0; x<context.game.board.getWidth(); x++) {
+				for (int y=0; y<context.game.board.getHeight(); y++) {
+					boolean lm = false;
+					if (context.game.getLegalMoves() != null)
+						lm = context.game.getLegalMoves().contains(context.game.createMove(x, y)) && showLegal;
+					Piece pc = context.game.board.getPiece(x, y);
 					//If we have a legal move to show, use a fake piece
 					if (lm)
-						pc = new Piece(game.getCurrentPlayer());
+						pc = new Piece(context.game.getCurrentPlayer());
 					//Display in the right order
 					if (reversed) {
 						paintPiece(g, pc, x, y);
@@ -277,6 +476,9 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 
+		/**
+		 * Displays legal moves
+		 */
 		@Override public void mouseReleased(MouseEvent e) {
 			if (e.getButton() == MouseEvent.BUTTON3) {
 				showLegal = false;
@@ -284,6 +486,9 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 		
+		/**
+		 * Hides legal moves
+		 */
 		@Override public void mousePressed(MouseEvent e) {
 			if (e.getButton() == MouseEvent.BUTTON3) {
 				showLegal = true;
@@ -294,61 +499,45 @@ public class Main extends JFrame implements ActionListener {
 		@Override public void mouseExited(MouseEvent arg0) {}
 		@Override public void mouseEntered(MouseEvent arg0) {}
 
+		/**
+		 * Handles player's moves via left click, checking its legality
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getButton()==MouseEvent.BUTTON1 && !game.hasFinished()) {
-				Move mv = game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
-				if (legal.contains(mv)) {
-					mv.play();
-					repaint();
-					legal = game.getLegalMoves();
-					if (game.hasFinished()) {
-						if (game.getScore(game.players[0]) == Game.SCORE_WON)
-							JOptionPane.showMessageDialog(null, game.players[0].name+" a gagné !");
-						else if (game.getScore(game.players[1]) == Game.SCORE_WON)
-							JOptionPane.showMessageDialog(null, game.players[1].name+" a gagné !");
-						else
-							JOptionPane.showMessageDialog(null, "Match nul !");
-					}
+			if (e.getButton()==MouseEvent.BUTTON1 && context.mode==GameMode.NORMAL && !context.game.hasFinished() && context.game.getCurrentPlayer()!=null) {
+				if (context.game.getCurrentPlayer() instanceof ComputerPlayer) {
+					((ComputerPlayer)context.game.getCurrentPlayer()).play();
+				}
+				else {
+					Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
+					if (context.game.getLegalMoves().contains(mv))
+						mv.play(true);
+				}
+				repaint();
+				if (context.game.hasFinished()) {
+					if (context.game.getScore(context.game.players[0]) == Game.SCORE_WON)
+						JOptionPane.showMessageDialog(null, context.game.players[0].name+" a gagné !");
+					else if (context.game.getScore(context.game.players[1]) == Game.SCORE_WON)
+						JOptionPane.showMessageDialog(null, context.game.players[1].name+" a gagné !");
+					else
+						JOptionPane.showMessageDialog(null, "Match nul !");
 				}
 			}
 		}
 		
-		public void computeSize() {
+		/**
+		 * Adjusts pieceSize from the pane's dimensions
+		 */
+		public void adjustSize() {
 			//if (pieceSize*game.board.getWidth()>getWidth() || pieceSize*game.board.getHeight()>getHeight())
-			pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/game.board.getWidth(), getHeight()/game.board.getHeight()));
+			pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
 		}
-		
 	}
 	
-	//FIXME do we really need to use 3 different objects?
 	
-	class FiarBoardPanel extends BoardPanel {
-
-		public FiarBoardPanel() throws URISyntaxException, IOException {
-			super("fiar/board", "fiar/yellow", "fiar/red", true);
-		}
-
-	}
-	
-	class TttBoardPanel extends BoardPanel {
-
-		public TttBoardPanel() throws URISyntaxException, IOException {
-			super("ttt/board", "ttt/o", "ttt/x", false);
-		}
-
-	}
-	
-	class OthBoardPanel extends BoardPanel {
-		
-		public OthBoardPanel() throws URISyntaxException, IOException {
-			super("oth/board", "oth/black", "oth/white", false);
-		}
-
-	}
 	
 	public static void main(String[] args) {
-		new Main();
+		new Main(args.length==1 && args[0].equals("-d"));
 	}
 
 }

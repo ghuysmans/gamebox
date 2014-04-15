@@ -14,7 +14,7 @@ public class Debug {
 		Game g = new Othello(4, 4);
 		//Game g = new TicTacToe(8, 8, 3);
 		Player p1 = new HumanPlayer("H");
-		Player p2 = new HumanPlayer("A");
+		Player p2 = new ComputerPlayer(g, "A", 0);
 		g.setPlayers(p1, p2);
 		
 		do {
@@ -46,8 +46,8 @@ public class Debug {
 				} while (!undo && sel==null);
 				if (undo) {
 					try {
-						g.history.undo(); //current player
-						g.history.undo(); //other player
+						g.history.undo(true); //current player
+						g.history.undo(false); //other player
 					}
 					catch (Exception e) {
 						System.out.println("Undo operation has failed.");
@@ -55,7 +55,7 @@ public class Debug {
 				}
 				else
 					//a legal move has been selected
-					sel.play();	
+					sel.play(true);	
 			}
 			else
 				//it should work (there are no other classes than ComputerPlayer and HumanPlayer)

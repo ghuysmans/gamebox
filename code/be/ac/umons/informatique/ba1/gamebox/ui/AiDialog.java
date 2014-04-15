@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import be.ac.umons.informatique.ba1.gamebox.core.AI;
+import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
  * AI selection dialog featuring a JSlider

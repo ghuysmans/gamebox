@@ -2,13 +2,12 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 import java.io.Serializable;
 import java.util.Observable;
-import java.util.Observer;
 
 /** 
  * Conditions triggered by subclasses of Game using their name.
  */
 
-class Condition implements Observer, Serializable {
+class Condition implements MyObserver, Serializable {
 
 	private static final long serialVersionUID = -6277076554051997918L;
 	protected int count;
@@ -24,7 +23,7 @@ class Condition implements Observer, Serializable {
 	 * @param nm Name (to be used in Game's subclasses)
 	 * @param max Maximum count
 	 */
-	public Condition(Observable obs, String desc, String nm, int max) {
+	public Condition(MyObservable obs, String desc, String nm, int max) {
 		count = 0;
 		description = desc;
 		name = nm;
@@ -68,7 +67,7 @@ class Condition implements Observer, Serializable {
 	 * @param g     Game object
 	 * @param param String identifier
 	 */
-	public void update(Observable g, Object param) {
+	public void update(MyObservable g, Object param) {
 		if (name.equals(param)) {
 			if (count < maximum) {
 				count++;
@@ -82,9 +81,9 @@ class Condition implements Observer, Serializable {
 	}
 	
 	public String toString() {
-		String cpl = (maximum==1 ? " ("+(count==0 ? "no" : "yes")+")" : " ("+count+"/"+maximum+")");
+		String cpl = (maximum==1 ? "" : " ("+count+"/"+maximum+")");
 		if (count<maximum)
-			return "NOT COMPLETED - "+description+cpl;
+			return description+cpl+" - NOT COMPLETED";
 		else
 			return description+cpl;
 	}

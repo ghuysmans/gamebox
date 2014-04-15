@@ -28,7 +28,7 @@ public class Connect4Test {
 				if (y != g.board.getHeight()) {
 					//not full (yet)
 					Assert.assertArrayEquals("posStr consistency "+s, new int[]{x,y}, a);
-					g.createMove(a[0], a[1]).play();
+					g.createMove(a[0], a[1]).play(true);
 				}
 				else {
 					Assert.assertNull("posStr full", a);
