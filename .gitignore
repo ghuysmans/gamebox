@@ -1,0 +1,21 @@
+#Unit tests
+/reports/
+
+#Javadoc
+/doc/java/
+
+#LaTeX-specific
+#* TeXnicCenter projects
+/doc/**/*.tps
+#* Intermediate build files
+/doc/**/*.aux
+/doc/**/*.log
+/doc/**/*.out
+/doc/**/*.toc
+#* Final documents
+/doc/**/*.pdf
+
+
+#Binaries
+/gamebox.jar
+/savegame.dat
