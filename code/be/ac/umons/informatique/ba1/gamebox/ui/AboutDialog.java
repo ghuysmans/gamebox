@@ -4,7 +4,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 /**
- * Mini-game consisting of squares to rotate with the mouse
+ * Mini-game consisting of squares to rotate with the mouse;
+ * their directions are randomized on the JDialog's opening.
  */
 
 @SuppressWarnings("serial")
