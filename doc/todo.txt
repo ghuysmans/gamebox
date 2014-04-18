@@ -1,2 +1,3 @@
+test trunk
 create packaging script using Python (or Ant?)
 test with a Git branch
