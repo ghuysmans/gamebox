@@ -15,7 +15,8 @@
 #* Final documents
 /doc/**/*.pdf
 
-
 #Binaries
+/build/
+/code/res/
 /gamebox.jar
 /savegame.dat
