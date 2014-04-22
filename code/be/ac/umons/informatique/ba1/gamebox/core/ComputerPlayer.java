@@ -33,6 +33,7 @@ public class ComputerPlayer extends Player {
 		mv.play(true);
 	}
 
+	@Override
 	public void setGame(Game g) {
 		game = g;
 		ai.setGame(g);

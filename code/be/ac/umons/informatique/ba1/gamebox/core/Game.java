@@ -33,8 +33,8 @@ public abstract class Game extends MyObservable implements Serializable {
 	 * @param p2 Second player
 	 */
 	public final void setPlayers(Player p1, Player p2) {
-		players[0] = p1;
-		players[1] = p2;
+		players[0] = p1; p1.setGame(this);
+		players[1] = p2; p2.setGame(this);
 		setup(); //must be here for Othello
 		setCurrentPlayer(p1);
 	}
