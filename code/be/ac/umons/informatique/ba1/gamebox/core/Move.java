@@ -33,6 +33,7 @@ public abstract class Move implements Serializable {
 
 	/**
 	 * Plays the move and pushes it to the history
+	 * @param notify Fires conditions for achievements
 	 */
 	public final void play(boolean notify) {
 		if (game.currentPlayer != player)
@@ -48,6 +49,7 @@ public abstract class Move implements Serializable {
 	/**
 	 * Undoes the move, checking the history without modifying it
 	 * Never call this method from the outside!
+	 * @param notify Fires conditions for achievements
 	 * @see History#undo()
 	 */
 	public final void undo(boolean notify) {
@@ -68,6 +70,8 @@ public abstract class Move implements Serializable {
 	 * Undoes the move (on the board)
 	 */
 	protected abstract void internalUndo();
+	
+	
 	public abstract String toString();
 
 
