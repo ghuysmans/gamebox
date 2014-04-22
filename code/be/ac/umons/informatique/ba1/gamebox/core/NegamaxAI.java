@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class NegamaxAI extends AI {
 	
 	private static final long serialVersionUID = 3102809303323977852L;
-	protected final int max_recursion;
+	protected final int maxRecursion;
 
-	public NegamaxAI(Game g, int max_rec) {
+	public NegamaxAI(Game g, int rec) {
 		super(g, "Negamax AI");
-		max_recursion = max_rec;
+		maxRecursion = rec;
 	}
 	
 	/**
@@ -24,7 +24,7 @@ public class NegamaxAI extends AI {
 	private int computeNode(int rec) {
 		//leaf? did someone win?
 		int score = game.getScore();
-		if (score==Game.SCORE_LOST || score==Game.SCORE_WON || rec==max_recursion)
+		if (score==Game.SCORE_LOST || score==Game.SCORE_WON || rec==maxRecursion)
 			//no need to compute further, we're done
 			return score;
 		//test possible moves...
