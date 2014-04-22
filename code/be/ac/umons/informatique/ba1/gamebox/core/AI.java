@@ -11,7 +11,7 @@ public abstract class AI implements Serializable {
 
 	private static final long serialVersionUID = 2932487869213658719L;
 	public static final int LEVEL_MIN = 0;  
-	public static final int LEVEL_MAX = 10;
+	public static final int LEVEL_MAX = 6;
 	
 	public final String desc;
 	protected Game game;
