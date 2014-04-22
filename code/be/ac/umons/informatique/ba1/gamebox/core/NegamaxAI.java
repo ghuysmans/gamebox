@@ -23,8 +23,8 @@ public class NegamaxAI extends AI {
 	 */
 	private int computeNode(int rec) {
 		//leaf? did someone win?
-		int score = game.getScore();
-		if (score==Game.SCORE_LOST || score==Game.SCORE_WON || rec==maxRecursion)
+		int score = game.getResult();
+		if (score==Game.RESULT_LOST || score==Game.RESULT_WON || rec==maxRecursion)
 			//no need to compute further, we're done
 			return score;
 		//test possible moves...

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public abstract class Game extends MyObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
-	public static final int SCORE_WON 	= 42;
-	public static final int SCORE_LOST 	= -42;
-	public static final int SCORE_DRAW 	= 0;
+	public static final int RESULT_WON 	= 42;
+	public static final int RESULT_LOST = -42;
+	public static final int RESULT_DRAW = 0;
 	
 	protected Player currentPlayer;
 	public final Player[] players;
@@ -103,11 +103,28 @@ public abstract class Game extends MyObservable implements Serializable {
 	}
 	
 	/**
-	 * Evaluates the score of the current given player.
+	 * Evaluates the score of the given player.
 	 * @see #getScore(Player)
 	 */
 	public final int getScore() {
 		return getScore(currentPlayer);
+	}
+	
+	/**
+	 * Evaluates the result of the given player and categorize it.
+	 * @param p Player
+	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
+	 */
+	public int getResult(Player p) {
+		return getResult(p);
+	}
+	
+	/**
+	 * Evaluates the result of the current player and categorize it.
+	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
+	 */
+	public int getResult() {
+		return getResult(currentPlayer);
 	}
 	
 	/**

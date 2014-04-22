@@ -213,6 +213,7 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void doDebug() {
 		System.out.println("doDebug()");
+		System.out.println(context.game.getResult(context.game.players[0]));
 	}
 	
 	/**
@@ -515,9 +516,9 @@ public class Main extends JFrame implements ActionListener {
 				}
 				repaint();
 				if (context.game.hasFinished()) {
-					if (context.game.getScore(context.game.players[0]) == Game.SCORE_WON)
+					if (context.game.getResult(context.game.players[0]) == Game.RESULT_WON)
 						JOptionPane.showMessageDialog(null, context.game.players[0].name+" a gagné !");
-					else if (context.game.getScore(context.game.players[1]) == Game.SCORE_WON)
+					else if (context.game.getResult(context.game.players[1]) == Game.RESULT_WON)
 						JOptionPane.showMessageDialog(null, context.game.players[1].name+" a gagné !");
 					else
 						JOptionPane.showMessageDialog(null, "Match nul !");

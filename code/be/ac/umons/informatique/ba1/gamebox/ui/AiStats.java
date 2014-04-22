@@ -31,10 +31,10 @@ public class AiStats {
 			if (dbg)
 				System.out.println(g.board); 
 		} while (!g.hasFinished());
-		int sc = g.getScore(realA1);
-		if (sc == Game.SCORE_WON)
+		int sc = g.getResult(realA1);
+		if (sc == Game.RESULT_WON)
 			ctWon++;
-		else if (sc == Game.SCORE_LOST)
+		else if (sc == Game.RESULT_LOST)
 			ctLost++;
 		else
 			ctDraw++;

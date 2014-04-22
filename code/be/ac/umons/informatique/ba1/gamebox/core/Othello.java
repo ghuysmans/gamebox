@@ -59,6 +59,18 @@ public class Othello extends Game {
 			return count2+ct;
 	}
 	
+	@Override
+	public int getResult(Player p) {
+		int count = getScore_internal(players[0]);
+		int count2 = getScore_internal(players[1]);
+		if (count == count2)
+			return RESULT_DRAW;
+		else if (count < count2)
+			return (p==players[0] ? RESULT_LOST : RESULT_WON);
+		else
+			return (p==players[0] ? RESULT_WON : RESULT_LOST);
+	}
+	
 	//The other method mustn't be overloaded (it calls this one)
 	@Override
 	public Move createMove(int x, int y) {

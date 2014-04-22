@@ -35,7 +35,7 @@ public class TicTacToe extends Game {
 					if (!skip)
 						//found a sequence of the required size!
 						//p has either won or lost (there's no draw)
-						return (v.owner == p ? SCORE_WON : SCORE_LOST);
+						return (v.owner == p ? RESULT_WON : RESULT_LOST);
 				}
 			}
 		}
@@ -55,7 +55,7 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? SCORE_WON : SCORE_LOST);
+						return (v.owner == p ? RESULT_WON : RESULT_LOST);
 				}
 			}
 		}
@@ -75,7 +75,7 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? SCORE_WON : SCORE_LOST);
+						return (v.owner == p ? RESULT_WON : RESULT_LOST);
 				}
 			}
 		}
@@ -95,19 +95,19 @@ public class TicTacToe extends Game {
 						}
 					}
 					if (!skip) //found!
-						return (v.owner == p ? SCORE_WON : SCORE_LOST);
+						return (v.owner == p ? RESULT_WON : RESULT_LOST);
 				}
 			}
 		}
 		//nobody has won: draw
-		return SCORE_DRAW;
+		return RESULT_DRAW;
 	}
 
 	@Override
 	public boolean hasFinished() {
-		int score = getScore(this.players[0]); //arbitrary choice (could be players[1])
+		int score = getResult(this.players[0]); //arbitrary choice (could be players[1])
 		//anyway, if any player has won (the first one, for example), it's finished.
-		if (score==SCORE_WON || score==SCORE_LOST)
+		if (score==RESULT_WON || score==RESULT_LOST)
 			return true;
 		//else, let's see whether the board is full
 		for (int y=0; y<board.getHeight(); y++) {

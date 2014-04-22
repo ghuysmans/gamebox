@@ -16,7 +16,7 @@ public class AbsentAI extends AI {
 	
 	@Override
 	public int computeNode() {
-		return Game.SCORE_DRAW;
+		return Game.RESULT_DRAW;
 	}
 	
 	@Override
