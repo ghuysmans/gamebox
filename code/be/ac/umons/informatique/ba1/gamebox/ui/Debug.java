@@ -11,10 +11,10 @@ public class Debug {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Game g = new Othello(4, 4);
-		//Game g = new TicTacToe(8, 8, 3);
+		//Game g = new Othello(4, 4);
+		Game g = new TicTacToe(4, 4, 3);
 		Player p1 = new HumanPlayer("H");
-		Player p2 = new ComputerPlayer(g, "A", 0);
+		Player p2 = new ComputerPlayer(g, "A", 3);
 		g.setPlayers(p1, p2);
 		
 		do {
@@ -62,14 +62,14 @@ public class Debug {
 				((ComputerPlayer)(g.getCurrentPlayer())).play();
 		} while (!g.hasFinished());
 		
-		switch (g.getScore()) {
-			case Game.SCORE_DRAW:
+		switch (g.getResult(p1)) {
+			case Game.RESULT_DRAW:
 				System.out.println("Draw.");
 				break;
-			case Game.SCORE_LOST:
+			case Game.RESULT_LOST:
 				System.out.println(p2.name+" won.");
 				break;
-			case Game.SCORE_WON:
+			case Game.RESULT_WON:
 				System.out.println(p1.name+" won.");
 		}
 		System.out.println("Last move: "+g.history.peek());
