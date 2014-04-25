@@ -27,7 +27,7 @@ class AchievementsDialog extends JDialog implements ActionListener {
 	protected static final int COMPLETION_RESOLUTION = 1000;
 	protected ArrayList<HumanPlayer> players;
 	protected JPanel list;
-	protected JComboBox<Object> cmbPlayer;
+	protected JComboBox cmbPlayer;
 
 	protected void populateList(int idx) {
 		list.removeAll();
@@ -53,7 +53,7 @@ class AchievementsDialog extends JDialog implements ActionListener {
 		Box sup = Box.createHorizontalBox();
 		sup.add(Box.createHorizontalGlue());
 		sup.add(new JLabel("Profil de joueur : "));
-		sup.add(cmbPlayer = new ThinCombo<Object>(players.toArray()));
+		sup.add(cmbPlayer = new ThinCombo(players.toArray()));
 		cmbPlayer.addActionListener(this);
 		sup.add(Box.createHorizontalGlue());
 		

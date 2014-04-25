@@ -9,9 +9,9 @@ import javax.swing.JComboBox;
  */
 
 @SuppressWarnings("serial")
-public class ThinCombo<E> extends JComboBox<E> {
+public class ThinCombo extends JComboBox {
 
-	public ThinCombo(E[] arr) {
+	public ThinCombo(Object[] arr) {
 		super(arr);
 	}
 	

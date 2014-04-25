@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -139,7 +140,7 @@ public class Main extends JFrame implements ActionListener {
 		else if (context.game instanceof Othello)
 			setContentPane(bp = new BoardPanel("oth/board", "oth/black", "oth/white", false));
 		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80);
-		revalidate();
+		//revalidate(); //FIXME find a way to do it without revalidate()
 	}
 	
 	public Main(boolean dbg) {
@@ -174,7 +175,7 @@ public class Main extends JFrame implements ActionListener {
 					enablePlayersSelection(true);
 					loadBoardPanel();
 				}
-				catch (URISyntaxException|IOException ex) {
+				catch (Exception ex) {
 					//FIXME better exception handling? logging?
 					ex.printStackTrace();
 				}
@@ -187,14 +188,14 @@ public class Main extends JFrame implements ActionListener {
 		p2 = new HumanPlayerMenu(this, "Joueur 2", 1);
 		initMenus();
 		
-		if (context.game != null)
+		if (context.game != null) {
 			try {
 				loadBoardPanel();
-			} catch (URISyntaxException | IOException ex) {
+			} catch (Exception ex) {
 				//FIXME better exception handling? logging?
 				ex.printStackTrace();
 			}
-		
+		}
 		tmrPlay = new Timer(800, this);
 		
 		setVisible(true);
@@ -534,7 +535,26 @@ public class Main extends JFrame implements ActionListener {
 			pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
 		}
 	}
-	
+
+	/*class InfoBar extends JPanel {
+		protected final ScoreLabel sp1 = new ScoreLabel(context.game.players[0]);
+		protected final ScoreLabel sp2 = new ScoreLabel(context.game.players[1]);
+		
+		public InfoBar() {
+			private JPanel container = new JPanel();
+			container.add(sp1);
+		}
+		
+		
+		
+		
+		class ScoreLabel extends ZoomedLabel {
+			
+			public ScoreLabel(Player p) {
+				super(Integer.toString(context.game.getScore(p)), 2);
+			}
+		}
+	} */
 	
 	
 	public static void main(String[] args) {
