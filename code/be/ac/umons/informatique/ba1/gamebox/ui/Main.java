@@ -8,7 +8,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import javax.imageio.ImageIO;
+import javax.swing.Action;
+>>>>>>> Started refactoring of games selection
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,6 +25,8 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
 import be.ac.umons.informatique.ba1.gamebox.core.*;
+import be.ac.umons.informatique.ba1.gamebox.ui.GameMenu.GameMenuItemNormal;
+import be.ac.umons.informatique.ba1.gamebox.ui.Main.GameMenu.GameMenuItemCustom;
 
 /** 
  * Main application window.
@@ -566,12 +574,16 @@ public class Main extends JFrame implements ActionListener {
 	} */
 	
 	
+<<<<<<< HEAD
 =======
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
+=======
+>>>>>>> Started refactoring of games selection
 	/**
 	 * Menu allowing selection of a game and customization of its board
 	 */
 	class GameMenu extends JMenu {
+<<<<<<< HEAD
 		class GameMenuItemNormal extends JMenuItem implements ActionListener {
 			UiGame descriptor;
 			
@@ -620,6 +632,23 @@ public class Main extends JFrame implements ActionListener {
 			super(gd.desc);
 			add(new GameMenuItemNormal(gd, "Traditionnel"));
 			add(new GameMenuItemCustom(gd, "Personnalisé"));
+=======
+		public class GameMenuItemNormal extends JMenuItem {
+			public GameMenuItemNormal(Class<Game> game, String caption) {
+				super(caption);
+			}
+		}
+		
+		public class GameMenuItemCustom extends GameMenuItemNormal {
+			public GameMenuItemCustom(Class<Game> game, String caption) {
+				super(game, caption);
+			}
+		}
+
+		public GameMenu(GameDescriptor gd) {
+			add(new GameMenuItemNormal(gd.cls, "Traditionnel"));
+			add(new GameMenuItemCustom(gd.cls, "Personnalisé"));
+>>>>>>> Started refactoring of games selection
 		}
 	}
 	
