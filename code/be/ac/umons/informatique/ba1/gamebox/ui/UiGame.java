@@ -1,9 +1,13 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+=======
+import java.net.URISyntaxException;
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
 
@@ -19,7 +23,11 @@ public class UiGame {
 	public final String desc;
 	public final int defaultX, defaultY;
 	
+<<<<<<< HEAD
 	protected final Class<? extends Game> cls;
+=======
+	protected final Class<Game> cls;
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 	protected final String txBoard;
 	protected final String txP1;
 	protected final String txP2;
@@ -36,7 +44,11 @@ public class UiGame {
 	 * @param t2 Texture for player 2's pieces
 	 * @param tr Reversed layers?
 	 */
+<<<<<<< HEAD
 	public UiGame(String d, Class<? extends Game> c, int x, int y, String tb, String t1, String t2, boolean tr) {
+=======
+	public UiGame(String d, Class<Game> c, int x, int y, String tb, String t1, String t2, boolean tr) {
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 		desc = d;
 		cls = c;
 		defaultX = x;
@@ -47,6 +59,7 @@ public class UiGame {
 		txRev = tr;
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * @see #createGame(int, int)
 	 */
@@ -69,21 +82,35 @@ public class UiGame {
 		Constructor<?> cons = cls.getConstructor(argTypes);
 		//use it!
 		return (Game)cons.newInstance(argValues);
+=======
+	public Game createGame() {
+		Class<?>[] argTypes = {};
+		return cls.newInstance(42);
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 	}
 	
 	/**
 	 * Creates a panel object associated to the given context.
+<<<<<<< HEAD
 	 * @param  ug  List of possible UiGame
 	 * @param  ctx Game context
+=======
+	 * @param ctx Game context
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 	 * @return A Panel to be used in {@link Main}
 	 * @throws URISyntaxException Invalid texture path
 	 * @throws IOException        Can't read a texture
 	 */
+<<<<<<< HEAD
 	public static BoardPanel createPanel(ArrayList<UiGame> ug, GameContext ctx) throws URISyntaxException, IOException {
 		for (UiGame g: ug)
 			if (g.cls == ctx.game.getClass())
 				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev);
 		return null; //not found
+=======
+	public BoardPanel createPanel(GameContext ctx) throws URISyntaxException, IOException {
+		return new BoardPanel(ctx, txBoard, txP1, txP2, txRev);
+>>>>>>> Created UiGame to establish a link between the core and the UI parts
 	}
 	
 }
