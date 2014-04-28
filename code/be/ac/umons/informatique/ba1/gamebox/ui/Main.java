@@ -13,11 +13,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.Action;
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -29,8 +28,6 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
 import be.ac.umons.informatique.ba1.gamebox.core.*;
-import be.ac.umons.informatique.ba1.gamebox.ui.GameMenu.GameMenuItemNormal;
-import be.ac.umons.informatique.ba1.gamebox.ui.Main.GameMenu.GameMenuItemCustom;
 
 /** 
  * Main application window.
@@ -40,14 +37,14 @@ import be.ac.umons.informatique.ba1.gamebox.ui.Main.GameMenu.GameMenuItemCustom;
 public class Main extends JFrame implements ActionListener {
 	
 	protected final GameContext context;
-	protected final JMenuBar menuBar = new JMenuBar();
 	protected ActionListener newGame;
-	protected boolean showLegal;
+	protected ArrayList<UiGame> games;
 	protected boolean debug;
 	protected Timer tmrPlay;
 	//protected Timer tmrClock;
+	protected final JMenuBar menuBar = new JMenuBar();
 	
-	protected final JMenu games = new JMenu("Jeux");
+	protected final JMenu gamesMenu = new JMenu("Jeux");
 	protected final JMenu pls = new JMenu("Joueurs");
 	protected final HumanPlayerMenu p1, p2;
 	protected final JMenuItem valPls = new JMenuItem("Lancer le jeu");
@@ -91,18 +88,9 @@ public class Main extends JFrame implements ActionListener {
 	 * Initializes menus
 	 */
 	private void initMenus() {
-		//FIXME implement GameMenu and GameMenuItem...
-		ttt.add(trd1); trd1.addActionListener(newGame);
-		ttt.add(cus1); cus1.addActionListener(newGame);
-		fiar.add(trd2); trd2.addActionListener(newGame);
-		fiar.add(cus2); cus2.addActionListener(newGame);
-		oth.add(trd3); trd3.addActionListener(newGame);
-		oth.add(cus3); cus3.addActionListener(newGame);
-		
-		games.add(ttt);
-		games.add(fiar);
-		games.add(oth);
-		menuBar.add(games);
+		for (UiGame gd: games)
+			gamesMenu.add(new GameMenu(gd));
+		menuBar.add(gamesMenu);
 		
 		pls.add(p1); pls.add(p2);
 		pls.add(valPls); valPls.addActionListener(this);
@@ -132,8 +120,7 @@ public class Main extends JFrame implements ActionListener {
 	/**
 	 * Loads a board panel, displays it and resizes the JFrame.
 	 * Both exception are declared to avoid ignoring an NPE thrown because of an unknown game.
-	 * @throws URISyntaxException Invalid texture path
-	 * @throws IOException        Can't read a texture
+	 * @see UiGame#createPanel(GameContext)
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
 		BoardPanel bp = null;
@@ -194,6 +181,7 @@ public class Main extends JFrame implements ActionListener {
 		//this must be done here because these constructors need a valid context
 		p1 = new HumanPlayerMenu(this, "Joueur 1", 0);
 		p2 = new HumanPlayerMenu(this, "Joueur 2", 1);
+		
 		initMenus();
 		
 		if (context.game != null) {
@@ -371,6 +359,7 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 
+<<<<<<< HEAD
 	
 	
 	/**
@@ -565,25 +554,41 @@ public class Main extends JFrame implements ActionListener {
 	} */
 	
 	
+=======
+>>>>>>> Moved BoardPanel outside of Main; continued refactoring
 	/**
 	 * Menu allowing selection of a game and customization of its board
 	 */
 	class GameMenu extends JMenu {
-		public class GameMenuItemNormal extends JMenuItem {
-			public GameMenuItemNormal(Class<Game> game, String caption) {
+		public class GameMenuItemNormal extends JMenuItem implements ActionListener {
+			UiGame descriptor;
+			
+			/**
+			 * Creates a game variant menu item
+			 * @param gd Game descriptor
+			 * @param caption Displayed text
+			 */
+			public GameMenuItemNormal(UiGame gd, String caption) {
 				super(caption);
+				descriptor = gd;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		}
 		
 		public class GameMenuItemCustom extends GameMenuItemNormal {
-			public GameMenuItemCustom(Class<Game> game, String caption) {
-				super(game, caption);
+			public GameMenuItemCustom(UiGame gd, String caption) {
+				super(gd, caption);
 			}
 		}
 
-		public GameMenu(GameDescriptor gd) {
-			add(new GameMenuItemNormal(gd.cls, "Traditionnel"));
-			add(new GameMenuItemCustom(gd.cls, "Personnalisé"));
+		public GameMenu(UiGame gd) {
+			add(new GameMenuItemNormal(gd, "Traditionnel"));
+			add(new GameMenuItemCustom(gd, "Personnalisé"));
 		}
 	}
 	
