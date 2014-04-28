@@ -5,12 +5,14 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 /**
- * ComboBox with the smallest possible height
+ * ComboBox with the smallest possible height.
+ * This uses generics to facilitate Java 7 migration.
  */
 
-@SuppressWarnings("serial")
-public class ThinCombo extends JComboBox {
+@SuppressWarnings({ "serial", "rawtypes" })
+public class ThinCombo<T> extends JComboBox {
 
+	@SuppressWarnings("unchecked")
 	public ThinCombo(Object[] arr) {
 		super(arr);
 	}

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ class AchievementsDialog extends JDialog implements ActionListener {
 	protected static final int COMPLETION_RESOLUTION = 1000;
 	protected ArrayList<HumanPlayer> players;
 	protected JPanel list;
-	protected JComboBox cmbPlayer;
+	protected ThinCombo<Player> cmbPlayer;
 
 	protected void populateList(int idx) {
 		list.removeAll();
@@ -53,7 +52,7 @@ class AchievementsDialog extends JDialog implements ActionListener {
 		Box sup = Box.createHorizontalBox();
 		sup.add(Box.createHorizontalGlue());
 		sup.add(new JLabel("Profil de joueur : "));
-		sup.add(cmbPlayer = new ThinCombo(players.toArray()));
+		sup.add(cmbPlayer = new ThinCombo<Player>(players.toArray()));
 		cmbPlayer.addActionListener(this);
 		sup.add(Box.createHorizontalGlue());
 		

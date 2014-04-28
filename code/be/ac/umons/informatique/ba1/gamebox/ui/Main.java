@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import javax.imageio.ImageIO;
 <<<<<<< HEAD
@@ -16,9 +17,10 @@ import javax.swing.Action;
 >>>>>>> Started refactoring of games selection
 =======
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
+=======
+>>>>>>> Rebased my work
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -37,9 +39,12 @@ public class Main extends JFrame implements ActionListener {
 	
 	protected final GameContext context;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	protected ActionListener newGame;
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
+=======
+>>>>>>> Rebased my work
 	protected ArrayList<UiGame> games;
 	protected boolean debug;
 	
@@ -128,6 +133,7 @@ public class Main extends JFrame implements ActionListener {
 	private void loadBoardPanel() throws URISyntaxException, IOException {
 		BoardPanel bp = null;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (context.game instanceof Connect4)
 			setContentPane(bp = new BoardPanel("fiar/board", "fiar/yellow", "fiar/red", true));
 		else if (context.game instanceof TicTacToe)
@@ -145,6 +151,11 @@ public class Main extends JFrame implements ActionListener {
 =======
 		revalidate(); //FIXME not present in Java 6
 >>>>>>> Made menus display correctly
+=======
+		setContentPane(bp = UiGame.createPanel(games, context));
+		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
+		revalidate(); //FIXME
+>>>>>>> Rebased my work
 	}
 	
 	/**
@@ -171,6 +182,7 @@ public class Main extends JFrame implements ActionListener {
 		});
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newGame = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,11 +203,16 @@ public class Main extends JFrame implements ActionListener {
 			}
 		};
 =======
+=======
+>>>>>>> Rebased my work
 		games = new ArrayList<UiGame>();
 		games.add(new UiGame("Puissance 4", Connect4.class, 7, 6, "fiar/board", "fiar/yellow", "fiar/red", true));
 		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, 3, 3, "ttt/board", "ttt/o", "ttt/x", false));
 		games.add(new UiGame("Othello", Othello.class, 8, 8, "oth/board", "oth/black", "oth/white", false));
+<<<<<<< HEAD
 >>>>>>> Finished games list refactoring
+=======
+>>>>>>> Rebased my work
 		
 		context = GameContext.loadContext("savegame.dat");
 		//this must be done here because these constructors need a valid context
@@ -213,11 +230,15 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		
 >>>>>>> Finished games list refactoring
 		tmrPlay = new Timer(800, this);
+=======
+>>>>>>> Rebased my work
 		
+		tmrPlay = new Timer(800, this);
 		setVisible(true);
 	}
 

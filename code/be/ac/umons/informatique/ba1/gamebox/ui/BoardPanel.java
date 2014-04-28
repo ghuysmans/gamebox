@@ -198,9 +198,12 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	public void adjustSize() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		//if (pieceSize*game.board.getWidth()>getWidth() || pieceSize*game.board.getHeight()>getHeight())
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
+=======
+>>>>>>> Rebased my work
 		pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
 	}
 }
