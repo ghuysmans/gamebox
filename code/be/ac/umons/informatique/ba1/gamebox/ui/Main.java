@@ -146,6 +146,7 @@ public class Main extends JFrame implements ActionListener {
 		setContentPane(bp = UiGame.createPanel(games, context));
 		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
 <<<<<<< HEAD
+<<<<<<< HEAD
 		revalidate(); //FIXME
 >>>>>>> Finished games list refactoring
 =======
@@ -156,6 +157,9 @@ public class Main extends JFrame implements ActionListener {
 		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
 		revalidate(); //FIXME
 >>>>>>> Rebased my work
+=======
+		revalidate(); //FIXME not present in Java 6
+>>>>>>> Made menus display correctly
 	}
 	
 	/**
@@ -440,10 +444,14 @@ public class Main extends JFrame implements ActionListener {
 	class GameMenu extends JMenu {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		class GameMenuItemNormal extends JMenuItem implements ActionListener {
 =======
 		public class GameMenuItemNormal extends JMenuItem implements ActionListener {
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
+=======
+		class GameMenuItemNormal extends JMenuItem implements ActionListener {
+>>>>>>> Made menus display correctly
 			UiGame descriptor;
 			
 			/**
@@ -499,18 +507,36 @@ public class Main extends JFrame implements ActionListener {
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
 				super(caption);
 				descriptor = gd;
+				addActionListener(this);
 			}
 
+			/**
+			 * Handles clicks
+			 */
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				try {
+					context.game = descriptor.createGame();
+					enablePlayersSelection(true);
+					loadBoardPanel();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		
-		public class GameMenuItemCustom extends GameMenuItemNormal {
+		class GameMenuItemCustom extends GameMenuItemNormal {
 			public GameMenuItemCustom(UiGame gd, String caption) {
 				super(gd, caption);
+			}
+			
+			/**
+			 * Shows a dialog asking for board size
+			 */
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Manquant"); //FIXME
 			}
 		}
 
@@ -521,6 +547,7 @@ public class Main extends JFrame implements ActionListener {
 >>>>>>> Started refactoring of games selection
 =======
 		public GameMenu(UiGame gd) {
+			super(gd.desc);
 			add(new GameMenuItemNormal(gd, "Traditionnel"));
 			add(new GameMenuItemCustom(gd, "Personnalisé"));
 >>>>>>> Moved BoardPanel outside of Main; continued refactoring
