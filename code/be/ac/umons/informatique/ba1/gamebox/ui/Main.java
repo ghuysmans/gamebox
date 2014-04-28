@@ -1,21 +1,13 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
@@ -37,9 +28,9 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 public class Main extends JFrame implements ActionListener {
 	
 	protected final GameContext context;
-	protected ActionListener newGame;
 	protected ArrayList<UiGame> games;
 	protected boolean debug;
+	
 	protected Timer tmrPlay;
 	//protected Timer tmrClock;
 	protected final JMenuBar menuBar = new JMenuBar();
@@ -124,6 +115,7 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
 		BoardPanel bp = null;
+<<<<<<< HEAD
 		if (context.game instanceof Connect4)
 			setContentPane(bp = new BoardPanel("fiar/board", "fiar/yellow", "fiar/red", true));
 		else if (context.game instanceof TicTacToe)
@@ -132,6 +124,11 @@ public class Main extends JFrame implements ActionListener {
 			setContentPane(bp = new BoardPanel("oth/board", "oth/black", "oth/white", false));
 		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80);
 		//revalidate(); //FIXME find a way to do it without revalidate()
+=======
+		setContentPane(bp = UiGame.createPanel(games, context));
+		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
+		revalidate(); //FIXME
+>>>>>>> Finished games list refactoring
 	}
 	
 	/**
@@ -157,6 +154,7 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		
+<<<<<<< HEAD
 		newGame = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -176,6 +174,12 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 		};
+=======
+		games = new ArrayList<UiGame>();
+		games.add(new UiGame("Puissance 4", Connect4.class, 7, 6, "fiar/board", "fiar/yellow", "fiar/red", true));
+		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, 3, 3, "ttt/board", "ttt/o", "ttt/x", false));
+		games.add(new UiGame("Othello", Othello.class, 8, 8, "oth/board", "oth/black", "oth/white", false));
+>>>>>>> Finished games list refactoring
 		
 		context = GameContext.loadContext("savegame.dat");
 		//this must be done here because these constructors need a valid context
@@ -192,6 +196,10 @@ public class Main extends JFrame implements ActionListener {
 				ex.printStackTrace();
 			}
 		}
+<<<<<<< HEAD
+=======
+		
+>>>>>>> Finished games list refactoring
 		tmrPlay = new Timer(800, this);
 		
 		setVisible(true);

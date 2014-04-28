@@ -2,6 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
 
@@ -17,7 +18,7 @@ public class UiGame {
 	public final String desc;
 	public final int defaultX, defaultY;
 	
-	protected final Class<Game> cls;
+	protected final Class<? extends Game> cls;
 	protected final String txBoard;
 	protected final String txP1;
 	protected final String txP2;
@@ -34,7 +35,7 @@ public class UiGame {
 	 * @param t2 Texture for player 2's pieces
 	 * @param tr Reversed layers?
 	 */
-	public UiGame(String d, Class<Game> c, int x, int y, String tb, String t1, String t2, boolean tr) {
+	public UiGame(String d, Class<? extends Game> c, int x, int y, String tb, String t1, String t2, boolean tr) {
 		desc = d;
 		cls = c;
 		defaultX = x;
@@ -46,19 +47,24 @@ public class UiGame {
 	}
 	
 	public Game createGame() {
-		Class<?>[] argTypes = {};
-		return cls.newInstance(42);
+		//Class<?>[] argTypes = {};
+		//return cls.newInstance(42);
+		return null;
 	}
 	
 	/**
 	 * Creates a panel object associated to the given context.
-	 * @param ctx Game context
+	 * @param  ug  List of possible UiGame
+	 * @param  ctx Game context
 	 * @return A Panel to be used in {@link Main}
 	 * @throws URISyntaxException Invalid texture path
 	 * @throws IOException        Can't read a texture
 	 */
-	public BoardPanel createPanel(GameContext ctx) throws URISyntaxException, IOException {
-		return new BoardPanel(ctx, txBoard, txP1, txP2, txRev);
+	public static BoardPanel createPanel(ArrayList<UiGame> ug, GameContext ctx) throws URISyntaxException, IOException {
+		for (UiGame g: ug)
+			if (g.cls == ctx.game.getClass())
+				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev);
+		return null; //not found
 	}
 	
 }
