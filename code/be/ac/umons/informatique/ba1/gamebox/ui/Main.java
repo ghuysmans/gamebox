@@ -8,23 +8,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import javax.imageio.ImageIO;
-<<<<<<< HEAD
-import javax.swing.Action;
->>>>>>> Started refactoring of games selection
-=======
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
-=======
->>>>>>> Rebased my work
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
@@ -38,13 +28,6 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 public class Main extends JFrame implements ActionListener {
 	
 	protected final GameContext context;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-	protected ActionListener newGame;
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
-=======
->>>>>>> Rebased my work
 	protected ArrayList<UiGame> games;
 	protected boolean debug;
 	
@@ -132,34 +115,9 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
 		BoardPanel bp = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (context.game instanceof Connect4)
-			setContentPane(bp = new BoardPanel("fiar/board", "fiar/yellow", "fiar/red", true));
-		else if (context.game instanceof TicTacToe)
-			setContentPane(bp = new BoardPanel("ttt/board", "ttt/o", "ttt/x", false));
-		else if (context.game instanceof Othello)
-			setContentPane(bp = new BoardPanel("oth/board", "oth/black", "oth/white", false));
-		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80);
-		//revalidate(); //FIXME find a way to do it without revalidate()
-=======
 		setContentPane(bp = UiGame.createPanel(games, context));
 		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
-<<<<<<< HEAD
-<<<<<<< HEAD
-		revalidate(); //FIXME
->>>>>>> Finished games list refactoring
-=======
 		revalidate(); //FIXME not present in Java 6
->>>>>>> Made menus display correctly
-=======
-		setContentPane(bp = UiGame.createPanel(games, context));
-		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
-		revalidate(); //FIXME
->>>>>>> Rebased my work
-=======
-		revalidate(); //FIXME not present in Java 6
->>>>>>> Made menus display correctly
 	}
 	
 	/**
@@ -185,38 +143,10 @@ public class Main extends JFrame implements ActionListener {
 			}
 		});
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
-		newGame = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (e.getSource() == trd1)
-						context.game = new TicTacToe(3, 3, 3);
-					else if (e.getSource() == trd2)
-						context.game = new Connect4(7, 6, 4);
-					else if (e.getSource() == trd3)
-						context.game = new Othello(8, 8);
-					enablePlayersSelection(true);
-					loadBoardPanel();
-				}
-				catch (Exception ex) {
-					//FIXME better exception handling? logging?
-					ex.printStackTrace();
-				}
-			}
-		};
-=======
-=======
->>>>>>> Rebased my work
 		games = new ArrayList<UiGame>();
 		games.add(new UiGame("Puissance 4", Connect4.class, 7, 6, "fiar/board", "fiar/yellow", "fiar/red", true));
 		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, 3, 3, "ttt/board", "ttt/o", "ttt/x", false));
 		games.add(new UiGame("Othello", Othello.class, 8, 8, "oth/board", "oth/black", "oth/white", false));
-<<<<<<< HEAD
->>>>>>> Finished games list refactoring
-=======
->>>>>>> Rebased my work
 		
 		context = GameContext.loadContext("savegame.dat");
 		//this must be done here because these constructors need a valid context
@@ -233,14 +163,6 @@ public class Main extends JFrame implements ActionListener {
 				ex.printStackTrace();
 			}
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-		
->>>>>>> Finished games list refactoring
-		tmrPlay = new Timer(800, this);
-=======
->>>>>>> Rebased my work
 		
 		tmrPlay = new Timer(800, this);
 		setVisible(true);
@@ -408,12 +330,6 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
 	/**
 	 * Information bar displaying scores, time (to be implemented)...
 	 */
@@ -433,25 +349,11 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
-=======
->>>>>>> Started refactoring of games selection
 	/**
 	 * Menu allowing selection of a game and customization of its board
 	 */
 	class GameMenu extends JMenu {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		class GameMenuItemNormal extends JMenuItem implements ActionListener {
-=======
-		public class GameMenuItemNormal extends JMenuItem implements ActionListener {
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
-=======
-		class GameMenuItemNormal extends JMenuItem implements ActionListener {
->>>>>>> Made menus display correctly
 			UiGame descriptor;
 			
 			/**
@@ -460,7 +362,6 @@ public class Main extends JFrame implements ActionListener {
 			 * @param caption Displayed text
 			 */
 			public GameMenuItemNormal(UiGame gd, String caption) {
-<<<<<<< HEAD
 				super(caption);
 				descriptor = gd;
 				addActionListener(this);
@@ -500,57 +401,6 @@ public class Main extends JFrame implements ActionListener {
 			super(gd.desc);
 			add(new GameMenuItemNormal(gd, "Traditionnel"));
 			add(new GameMenuItemCustom(gd, "Personnalisé"));
-=======
-		public class GameMenuItemNormal extends JMenuItem {
-			public GameMenuItemNormal(Class<Game> game, String caption) {
-=======
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
-				super(caption);
-				descriptor = gd;
-				addActionListener(this);
-			}
-
-			/**
-			 * Handles clicks
-			 */
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					context.game = descriptor.createGame();
-					enablePlayersSelection(true);
-					loadBoardPanel();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		class GameMenuItemCustom extends GameMenuItemNormal {
-			public GameMenuItemCustom(UiGame gd, String caption) {
-				super(gd, caption);
-			}
-			
-			/**
-			 * Shows a dialog asking for board size
-			 */
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Manquant"); //FIXME
-			}
-		}
-
-<<<<<<< HEAD
-		public GameMenu(GameDescriptor gd) {
-			add(new GameMenuItemNormal(gd.cls, "Traditionnel"));
-			add(new GameMenuItemCustom(gd.cls, "Personnalisé"));
->>>>>>> Started refactoring of games selection
-=======
-		public GameMenu(UiGame gd) {
-			super(gd.desc);
-			add(new GameMenuItemNormal(gd, "Traditionnel"));
-			add(new GameMenuItemCustom(gd, "Personnalisé"));
->>>>>>> Moved BoardPanel outside of Main; continued refactoring
 		}
 	}
 	
