@@ -1,6 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -46,10 +47,28 @@ public class UiGame {
 		txRev = tr;
 	}
 	
-	public Game createGame() {
-		//Class<?>[] argTypes = {};
-		//return cls.newInstance(42);
-		return null;
+	/**
+	 * @see #createGame(int, int)
+	 */
+	public Game createGame() throws Exception {
+		return createGame(defaultX, defaultY);
+	}
+	
+	/**
+	 * Creates an instance of cls with default dimensions using Java Reflection!
+	 * @param  x Board width
+	 * @param  y Board height
+	 * @return A ready-to-use Game object
+	 * @throws Exception Invalid dimensions, non-existing constructor...
+	 */
+	public Game createGame(int x, int y) throws Exception {
+		//arguments: width, height
+		Class<?>[] argTypes = {int.class, int.class};
+		Object[] argValues = {new Integer(x), new Integer(y)};
+		//get a reference to it
+		Constructor<?> cons = cls.getConstructor(argTypes);
+		//use it!
+		return (Game)cons.newInstance(argValues);
 	}
 	
 	/**
