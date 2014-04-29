@@ -393,7 +393,18 @@ public class Main extends JFrame implements ActionListener {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Manquant"); //FIXME
+				while(true) {
+					try {
+						CustomDialog dlg = new CustomDialog(null, true);
+						context.game = descriptor.createGame(dlg.getTypedWidth(), dlg.getTypedHeight());
+						enablePlayersSelection(true);
+						loadBoardPanel();
+						break;
+					}
+					catch(Exception e) {
+						JOptionPane.showMessageDialog(this, e.getMessage());
+					}
+				}
 			}
 		}
 
