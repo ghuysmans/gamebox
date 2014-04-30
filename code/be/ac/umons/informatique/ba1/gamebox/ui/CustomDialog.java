@@ -9,7 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import com.sun.media.sound.InvalidFormatException;
 
 @SuppressWarnings("serial")
 public class CustomDialog extends JDialog implements ActionListener {
@@ -22,8 +25,8 @@ public class CustomDialog extends JDialog implements ActionListener {
 	protected final JButton btnCcl = new JButton("Annuler");
 	
 	public CustomDialog(JFrame parent, boolean modal) {
-		super(parent, "Personalisation", modal);
-		setSize(400, 400);
+		super(parent, "Personnalisation", modal);
+		setSize(350, 100);
 		setLocationRelativeTo(parent);
 		setResizable(false);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -44,6 +47,7 @@ public class CustomDialog extends JDialog implements ActionListener {
 		box.add(btnOK);
 		box.add(Box.createHorizontalStrut(10));
 		box.add(btnCcl);
+		add(box);
 		
 		setVisible(true);	
 	}
@@ -62,9 +66,19 @@ public class CustomDialog extends JDialog implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnCcl)
-			cancelled = true;
-		setVisible(false);	
+		try {
+			if (e.getSource() == btnCcl)
+				cancelled = true;
+			else {
+				@SuppressWarnings("unused")
+				int test = getTypedHeight()+getTypedWidth();
+			}
+			setVisible(false);
+		}	
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+			
 	}
 	
 }

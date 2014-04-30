@@ -403,7 +403,7 @@ public class Main extends JFrame implements ActionListener {
 						break;
 					}
 					catch(InvocationTargetException e) {
-						JOptionPane.showMessageDialog(this, e.getMessage());
+						JOptionPane.showMessageDialog(this, e.getCause().getMessage());
 					}
 					catch(Exception e) {
 						JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
