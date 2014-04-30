@@ -2,6 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -59,9 +60,10 @@ public class UiGame {
 	 * @param  x Board width
 	 * @param  y Board height
 	 * @return A ready-to-use Game object
-	 * @throws Exception Invalid dimensions, non-existing constructor...
+	 * @throws InvocationTargetException Invalid dimensions, etc.
+	 * @throws Exception                 Non-existing constructor...
 	 */
-	public Game createGame(int x, int y) throws Exception {
+	public Game createGame(int x, int y) throws InvocationTargetException, Exception {
 		//arguments: width, height
 		Class<?>[] argTypes = {int.class, int.class};
 		Object[] argValues = {new Integer(x), new Integer(y)};

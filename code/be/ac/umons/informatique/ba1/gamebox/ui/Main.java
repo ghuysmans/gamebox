@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -401,8 +402,11 @@ public class Main extends JFrame implements ActionListener {
 						loadBoardPanel();
 						break;
 					}
-					catch(Exception e) {
+					catch(InvocationTargetException e) {
 						JOptionPane.showMessageDialog(this, e.getMessage());
+					}
+					catch(Exception e) {
+						JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
