@@ -12,12 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import com.sun.media.sound.InvalidFormatException;
-
 @SuppressWarnings("serial")
 public class CustomDialog extends JDialog implements ActionListener {
 	
-	protected boolean cancelled;
+	protected boolean ok;
 	
 	protected final JTextField width = new ThinTextField("", 20);
 	protected final JTextField height = new ThinTextField("", 20);
@@ -52,8 +50,8 @@ public class CustomDialog extends JDialog implements ActionListener {
 		setVisible(true);	
 	}
 	
-	public boolean getCancelled() {
-		return cancelled;
+	public boolean getOK() {
+		return ok;
 	}
 	
 	public int getTypedWidth() {
@@ -67,9 +65,8 @@ public class CustomDialog extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			if (e.getSource() == btnCcl)
-				cancelled = true;
-			else {
+			if (e.getSource() == btnOK) {
+				ok = true;
 				@SuppressWarnings("unused")
 				int test = getTypedHeight()+getTypedWidth();
 			}
@@ -82,11 +79,3 @@ public class CustomDialog extends JDialog implements ActionListener {
 	}
 	
 }
-
-
-
-
-
-
-
-

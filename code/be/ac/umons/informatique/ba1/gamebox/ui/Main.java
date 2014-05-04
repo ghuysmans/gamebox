@@ -394,20 +394,21 @@ public class Main extends JFrame implements ActionListener {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				while(true) {
-					try {
-						CustomDialog dlg = new CustomDialog(null, true);
+				try {
+					CustomDialog dlg = new CustomDialog(null, true);
+					if (dlg.ok) {
 						context.game = descriptor.createGame(dlg.getTypedWidth(), dlg.getTypedHeight());
 						enablePlayersSelection(true);
 						loadBoardPanel();
-						break;
 					}
-					catch(InvocationTargetException e) {
-						JOptionPane.showMessageDialog(this, e.getCause().getMessage());
-					}
-					catch(Exception e) {
-						JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-					}
+				}
+				catch(InvocationTargetException e) {
+					//FIXME Main** error
+					JOptionPane.showMessageDialog(this, e.getCause().getMessage(), "Main Error", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception e) {
+					//FIXME Main** error
+					JOptionPane.showMessageDialog(this, e.getMessage(), "Main Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
