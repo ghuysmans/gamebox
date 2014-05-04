@@ -55,6 +55,11 @@ class BoardPanel extends JPanel implements MouseListener {
 	protected boolean showLegal;
 	
 	/**
+	 * Is an AI working NOW?
+	 */
+	protected boolean working;
+	
+	/**
 	 * Loads an image from the res folder. Typically called from the constructor.
 	 * @param name Image name, without extension nor absolute path
 	 * @return Usable Image object
@@ -172,12 +177,19 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getButton()==MouseEvent.BUTTON1 && context.mode==GameMode.NORMAL && !context.game.hasFinished() && context.game.getCurrentPlayer()!=null) {
-			if (context.game.getCurrentPlayer() instanceof ComputerPlayer) {
+		if (	!working && //not currently working
+				e.getButton()==MouseEvent.BUTTON1 && //left click 
+				context.mode==GameMode.NORMAL && //not automatic 
+				!context.game.hasFinished() && //can yet play something 
+				context.game.getCurrentPlayer()!=null) { //there's a current player
+			working = true;
+			if (context.game.getCurrentPlayer() instanceof ComputerPlayer)
+				//it's a computer player, just ask it to play
 				((ComputerPlayer)context.game.getCurrentPlayer()).play();
-			}
 			else {
+				//it's a human player, let's convert the current mouse position to coordinates
 				Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
+				//if the given move is legal, play it
 				if (context.game.getLegalMoves().contains(mv))
 					mv.play(true);
 			}
@@ -190,6 +202,7 @@ class BoardPanel extends JPanel implements MouseListener {
 				else
 					JOptionPane.showMessageDialog(null, "Match nul !");
 			}
+			working = false;
 		}
 	}
 	
