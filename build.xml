@@ -18,6 +18,7 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 	<property name="test.bin" value="**/*Test.class" />
 	<property name="root-pkg" value="be.ac.umons.informatique.ba1.gamebox" />
 	<property name="main-class" value="${root-pkg}.ui.Main" />
+	<property name="debug-class" value="${root-pkg}.ui.Debug" />
 	<property name="jar.dir" value="." />
 	<property name="jar.name" value="${jar.dir}/gamebox.jar" />
 	
@@ -55,6 +56,9 @@ License: GNU GPL v3 - https://www.gnu.org/licenses/gpl-3.0.en.html
 	</target>
 	<target name="run" depends="build">
 		<java classpath="${build.dir}:." classname="${main-class}" fork="true" />
+	</target>
+	<target name="run-debug" depends="build">
+		<java classpath="${build.dir}:." classname="${debug-class}" fork="true" />
 	</target>
 	<target name="run-jar" depends="jar">
 		<java classpath="${jar.name}" classname="${main-class}" fork="true" />
