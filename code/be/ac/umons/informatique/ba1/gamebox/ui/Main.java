@@ -38,7 +38,7 @@ public class Main extends JFrame implements ActionListener {
 	
 	protected final JMenu gamesMenu = new JMenu("Jeux");
 	protected final JMenu pls = new JMenu("Joueurs");
-	protected final HumanPlayerMenu p1, p2;
+	protected final PlayerMenu p1, p2;
 	protected final JMenuItem valPls = new JMenuItem("Lancer le jeu");
 	protected final JMenuItem mngPls = new JMenuItem("Gérer");
 	protected final JMenuItem ach = new JMenuItem("Succès");
@@ -151,8 +151,8 @@ public class Main extends JFrame implements ActionListener {
 		
 		context = GameContext.loadContext("savegame.dat");
 		//this must be done here because these constructors need a valid context
-		p1 = new HumanPlayerMenu(this, "Joueur 1", 0);
-		p2 = new HumanPlayerMenu(this, "Joueur 2", 1);
+		p1 = new PlayerMenu(this, "Joueur 1", 0);
+		p2 = new PlayerMenu(this, "Joueur 2", 1);
 		
 		initMenus();
 		
@@ -241,7 +241,7 @@ public class Main extends JFrame implements ActionListener {
 	/**
 	 * Menu presenting a list of human players for selection.
 	 */
-	class HumanPlayerMenu extends JMenu {
+	class PlayerMenu extends JMenu {
 		protected JFrame frame;
 		protected int id;
 		protected ButtonGroup grp;
@@ -251,7 +251,7 @@ public class Main extends JFrame implements ActionListener {
 		 * @param caption Displayed text
 		 * @param id      Player index (in context.selPlayers)
 		 */
-		public HumanPlayerMenu(JFrame frm, String caption, int id) {
+		public PlayerMenu(JFrame frm, String caption, int id) {
 			super(caption);
 			frame = frm;
 			this.id = id;
