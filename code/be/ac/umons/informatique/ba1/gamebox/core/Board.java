@@ -29,8 +29,8 @@ public class Board implements Serializable {
 	 * @param height Height (y)
 	 */
 	public Board(int width, int height) {
-		if (width == 0 || height == 0)
-			throw new IllegalArgumentException("Both dimensions must be non-zero!");
+		if (width<2 || height<2)
+			throw new IllegalArgumentException("The board must be at least 2x2!");
 		arr = new Piece[height][width];
 		
 	}
