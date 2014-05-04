@@ -60,6 +60,11 @@ class BoardPanel extends JPanel implements MouseListener {
 	protected boolean working;
 	
 	/**
+	 * Is the debug mode enabled?
+	 */
+	protected boolean debug;
+	
+	/**
 	 * Loads an image from the res folder. Typically called from the constructor.
 	 * @param name Image name, without extension nor absolute path
 	 * @return Usable Image object
@@ -75,8 +80,9 @@ class BoardPanel extends JPanel implements MouseListener {
 	 * @param p1 Player1's piece name
 	 * @param p2 Player2's piece name
 	 * @param r  Reversed display
+	 * @param d  Debug mode
 	 */
-	public BoardPanel(GameContext c, String b, String p1, String p2, boolean r) throws URISyntaxException, IOException {
+	public BoardPanel(GameContext c, String b, String p1, String p2, boolean r, boolean d) throws URISyntaxException, IOException {
 		addMouseListener(this);
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -121,6 +127,8 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void paintComponent(Graphics g){ 
+		AI ai = null;
+		if (debug) ai = new NegamaxAI(context.game, 4);
 		super.paintComponent(g); //paint the background
 		for (int x=0; x<context.game.board.getWidth(); x++) {
 			for (int y=0; y<context.game.board.getHeight(); y++) {

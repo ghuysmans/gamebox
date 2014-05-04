@@ -77,14 +77,15 @@ public class UiGame {
 	 * Creates a panel object associated to the given context.
 	 * @param  ug  List of possible UiGame
 	 * @param  ctx Game context
+	 * @param  d   Debug mode
 	 * @return A Panel to be used in {@link Main}
 	 * @throws URISyntaxException Invalid texture path
 	 * @throws IOException        Can't read a texture
 	 */
-	public static BoardPanel createPanel(ArrayList<UiGame> ug, GameContext ctx) throws URISyntaxException, IOException {
+	public static BoardPanel createPanel(ArrayList<UiGame> ug, GameContext ctx, boolean d) throws URISyntaxException, IOException {
 		for (UiGame g: ug)
 			if (g.cls == ctx.game.getClass())
-				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev);
+				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev, d);
 		return null; //not found
 	}
 	
