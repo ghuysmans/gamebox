@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
@@ -36,7 +37,7 @@ class AiDialog extends JDialog implements ActionListener {
 		super(parent, "Choix de l'IA", modal);
 		setSize(400, 150);
 		setLocationRelativeTo(parent);
-		this.setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		setResizable(false);
 		
 		diff.setMajorTickSpacing(1); diff.setMinorTickSpacing(1);
