@@ -96,6 +96,7 @@ class BoardPanel extends JPanel implements MouseListener {
 		imgP1 = getImage(p1);
 		imgP2 = getImage(p2);
 		reversed = r;
+		debug = d;
 	}
 	
 	/**
@@ -128,15 +129,18 @@ class BoardPanel extends JPanel implements MouseListener {
 	@Override
 	public void paintComponent(Graphics g){ 
 		AI ai = null;
-		if (debug) ai = new NegamaxAI(context.game, 4);
+		if (debug && !working) //avoid a nasty error condition...
+			ai = new NegamaxAI(context.game, 4);
 		super.paintComponent(g); //paint the background
 		for (int x=0; x<context.game.board.getWidth(); x++) {
 			for (int y=0; y<context.game.board.getHeight(); y++) {
 				boolean lm = false;
-				if (context.game.getLegalMoves() != null)
-					lm = context.game.getLegalMoves().contains(context.game.createMove(x, y)) && showLegal;
+				Move mv = context.game.createMove(x, y);
 				Piece pc = context.game.board.getPiece(x, y);
-				//If we have a legal move to show, use a fake piece
+				//Determine if we have to show whether this move is legal
+				if (context.game.getLegalMoves() != null)
+					lm = context.game.getLegalMoves().contains(mv) && showLegal;
+				//If so, use a fake piece (the previously read value was null)
 				if (lm)
 					pc = new Piece(context.game.getCurrentPlayer());
 				//Display in the right order
@@ -152,6 +156,17 @@ class BoardPanel extends JPanel implements MouseListener {
 				if (lm) {
 					g.setColor(Color.GREEN);
 					g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30);
+					//Display the score (if needed)
+					if (ai != null) {
+						//TODO warning reentrancy due to callback
+						//Compute the score
+						mv.play(false);
+						int v = -ai.computeNode();
+						context.game.history.undo(false);
+						//Display it
+						g.setColor(Color.BLACK);
+						g.drawString(Integer.toString(v), x*pieceSize+pieceSize/2, y*pieceSize+pieceSize/2); //FIXME position
+					}
 				}
 			}
 		}
