@@ -29,7 +29,7 @@ public class ComputerPlayer extends Player {
 		else if (lvl==1)
 			ai = new RandomAI(g);
 		else
-			ai = new NegamaxAI(g, lvl-1);
+			ai = new NegamaxAI(g, lvl-2);
 	}
 
 	/**
