@@ -7,6 +7,9 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 public class ComputerPlayer extends Player {
 
 	private static final long serialVersionUID = 2817118917278891230L;
+	
+	public final int level;
+	
 	protected Game game;
 	protected final AI ai;
 	
@@ -17,7 +20,11 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(Game g, String n, int lvl) {
 		super(n);
 		game = g;
-		if (lvl==0)
+		level = lvl;
+		
+		if (lvl<0)
+			throw new IllegalArgumentException("ComputerPlayer's difficulty level can't be negative!");
+		else if (lvl==0)
 			ai = new AbsentAI(g);
 		else if (lvl==1)
 			ai = new RandomAI(g);
