@@ -182,7 +182,6 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void doDebug() {
 		System.out.println("doDebug()");
-		context.game.history.undo(true);
 		context.game.players[0].setName("H");
 		context.game.players[1].setName("C");
 	}

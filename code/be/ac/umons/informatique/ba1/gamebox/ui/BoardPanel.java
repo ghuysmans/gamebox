@@ -129,8 +129,14 @@ class BoardPanel extends JPanel implements MouseListener {
 	@Override
 	public void paintComponent(Graphics g){ 
 		AI ai = null;
-		if (debug && !working) //avoid a nasty error condition...
-			ai = new NegamaxAI(context.game, 4);
+		if (debug && !working) { //avoid a nasty error condition...
+			int lvl = 5; //default value
+			if (context.game.players[0] instanceof ComputerPlayer)
+				lvl = ((ComputerPlayer)context.game.players[0]).level-2;
+			else if (context.game.players[1] instanceof ComputerPlayer)
+				lvl = ((ComputerPlayer)context.game.players[1]).level-2;
+			ai = new NegamaxAI(context.game, lvl);
+		}
 		super.paintComponent(g); //paint the background
 		for (int x=0; x<context.game.board.getWidth(); x++) {
 			for (int y=0; y<context.game.board.getHeight(); y++) {
@@ -155,7 +161,7 @@ class BoardPanel extends JPanel implements MouseListener {
 				//Add a green circle if we drew a legal move
 				if (lm) {
 					g.setColor(Color.GREEN);
-					g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30);
+					g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30); //FIXME position and size
 					//Display the score (if needed)
 					if (ai != null) {
 						//TODO warning reentrancy due to callback
@@ -165,7 +171,7 @@ class BoardPanel extends JPanel implements MouseListener {
 						context.game.history.undo(false);
 						//Display it
 						g.setColor(Color.BLACK);
-						g.drawString(Integer.toString(v), x*pieceSize+pieceSize/2, y*pieceSize+pieceSize/2); //FIXME position
+						g.drawString(Integer.toString(v), x*pieceSize+pieceSize/2-8, y*pieceSize+pieceSize/2+6); //FIXME position
 					}
 				}
 			}
@@ -200,16 +206,17 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (	!working && //not currently working
-				e.getButton()==MouseEvent.BUTTON1 && //left click 
+		if (working) return; //avoid reentrancy!
+		if (e.getButton()==MouseEvent.BUTTON1 && //left click 
 				context.mode==GameMode.NORMAL && //not automatic 
-				!context.game.hasFinished() && //can yet play something 
 				context.game.getCurrentPlayer()!=null) { //there's a current player
 			working = true;
-			if (context.game.getCurrentPlayer() instanceof ComputerPlayer)
+			if (e.isShiftDown())
+				context.game.history.undo(true);
+			else if (context.game.getCurrentPlayer() instanceof ComputerPlayer && !(e.isControlDown() && debug))
 				//it's a computer player, just ask it to play
 				((ComputerPlayer)context.game.getCurrentPlayer()).play();
-			else {
+			else if (!context.game.hasFinished()) {
 				//it's a human player, let's convert the current mouse position to coordinates
 				Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
 				//if the given move is legal, play it
