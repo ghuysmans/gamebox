@@ -1,6 +1,7 @@
 use an enum for RESULT_*
 use a bitfield instead of boolean[]
 implement undo in the UI
-refactoring: use the default constructor
+refactoring: use the default constructor for default sizes
 explain somewhere how to run tests in console
+make the AI work on an isolated fake Game instance!
 create packaging script using Python (or Ant?)
