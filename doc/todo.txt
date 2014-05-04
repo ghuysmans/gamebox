@@ -1,5 +1,6 @@
 use an enum for RESULT_*
 use a bitfield instead of boolean[]
 implement undo in the UI
+refactoring: use the default constructor
 explain somewhere how to run tests in console
 create packaging script using Python (or Ant?)
