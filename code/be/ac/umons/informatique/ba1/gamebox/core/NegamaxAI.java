@@ -35,11 +35,10 @@ public class NegamaxAI extends AI {
 		else
 		{
 			int M = Integer.MIN_VALUE; //fake value which will be overwritten
-			int v; //score for current move
 			for (Move mv: mvs)
 			{
 				mv.play(false);
-				v = -computeNode(rec+1);
+				int v = -computeNode(rec+1);
 				game.history.undo(false);
 				if (v > M)
 					M = v; //keep the max
@@ -60,7 +59,6 @@ public class NegamaxAI extends AI {
 	@Override
 	public Move getBest() {
 		ArrayList<Move> mvs = game.getLegalMoves();
-		Move bm = null; //best move (to be returned)
 		if (mvs.size() != 0) { //can we do something?
 			int bs = Integer.MIN_VALUE; //fake value which will be overwritten
 			int v; //score for current move
@@ -79,14 +77,11 @@ public class NegamaxAI extends AI {
 					//yet a possible best move
 					bms.add(mv);
 			}
-			if (bms.isEmpty())
-				return null;
-			else {
-				int rand = (int)(Math.random()*bms.size());
-				return bms.get(rand);
-			}
+			//select a random move from the best ones
+			int rand = (int)(Math.random()*bms.size());
+			return bms.get(rand);
 		}
-		return bm;
+		return null; //not found
 	}
 
 }
