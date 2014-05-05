@@ -32,6 +32,18 @@ public class Connect4 extends TicTacToe {
 		return null; //invalid column
 	}
 	
+	/**
+	 * Creates a move, ignoring the Y coordinate.
+	 * @param x X coordinate
+	 * @param y This could be anything you like, it will be ignored anyway.
+	 */
+	public Move createUserMove(int x, int y) {
+		for (int real_y=board.getHeight()-1; real_y>=0; real_y--)
+			if (board.getPiece(x, real_y) == null)
+				return new PutMove(this, x, real_y);
+		return null; //not found
+	}
+	
 	@Override
 	public ArrayList<Move> computeLegalMoves() {
 		ArrayList<Move> al = new ArrayList<Move>();

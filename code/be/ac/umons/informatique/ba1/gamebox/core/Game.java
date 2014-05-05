@@ -151,6 +151,16 @@ public abstract class Game extends MyObservable implements Serializable {
 	}
 	
 	/**
+	 * Creates a move from the given coordinates (called by the UI)
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @return Move object
+	 */
+	public Move createUserMove(int x, int y) {
+		return createMove(x, y);
+	}
+	
+	/**
 	 * Notifies all events corresponding to name.
 	 * Only the current player will be notified.
 	 * @param name Event name
