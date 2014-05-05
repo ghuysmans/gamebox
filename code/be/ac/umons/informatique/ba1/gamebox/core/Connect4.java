@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Connect4 extends TicTacToe {
 
 	private static final long serialVersionUID = 8899500704858942663L;
+	
+	public Connect4() {
+		this(7, 6);
+	}
 
 	public Connect4(int width, int height) {
 		this(width, height, 4);

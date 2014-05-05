@@ -18,7 +18,6 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
 public class UiGame {
 	
 	public final String desc;
-	public final int defaultX, defaultY;
 	
 	protected final Class<? extends Game> cls;
 	protected final String txBoard;
@@ -30,18 +29,14 @@ public class UiGame {
 	 * Creates a descriptor
 	 * @param d User-readable Description
 	 * @param c Class to be instantiated
-	 * @param x Default width
-	 * @param y Default height
 	 * @param tb Board texture
 	 * @param t1 Texture for player 1's pieces
 	 * @param t2 Texture for player 2's pieces
 	 * @param tr Reversed layers?
 	 */
-	public UiGame(String d, Class<? extends Game> c, int x, int y, String tb, String t1, String t2, boolean tr) {
+	public UiGame(String d, Class<? extends Game> c, String tb, String t1, String t2, boolean tr) {
 		desc = d;
 		cls = c;
-		defaultX = x;
-		defaultY = y;
 		txBoard = tb;
 		txP1 = t1;
 		txP2 = t2;
@@ -49,14 +44,16 @@ public class UiGame {
 	}
 	
 	/**
+	 * Creates an instance of cls with default dimensions using Java Reflection!
 	 * @see #createGame(int, int)
 	 */
-	public Game createGame() throws Exception {
-		return createGame(defaultX, defaultY);
+	public Game createGame() throws InvocationTargetException, Exception {
+		Constructor<?> cons = cls.getConstructor(new Class<?>[]{});
+		return (Game)cons.newInstance();
 	}
 	
 	/**
-	 * Creates an instance of cls with default dimensions using Java Reflection!
+	 * Creates an instance of cls with given dimensions using Java Reflection!
 	 * @param  x Board width
 	 * @param  y Board height
 	 * @return A ready-to-use Game object
@@ -67,7 +64,7 @@ public class UiGame {
 		//arguments: width, height
 		Class<?>[] argTypes = {int.class, int.class};
 		Object[] argValues = {new Integer(x), new Integer(y)};
-		//get a reference to it
+		//get a reference to the needed constructor
 		Constructor<?> cons = cls.getConstructor(argTypes);
 		//use it!
 		return (Game)cons.newInstance(argValues);

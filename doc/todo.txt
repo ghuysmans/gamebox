@@ -1,7 +1,10 @@
+check questions.txt
 "Recommencer" button (restart)
+stats must use user's selection (and force AI/AI)
 use antialiasing in BoardPanel!
 use a bitfield instead of boolean[]
-refactoring: use the default constructor for default sizes
 explain somewhere how to run tests in console
+resync UML with code!
+
 make the AI work on an isolated fake Game instance!
 create packaging script using Python (or Ant?)

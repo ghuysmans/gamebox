@@ -1,0 +1,11 @@
+﻿victoire : attributs protégés ou dans l'interface ?
+attributs ! lastMoveVirtual, firstEval. méthode pour set flags
+
+exceptions personnalisées pour erreurs liées aux jeux pour éviter français ?
+catcher précisément dans la GUI et traduire là
+
+grave si les méthodes des classes *Test ne sont pas commentées ?
+non faut juste les mettre dans un package différent
+
+distinction entre ordi et humain : instanceof ou méthode idiote ?
+instanceof ça va ^^

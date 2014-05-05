@@ -10,6 +10,10 @@ public class Othello extends Game {
 
 	private static final long serialVersionUID = 3817939786028484436L;
 
+	public Othello() {
+		this(8, 8);
+	}
+	
 	public Othello(int width, int height) {
 		super(width, height);
 		if (width != height)

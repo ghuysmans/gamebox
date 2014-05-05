@@ -9,6 +9,10 @@ public class TicTacToe extends Game {
 	
 	private static final long serialVersionUID = 7629735041191059405L;
 	protected final int required;
+	
+	public TicTacToe() {
+		this(3, 3);
+	}
 
 	public TicTacToe(int width, int height) {
 		this(width, height, 3);

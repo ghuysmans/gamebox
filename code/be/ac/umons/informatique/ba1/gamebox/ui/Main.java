@@ -134,9 +134,9 @@ public class Main extends JFrame implements ActionListener {
 		});
 		
 		games = new ArrayList<UiGame>();
-		games.add(new UiGame("Puissance 4", Connect4.class, 7, 6, "fiar/board", "fiar/yellow", "fiar/red", true));
-		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, 3, 3, "ttt/board", "ttt/o", "ttt/x", false));
-		games.add(new UiGame("Othello", Othello.class, 8, 8, "oth/board", "oth/black", "oth/white", false));
+		games.add(new UiGame("Puissance 4", Connect4.class, "fiar/board", "fiar/yellow", "fiar/red", true));
+		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false));
+		games.add(new UiGame("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false));
 		
 		context = GameContext.loadContext("savegame.dat");
 		//this must be done here because these constructors need a valid context
