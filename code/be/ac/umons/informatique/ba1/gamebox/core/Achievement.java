@@ -42,7 +42,7 @@ public class Achievement extends TextMessage {
 	
 	@Override
 	protected void performAction() {
-		Logging.getLogger(getClass()).info("Achievement unlocked: "+this.message);
+		Logging.getLogger(getClass()).fine("Achievement unlocked: "+this.message);
 	}
 	
 	@Override
