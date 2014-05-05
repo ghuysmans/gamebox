@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public abstract class Game extends MyObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
-	public static final int RESULT_WON 	= 42;
-	public static final int RESULT_LOST = -42;
+	public static final int RESULT_WON 	= 420;
+	public static final int RESULT_LOST = -420;
 	public static final int RESULT_DRAW = 0;
 	
 	protected Player currentPlayer;
