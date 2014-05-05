@@ -213,15 +213,18 @@ class BoardPanel extends JPanel implements MouseListener {
 			working = true;
 			if (e.isShiftDown())
 				context.game.history.undo(true);
-			else if (context.game.getCurrentPlayer() instanceof ComputerPlayer && !(e.isControlDown() && debug))
-				//it's a computer player, just ask it to play
-				((ComputerPlayer)context.game.getCurrentPlayer()).play();
-			else if (!context.game.hasFinished()) {
-				//it's a human player, let's convert the current mouse position to coordinates
-				Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
-				//if the given move is legal, play it
-				if (context.game.getLegalMoves().contains(mv))
-					mv.play(true);
+			else if (!context.game.hasFinished())
+			{
+				if (context.game.getCurrentPlayer() instanceof ComputerPlayer && !(e.isControlDown() && debug))
+					//it's a computer player, just ask it to play
+					((ComputerPlayer)context.game.getCurrentPlayer()).play();
+				else if (!context.game.hasFinished()) {
+					//it's a human player, let's convert the current mouse position to coordinates
+					Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
+					//if the given move is legal, play it
+					if (context.game.getLegalMoves().contains(mv))
+						mv.play(true);
+				}
 			}
 			repaint();
 			if (context.game.hasFinished()) {
