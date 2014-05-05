@@ -45,6 +45,7 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenu stats = new JMenu("Statistiques");
 	protected final JMenu help = new JMenu("Aide");
 	
+	protected final String ACTION_STATS = "STATS";
 	protected final JMenuItem res = new JMenuItem("Résultats");
 	protected final JMenuItem graph = new JMenuItem("Graphique");
 	protected final JMenuItem itv = new JMenuItem("Interactif");
@@ -83,9 +84,9 @@ public class Main extends JFrame implements ActionListener {
 		pls.add(ach); ach.addActionListener(this);
 		menuBar.add(pls);
 		
-		stats.add(res);
-		stats.add(graph);
-		stats.add(itv);
+		stats.add(res); res.addActionListener(this); res.setActionCommand(ACTION_STATS);
+		stats.add(graph); graph.addActionListener(this); graph.setActionCommand(ACTION_STATS);
+		stats.add(itv); itv.addActionListener(this); itv.setActionCommand(ACTION_STATS);
 		menuBar.add(stats);
 		
 		if (debug) {
@@ -223,6 +224,15 @@ public class Main extends JFrame implements ActionListener {
 		else if (e.getSource() == valPls) doValPlayersSel();
 		else if (e.getSource() == mngPls) showPlayers();
 		else if (e.getSource() == about) showAbout();
+		else if (e.getActionCommand() == ACTION_STATS) {
+			int lvl1, lvl2;
+			StatsDialog sd = new StatsDialog(this, true);
+			if (!sd.cancelled) {
+				lvl1 = sd.getLevel1();
+				lvl2 = sd.getLevel2();
+				System.out.println(lvl1+" and "+lvl2);
+			}
+		}
 	}
 	
 	
