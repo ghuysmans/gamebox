@@ -1,10 +1,17 @@
+basic:
+- stats
+- automatic bot move (mode!)
+- aboutbox
+- report
+
 check questions.txt
+FIXME's and TODO's
 "Recommencer" button (restart)
 stats must use user's selection (and force AI/AI)
 use antialiasing in BoardPanel!
-use a bitfield instead of boolean[]
-explain somewhere how to run tests in console
+explain somewhere how to run tests from the console
 resync UML with code!
 
+optimization: use a bitfield instead of boolean[]. maybe not (but EXPLAIN!)
 make the AI work on an isolated fake Game instance!
 create packaging script using Python (or Ant?)
