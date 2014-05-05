@@ -130,11 +130,13 @@ class BoardPanel extends JPanel implements MouseListener {
 	public void paintComponent(Graphics g){ 
 		AI ai = null;
 		if (debug && !working) { //avoid a nasty error condition...
-			int lvl = 5; //default value
+			int lvl = -1; //invalid
 			if (context.game.players[0] instanceof ComputerPlayer)
 				lvl = ((ComputerPlayer)context.game.players[0]).level-2;
 			else if (context.game.players[1] instanceof ComputerPlayer)
 				lvl = ((ComputerPlayer)context.game.players[1]).level-2;
+			if (lvl < 0) //invalid level?
+				lvl = 5; //set a default one...
 			ai = new NegamaxAI(context.game, lvl);
 		}
 		super.paintComponent(g); //paint the background

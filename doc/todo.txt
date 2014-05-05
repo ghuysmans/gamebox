@@ -1,6 +1,4 @@
 "Recommencer" button (restart)
-right click crashing with stupid AI's
-use an enum for RESULT_*
 use a bitfield instead of boolean[]
 refactoring: use the default constructor for default sizes
 explain somewhere how to run tests in console
