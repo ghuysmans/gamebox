@@ -32,7 +32,7 @@ public abstract class Player extends MyObservable implements Serializable {
 	}
 
 	/**
-	 * Stores (if needed) a reference to the Game object
+	 * Stores (if needed) a reference to the Game object this player is playing on.
 	 * @param g Game object
 	 */
 	public void setGame(Game g) {

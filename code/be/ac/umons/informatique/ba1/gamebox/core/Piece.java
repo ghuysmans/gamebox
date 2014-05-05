@@ -3,7 +3,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 import java.io.Serializable;
 
 /** 
- * Generic piece which only contains an owner.
+ * Generic piece which only contains a reference to its owner.
  */
 
 public class Piece implements Serializable {
