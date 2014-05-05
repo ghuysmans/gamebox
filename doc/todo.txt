@@ -1,4 +1,5 @@
 "Recommencer" button (restart)
+use antialiasing in BoardPanel!
 use a bitfield instead of boolean[]
 refactoring: use the default constructor for default sizes
 explain somewhere how to run tests in console
