@@ -44,17 +44,7 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenuItem ach = new JMenuItem("Succès");
 	protected final JMenu stats = new JMenu("Statistiques");
 	protected final JMenu help = new JMenu("Aide");
-	protected final JMenu ttt = new JMenu("Tic-Tac-Toe");
-	protected final JMenu fiar = new JMenu("Puissance 4");
-	protected final JMenu oth = new JMenu("Othello");
 	
-	protected final JMenuItem trd1 = new JMenuItem("Traditionnel");
-	protected final JMenuItem cus1 = new JMenuItem("Personnalisé");
-	protected final JMenuItem trd2 = new JMenuItem("Traditionnel");
-	protected final JMenuItem cus2 = new JMenuItem("Personnalisé");
-	protected final JMenuItem trd3 = new JMenuItem("Traditionnel");
-	protected final JMenuItem cus3 = new JMenuItem("Personnalisé");
-
 	protected final JMenuItem res = new JMenuItem("Résultats");
 	protected final JMenuItem graph = new JMenuItem("Graphique");
 	protected final JMenuItem itv = new JMenuItem("Interactif");
