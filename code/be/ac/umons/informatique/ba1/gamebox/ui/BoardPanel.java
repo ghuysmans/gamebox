@@ -179,7 +179,7 @@ class BoardPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * Displays legal moves
+	 * Hides legal moves
 	 */
 	@Override public void mouseReleased(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON3) {
@@ -189,10 +189,10 @@ class BoardPanel extends JPanel implements MouseListener {
 	}
 	
 	/**
-	 * Hides legal moves
+	 * Displays legal moves
 	 */
 	@Override public void mousePressed(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
+		if (e.getButton()==MouseEvent.BUTTON3 && !context.game.hasFinished()) {
 			showLegal = true;
 			repaint();
 		}
@@ -219,11 +219,16 @@ class BoardPanel extends JPanel implements MouseListener {
 					//it's a computer player, just ask it to play
 					((ComputerPlayer)context.game.getCurrentPlayer()).play();
 				else if (!context.game.hasFinished()) {
-					//it's a human player, let's convert the current mouse position to coordinates
-					Move mv = context.game.createMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
-					//if the given move is legal, play it
-					if (context.game.getLegalMoves().contains(mv))
-						mv.play(true);
+					try {
+						//it's a human player, let's convert the current mouse position to coordinates
+						Move mv = context.game.createUserMove(e.getPoint().x/pieceSize, e.getPoint().y/pieceSize);
+						//if the given move is legal, play it
+						if (context.game.getLegalMoves().contains(mv))
+							mv.play(true);
+					}
+					catch (Exception ex) {
+						//nothing to do
+					}
 				}
 			}
 			repaint();
