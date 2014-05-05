@@ -49,7 +49,7 @@ public abstract class Game extends MyObservable implements Serializable {
 	/**
 	 * Selects the other player as current one.
 	 */
-	public final void nextPlayer() {
+	public void nextPlayer() {
 		assert(currentPlayer!=null): "Trying to use an uninitialized Game";
 		if (currentPlayer == players[0])
 			setCurrentPlayer(players[1]);

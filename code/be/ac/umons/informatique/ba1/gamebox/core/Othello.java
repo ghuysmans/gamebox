@@ -2,7 +2,8 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 import java.util.ArrayList;
 
 /** 
- * Traditional Othello game
+ * Traditional Othello game (variant of Reversi).
+ * First player is black, just in case you don't remember ;)
  */
 
 public class Othello extends Game {
@@ -25,6 +26,13 @@ public class Othello extends Game {
 		board.setPiece(new Piece(players[0]), hw-1, hh); //black2
 		board.setPiece(new Piece(players[1]), hw-1, hh-1); //white
 		board.setPiece(new Piece(players[1]), hw, hh); //white2
+	}
+	
+	@Override
+	public void nextPlayer() {
+		super.nextPlayer();
+		if (getLegalMoves().size() == 0)
+			super.nextPlayer();
 	}
 	
 	protected int getScore_internal(Player p) {
