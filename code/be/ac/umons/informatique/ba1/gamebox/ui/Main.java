@@ -395,7 +395,7 @@ public class Main extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					CustomDialog dlg = new CustomDialog(null, true);
-					if (dlg.ok) {
+					if (!dlg.getCancelled()) {
 						context.game = descriptor.createGame(dlg.getTypedWidth(), dlg.getTypedHeight());
 						enablePlayersSelection(true);
 						loadBoardPanel();

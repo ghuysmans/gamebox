@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class CustomDialog extends JDialog implements ActionListener {
 	
-	protected boolean ok;
+	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
 	
 	protected final JTextField width = new ThinTextField("", 5);
 	protected final JTextField height = new ThinTextField("", 5);
@@ -50,8 +50,12 @@ public class CustomDialog extends JDialog implements ActionListener {
 		setVisible(true);	
 	}
 	
-	public boolean getOK() {
-		return ok;
+	/**
+	 * Returns whether the frame has been closed without clicking OK
+	 * @return false if the user has clicked on OK
+	 */
+	public boolean getCancelled() {
+		return cancelled;
 	}
 	
 	public int getTypedWidth() {
@@ -66,7 +70,7 @@ public class CustomDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == btnOK) {
-				ok = true;
+				cancelled = false;
 				@SuppressWarnings("unused")
 				int test = getTypedHeight()+getTypedWidth();
 			}
