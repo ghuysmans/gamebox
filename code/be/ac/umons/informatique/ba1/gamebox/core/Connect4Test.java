@@ -9,7 +9,8 @@ public class Connect4Test {
 	public void legalSmoke() {
 		Game g = new Connect4(3, 2, 4); //a small one
 		Player p = new HumanPlayer("X");
-		g.setPlayers(p, null); //with only one player
+		Player p2 = new HumanPlayer("Y");
+		g.setPlayers(p, p2); //with only one player
 		Object mv[] = g.getLegalMoves().toArray();
 		Object exp[] = {new PutMove(g, 0, 1), new PutMove(g, 1, 1), new PutMove(g, 2, 1)};
 		Assert.assertArrayEquals("Moves match", exp, mv);
