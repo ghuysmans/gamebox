@@ -17,14 +17,14 @@ public class CustomDialog extends JDialog implements ActionListener {
 	
 	protected boolean ok;
 	
-	protected final JTextField width = new ThinTextField("", 20);
-	protected final JTextField height = new ThinTextField("", 20);
+	protected final JTextField width = new ThinTextField("", 5);
+	protected final JTextField height = new ThinTextField("", 5);
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
 	
 	public CustomDialog(JFrame parent, boolean modal) {
 		super(parent, "Personnalisation", modal);
-		setSize(350, 100);
+		setSize(200, 100);
 		setLocationRelativeTo(parent);
 		setResizable(false);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
