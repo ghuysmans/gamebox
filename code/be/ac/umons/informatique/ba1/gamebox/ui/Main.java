@@ -115,9 +115,7 @@ public class Main extends JFrame implements ActionListener {
 	 * @see UiGame#createPanel(GameContext)
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
-		BoardPanel bp = null;
-		setContentPane(bp = UiGame.createPanel(games, context, debug));
-		setSize(bp.pieceSize*context.game.board.getWidth()+50, bp.pieceSize*context.game.board.getHeight()+80); //FIXME
+		setContentPane(UiGame.createPanel(games, context, debug));
 		revalidate(); //FIXME not present in Java 6
 	}
 	
