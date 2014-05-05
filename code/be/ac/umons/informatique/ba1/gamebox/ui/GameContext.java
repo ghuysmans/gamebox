@@ -11,7 +11,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
  * Represents a saved game: this object will be saved when the application is closed.
- * There's no need to care about encapsulation: this object is just a load/saved structure! 
+ * There's no need to care about encapsulation: this object is just a loaded/saved structure! 
  */
 
 public class GameContext implements Serializable {
