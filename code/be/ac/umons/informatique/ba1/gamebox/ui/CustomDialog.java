@@ -1,10 +1,10 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -17,17 +17,17 @@ public class CustomDialog extends JDialog implements ActionListener {
 	
 	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
 	
-	protected final JTextField width = new ThinTextField("", 5);
-	protected final JTextField height = new ThinTextField("", 5);
+	protected final JTextField width = new ThinTextField("", 3);
+	protected final JTextField height = new ThinTextField("", 3);
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
 	
 	public CustomDialog(JFrame parent, boolean modal) {
 		super(parent, "Personnalisation", modal);
-		setSize(200, 100);
+		setSize(160, 120);
 		setLocationRelativeTo(parent);
 		setResizable(false);
-		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		setLayout(new FlowLayout());
 		
 		Box box = Box.createHorizontalBox();
 		box.add(new JLabel("Largeur : "));
