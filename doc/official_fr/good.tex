@@ -1,17 +1,32 @@
 \section{Points positifs}
 \begin{enumerate}
+	\item Le~moteur du jeu est profondément modulaire :
+	\begin{enumerate}
+		\item Il est facile d'ajouter de nouveaux succès et des ensembles complexes 
+				de conditions pour chacun d'entre eux : les~succès ne sont pas 
+				directement liés aux~jeux mais plutôt déclenchés à travers des événements : 
+				un~mouvement, une~victoire, une~défaite, un~retour en arrière, etc.
+		\item Des jeux supplémentaires mais semblables aux jeux déjà implémentés peuvent facilement 
+				être ajoutés : il suffit de créer une~nouvelle classe pour chacun d'eux ainsi que 
+				pour chacun de leurs mouvements spécifiques.
+		\item Les~IA sont interchangeables : à partir du moment où un~jeu propose 
+				une~liste de mouvements légaux et évalue la~situation courante, 
+				n'importe quelle IA est compatible avec lui.
+	\end{enumerate}
+	
+	\item Les~textures ont entièrement été faites par nos~soins.
 
-\item Toutes les foncionnalit�s impl�ment�es de mani�re modulaire, comme par exemple le fait de pouvoir ajouter des achievements assez facilement, 
-un ensemble d'inteligences artifcielles capables de fonctionner avec n'importe quel jeu o� l'�valuation du score est impl�ment�e.
+	\item Tout le~projet est capable de tenir dans un~fichier \texttt{jar}, ce qui le rend plus facile à partager.
 
-\item Tout le projet est capable de tenir dans un jar, ce qui le rend plus facile � partager.
+	\item Le~système de retour en arrière a été implémenté dès le début et fonctionne partout.
 
-\item Le code est assez concis gr�ce � l'utilisation maximale que nous avaos faite de l'orient� objets.
+	\item Le~débogage des IA ainsi que la triche sont facilités par la~présence d'un~mode de fonctionnement et de raccourcis dédiés.
 
-\item Les textures sont enti�rement faites par nos soins.
+	\item Le~déroulement des jeux est totalement isolé de l'interface graphique : cette dernière 
+			ne fait qu'instancier des objets génériques (chose possible grâce au polymorphisme) et 
+			utiliser les~méthodes qu'ils présentent. 
 
-\item Nous avons impl�ment� quelques bonus comme par exemples le systeme de retour en arri�re (fonctionnel avec tous les jeux), l'export des statistiques des ia dans gnuplot.
-
-TODO
-
+	\item Le~code est bien organisé grâce à l'utilisation maximale que nous avons faite de la~POO et abondamment documenté en utilisant Javadoc.
+	
+	\item Les~statistiques des intelligences artificielles sont exportables dans gnuplot.
 \end{enumerate}

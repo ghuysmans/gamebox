@@ -3,7 +3,10 @@ basic:
 - automatic bot move (mode!)
 - aboutbox
 - report
+- achievements icons
+- sounds?
 
+selected game without players must be discarded
 check questions.txt
 FIXME's and TODO's
 "Recommencer" button (restart)
