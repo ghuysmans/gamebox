@@ -1,9 +1,11 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JSlider;
+
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
@@ -19,9 +21,9 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 
 	public StatsDialog(JFrame parent, boolean modal) {
 		super(parent, "Choix des niveaux d'IA", modal);
-		setSize(400, 300);
+		setSize(250, 165);
 		setLocationRelativeTo(parent);
-		setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		setLayout(new FlowLayout());
 		setResizable(false);
 		
 		initAiLevelSlider(lvl1);
