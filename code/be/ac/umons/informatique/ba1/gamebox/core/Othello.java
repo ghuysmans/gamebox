@@ -26,6 +26,7 @@ public class Othello extends Game {
 		board.setPiece(new Piece(players[0]), hw-1, hh); //black2
 		board.setPiece(new Piece(players[1]), hw-1, hh-1); //white
 		board.setPiece(new Piece(players[1]), hw, hh); //white2
+		notifyEvent("chg");
 	}
 	
 	@Override

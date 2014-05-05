@@ -3,8 +3,6 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -21,7 +19,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
  * We'll need to use different classes later if we want to handle animations.
  */
 @SuppressWarnings("serial")
-class BoardPanel extends JPanel implements MouseListener {
+class BoardPanel extends JPanel implements MyObserver, MouseListener {
 	
 	/**
 	 * Maximum piece size, in pixels. Corresponds to a tile's size.
@@ -84,12 +82,7 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	public BoardPanel(GameContext c, String b, String p1, String p2, boolean r, boolean d) throws URISyntaxException, IOException {
 		addMouseListener(this);
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				adjustSize();
-			}
-		});
+		c.game.addTmpObserver(this);
 		
 		context = c;
 		imgBoard = getImage(b);
@@ -128,6 +121,9 @@ class BoardPanel extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void paintComponent(Graphics g){ 
+		//Compute pieces' size before doing anything
+		pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
+		//Create an AI object if needed
 		AI ai = null;
 		if (debug && !working) { //avoid a nasty error condition...
 			int lvl = -1; //invalid
@@ -139,7 +135,9 @@ class BoardPanel extends JPanel implements MouseListener {
 				lvl = 5; //set a default one...
 			ai = new NegamaxAI(context.game, lvl);
 		}
+		//Actually start painting...
 		super.paintComponent(g); //paint the background
+		//For each piece,
 		for (int x=0; x<context.game.board.getWidth(); x++) {
 			for (int y=0; y<context.game.board.getHeight(); y++) {
 				boolean lm = false;
@@ -233,7 +231,6 @@ class BoardPanel extends JPanel implements MouseListener {
 					}
 				}
 			}
-			repaint();
 			if (context.game.hasFinished()) {
 				if (context.game.getResult(context.game.players[0]) == Game.RESULT_WON)
 					JOptionPane.showMessageDialog(null, context.game.players[0].name+" a gagné !");
@@ -245,11 +242,10 @@ class BoardPanel extends JPanel implements MouseListener {
 			working = false;
 		}
 	}
-	
-	/**
-	 * Adjusts pieceSize from the pane's dimensions
-	 */
-	public void adjustSize() {
-		pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
+
+	@Override
+	public void update(MyObservable g, Object param) {
+		if (param.equals("chg"))
+			repaint();
 	}
 }
