@@ -103,7 +103,7 @@ public class Main extends JFrame implements ActionListener {
 	/**
 	 * Loads a board panel, displays it and resizes the JFrame.
 	 * Both exception are declared to avoid ignoring an NPE thrown because of an unknown game.
-	 * @see UiGame#createPanel(GameContext)
+	 * @see UiGame#createPanel(ArrayList, GameContext, boolean)
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
 		setContentPane(UiGame.createPanel(games, context, debug));

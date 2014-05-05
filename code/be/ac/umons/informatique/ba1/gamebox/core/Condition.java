@@ -1,7 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 import java.io.Serializable;
-import java.util.Observable;
 
 /** 
  * Conditions triggered by subclasses of Game using their name.
@@ -90,7 +89,7 @@ class Condition implements MyObserver, Serializable {
 	
 	/**
 	 * Performs the action triggered by the condition's completion.
-	 * @see Condition#update(Observable, Object)
+	 * @see Condition#update(MyObservable, Object)
 	 */
 	protected void performAction() {
 		return;

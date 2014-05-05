@@ -58,7 +58,7 @@ public abstract class Game extends MyObservable implements Serializable {
 	}
 	
 	/**
-	 * Forces a new current player (used in {@link Move#undo()}).
+	 * Forces a new current player (used in {@link Move#undo(boolean)}).
 	 * @param p New current player
 	 */
 	public final void setCurrentPlayer(Player p) {
@@ -201,7 +201,7 @@ public abstract class Game extends MyObservable implements Serializable {
 	
 	/**
 	 * Computes legal moves; called internally.
-	 * @see getLegalMoves()
+	 * @see #getLegalMoves()
 	 */
 	protected abstract ArrayList<Move> computeLegalMoves();
 

@@ -50,7 +50,7 @@ public abstract class Move implements Serializable {
 	 * Undoes the move, checking the history without modifying it
 	 * Never call this method from the outside!
 	 * @param notify Fires conditions for achievements
-	 * @see History#undo()
+	 * @see History#undo(boolean)
 	 */
 	public final void undo(boolean notify) {
 		if (game.history.peek() != this)

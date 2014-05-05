@@ -3,7 +3,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 import java.io.Serializable;
 
 /** 
- * Rectangle which contains all pieces. It state shouldn't be manipulated without 
+ * Rectangle which contains all pieces. Its state shouldn't be manipulated without 
  * using the Move class (and its derived classes) to avoid game corruption.
  */
 
