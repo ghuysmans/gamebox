@@ -48,7 +48,6 @@ public class Main extends JFrame implements ActionListener {
 	protected final String ACTION_STATS = "STATS";
 	protected final JMenuItem res = new JMenuItem("Résultats");
 	protected final JMenuItem graph = new JMenuItem("Graphique");
-	protected final JMenuItem itv = new JMenuItem("Interactif");
 	
 	protected final JMenuItem manual = new JMenuItem("Manuel");
 	protected final JMenuItem about = new JMenuItem("À propos de...");
@@ -86,7 +85,6 @@ public class Main extends JFrame implements ActionListener {
 		
 		stats.add(res); res.addActionListener(this); res.setActionCommand(ACTION_STATS);
 		stats.add(graph); graph.addActionListener(this); graph.setActionCommand(ACTION_STATS);
-		stats.add(itv); itv.addActionListener(this); itv.setActionCommand(ACTION_STATS);
 		menuBar.add(stats);
 		
 		if (debug) {
