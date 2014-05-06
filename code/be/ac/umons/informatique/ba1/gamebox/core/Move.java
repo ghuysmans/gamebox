@@ -57,8 +57,10 @@ public abstract class Move implements Serializable {
 			throw new RuntimeException("Trying to undo something else than the last move!");
 		internalUndo();
 		game.setCurrentPlayer(player);
-		if (!conseq && notify)
-			game.notifyEvent("ud");
+		if (!conseq && notify) {
+			game.notifyEvent("ud"); //for events
+			game.notifyEvent("chg"); //to update the display
+		}
 	}
 	
 	/**
