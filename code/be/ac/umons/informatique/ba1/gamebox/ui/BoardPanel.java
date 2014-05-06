@@ -225,6 +225,9 @@ class BoardPanel extends JPanel implements MyObserver, MouseListener {
 						//if the given move is legal, play it
 						if (context.game.getLegalMoves().contains(mv))
 							mv.play(true);
+						//automatically asks for the computer player to play
+						if (!context.game.hasFinished() && context.game.getCurrentPlayer() instanceof ComputerPlayer && !debug)
+							((ComputerPlayer)context.game.getCurrentPlayer()).play();
 					}
 					catch (Exception ex) {
 						//nothing to do
