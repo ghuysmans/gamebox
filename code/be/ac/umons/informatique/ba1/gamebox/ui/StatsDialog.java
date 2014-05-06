@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
 
-import be.ac.umons.informatique.ba1.gamebox.core.*;
-
 /**
  * AI's selection dialog featuring two (!) JSliders.
  * Simply adapted from AiDialog...
@@ -16,8 +14,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 @SuppressWarnings("serial")
 class StatsDialog extends AiAbstractDialog implements ActionListener { 
 	
-	protected final JSlider lvl1 = new JSlider(JSlider.HORIZONTAL, AI.LEVEL_MIN, AI.LEVEL_MAX, (AI.LEVEL_MAX+AI.LEVEL_MIN)/2);
-	protected final JSlider lvl2 = new JSlider(JSlider.HORIZONTAL, AI.LEVEL_MIN, AI.LEVEL_MAX, (AI.LEVEL_MAX+AI.LEVEL_MIN)/2);
+	protected final JSlider lvl1, lvl2;
 
 	public StatsDialog(JFrame parent, boolean modal) {
 		super(parent, "Choix des niveaux d'IA", modal);
@@ -26,8 +23,8 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 		setLayout(new FlowLayout());
 		setResizable(false);
 		
-		initAiLevelSlider(lvl1);
-		initAiLevelSlider(lvl2);
+		lvl1 = createAiLevelSlider(-1); //FIXME
+		lvl2 = createAiLevelSlider(-1); //FIXME
 		
 		add(lvl1);
 		add(lvl2);

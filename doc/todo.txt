@@ -1,16 +1,17 @@
 basic:
-- stats
+- stats; they must use user's game selection (hidden)
 - automatic bot move (mode!)
 - aboutbox
 - report
 - achievements icons
 - sounds?
 
+open users management dialog when no profile exist
 selected game without players must be discarded
+AI selection dialogs must be pre-filled when modifying
 check questions.txt
 FIXME's and TODO's
 "Recommencer" button (restart)
-stats must use user's selection (and force AI/AI)
 use antialiasing in BoardPanel!
 explain somewhere how to run tests from the console
 resync UML with code!

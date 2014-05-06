@@ -11,6 +11,7 @@ public abstract class AI implements Serializable {
 
 	private static final long serialVersionUID = 2932487869213658719L;
 	public static final int LEVEL_MIN = 0;  
+	public static final int LEVEL_MID = 5;
 	public static final int LEVEL_MAX = 8;
 	
 	public final String desc;

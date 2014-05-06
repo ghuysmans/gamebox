@@ -9,8 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import be.ac.umons.informatique.ba1.gamebox.core.*;
-
 /**
  * AI selection dialog featuring a JSlider
  */
@@ -21,7 +19,7 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 	protected static final String DEFAULT_NAME = "Ordinateur"; 
 	
 	protected final JTextField name = new ThinTextField(DEFAULT_NAME, 8);
-	protected final JSlider diff = new JSlider(JSlider.HORIZONTAL, AI.LEVEL_MIN, AI.LEVEL_MAX, (AI.LEVEL_MAX+AI.LEVEL_MIN)/2);
+	protected final JSlider diff;
 
 	public AiDialog(JFrame parent, boolean modal) {
 		super(parent, "Choix de l'IA", modal);
@@ -30,11 +28,11 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 		setLayout(new FlowLayout());
 		setResizable(false);
 		
-		initAiLevelSlider(diff);
-		
 		Box sup = Box.createHorizontalBox();
 		sup.add(new JLabel("Nom donné à l'IA : "));
 		sup.add(name);
+		
+		diff = createAiLevelSlider(-1); //FIXME
 		
 		add(sup);
 		add(Box.createVerticalStrut(5));
