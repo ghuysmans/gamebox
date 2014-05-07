@@ -226,7 +226,7 @@ public class Main extends JFrame implements ActionListener {
 					enablePlayersSelection(false);
 				}
 				else if (e.getSource() == res)
-					new AiStatsDialog(context.game.class, ai1, ai2, this, true);
+					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, true);
 			}
 		}
 		else {
