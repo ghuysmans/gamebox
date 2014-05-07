@@ -1,13 +1,15 @@
 \section{Choix argumentés}
+
+\subsection{Organisation interne}
 Le même objet est utilisé pour représenter le~plateau de tous les~jeux. Ce~plateau n'est jamais manipulé directement par ces~derniers :
 les~objets représentant les~jeux génèrent des listes de coups possibles qui seront ensuite utilisés par les différentes intelligences artificielles.
 Pour savoir si un~mouvement est autorisé, il nous suffit de vérifier qu'il appartient à cette~liste. 
 
 Du fait que les~jeux proposent tous une~liste de coups autorisés par les~règles, les~intelligences artificielles sont indépendantes des jeux :
-il suffit de modéliser les~différents types de mouvements et leurs~conséquences pour permettre à un~joueur humain ou au logiciel de jouer !
+il suffit de modéliser les~différents types de mouvements et leurs~conséquences pour permettre \emph{à la fois} à un~joueur humain et au logiciel de jouer !
 
-Le~jeu de \textit{tic-tac-toe} et \textit{puissance 4} ont une~caractéristique commune : les~conditions de victoire sont identiques, seul le~nombre de jetons diffère !
-\textit{Puissance 4} ne fait qu'ajouter une~contrainte lorsqu'un~jeton est joué, c'est pourquoi il hérite de \textit{tic-tac-toe}.
+Le~jeu de \ttt{} et \cf{} ont une~caractéristique commune : les~conditions de victoire sont identiques, seul le~nombre de jetons diffère !
+\c4 ne fait qu'ajouter une~contrainte lorsqu'un~jeton est joué, c'est pourquoi il hérite de \ttt.
 
 L'historique est géré sous la~forme d'une~pile : on ne peut défaire un~mouvement que lorsque c'est le~dernier effectué. 
 Les~intelligences artificielles s'en servent abondamment pour explorer les différentes possibilités. 
@@ -20,4 +22,19 @@ les~événements. Ces~derniers sont constitués de plusieurs compteurs nommés, 
 L'utilisation du design patern \texttt{Observer} nous évite des incohérence entre l'interface graphique et l'état interne des jeux.
 
 La~sérialisation nous a permis de facilement sauvegarder et enregistrer les~parties en cours et les~profils des joueurs. 
-Les~classes composant le~design pattern \texttt{Observer} ont cependant dû être réécrites puisqu'\texttt{Observable} n'est pas sérialisable.
+Les~classes composant le~design pattern \texttt{Observer} ont cependant dû être réécrites puisqu'\texttt{Observable} n'est pas sérialisable, 
+ce qui nous empêchait de sauvegarder les~liens entre les différentes conditions et le~jeu en cours d'exécution.
+
+
+\subsection{IA}
+Comme il nous était demandé d'implémenter plusieurs <<~intelligences artificielles~>>, 
+nous en avons choisi trois, classées ici par niveau selon l'ordre croissant :
+
+\begin{enumerate}
+	\item \emph{Hasard} : elle sélectionne un~coup au~hasard parmi les~coups légaux.
+    \item \emph{Premier} : elle sélectionne le premier coup légal de la~liste. Le~balayage est fait,
+    \begin{itemize}
+        \item pour \oth{} et \ttt{} : de gauche à droite et de haut en bas.
+        \item pour \cf{} : de gauche à droite.
+    \end{itemize}
+\end{enumerate}
