@@ -26,11 +26,11 @@ public class NegamaxAI extends AI {
 		int result = game.getResult();
 		if (result==Game.RESULT_LOST || result==Game.RESULT_WON || rec==maxRecursion)
 			//no need to compute further, we're done
-			return result >> rec;
+			return (result >> rec) + game.getPositionalBonus();
 		//test possible moves...
 		ArrayList<Move> mvs = game.getLegalMoves();
 		if (mvs.size() == 0)
-			return result >> rec;
+			return (result >> rec) + game.getPositionalBonus();
 		else
 		{
 			int M = Integer.MIN_VALUE; //fake value which will be overwritten

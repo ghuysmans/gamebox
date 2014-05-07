@@ -123,8 +123,16 @@ public abstract class Game extends MyObservable implements Serializable {
 	 * Evaluates the result of the current player and categorizes it.
 	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
 	 */
-	public int getResult() {
+	public final int getResult() {
 		return getResult(currentPlayer);
+	}
+	
+	/**
+	 * Gives bonus points to well-located pieces on the board belonging to the current user.
+	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
+	 */
+	public final int getPositionalBonus() {
+		return getPositionalBonus(currentPlayer);
 	}
 	
 	/**
