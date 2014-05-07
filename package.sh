@@ -30,6 +30,8 @@ echo "Copying libraries..."
 cp -R lib $1/$2
 echo "Copying resources..."
 cp -R res $1/$2
+rm -R $1/$2/res/**/*.psd
+rm -R $1/$2/res/*.psd
 echo "Copying the PDF report..."
 cp doc/official_fr/main.pdf $1/$2/rapport.pdf
 echo "Copying the Ant build file..."
