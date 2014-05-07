@@ -1,20 +1,25 @@
-basic:
-- stats; they must use user's game selection (hidden)
+mlq
+todo @AboutDialog: implement it!
+bug @aisel: not pre-filled when modifying
+todo @report: complete it?
+todo @Achievement: draw the remaining ones
+todo @sounds: record them?
 
-- aboutbox
-- report
-- achievements icons
-- sounds?
+ghs
+bug @automove: the /working/ flag isn't used!
+bug @gamesel: no players then discarded
+todo @AiStatsDialog: use a thread
+todo @Main: implement the restart button
+todo @Game: trigger won and won-xxx using internal flags
+todo: fix FIXME's and TODO's in the code
+todo @BoardPanel: use antialiasing!
+bug: exceptions must be translated
+todo @manual: (in HTML), how to get stats for gnuplot from the console?
+todo @report: resync UML with code and integrate it
+todo @sound: implement something to play them
 
-selected game without players must be discarded
-AI selection dialogs must be pre-filled when modifying
-translate exceptions in the UI, trigger won
-FIXME's and TODO's
-"Recommencer" button (restart)
-use antialiasing in BoardPanel!
-HTML manual: how to run stats from the console (gnuplot)
-resync UML with code!
-
-optimization: use a bitfield instead of boolean[]. maybe not (but EXPLAIN!)
-make the AI work on an isolated fake Game instance!
-create packaging script using Python (or Ant?)
+maybe?
+todo @getEnemyNeighbors: optimization, use a bitfield
+bug @AiDialog: cancel but looks like selected, though
+todo @ComputerPlayer: make the AI work on an isolated fake Game instance!
+todo @packaging: create a script using Python or Ant
