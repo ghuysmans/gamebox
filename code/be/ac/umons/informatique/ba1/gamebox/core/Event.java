@@ -19,7 +19,7 @@ public abstract class Event extends Condition {
 	 * @param thr  Threshold
 	 * @param rst  Auto-reset
 	 */
-	public Event(MyObservable obs, String desc, String nm, int thr, boolean rst) {
+	public Event(SavedObservable obs, String desc, String nm, int thr, boolean rst) {
 		super(obs, desc, nm, thr);
 		autoreset = rst;
 		conditions = new ArrayList<Condition>();
@@ -34,7 +34,7 @@ public abstract class Event extends Condition {
 	 * @param rst  Auto-reset
 	 * @param cond Conditions
 	 */
-	public Event(MyObservable obs, String desc, String nm, int thr, boolean rst, Condition... cond) {
+	public Event(SavedObservable obs, String desc, String nm, int thr, boolean rst, Condition... cond) {
 		this(obs, desc, nm, thr, rst);
 		for (Condition x: cond) {
 			x.setParent(this);
@@ -43,7 +43,7 @@ public abstract class Event extends Condition {
 	}
 	
 	@Override
-	public void update(MyObservable g, Object param) {
+	public void update(SavedObservable g, Object param) {
 		if (name.equals(param)) {
 			for (Condition c: conditions) {
 				if (!c.isMet()) 

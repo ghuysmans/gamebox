@@ -19,7 +19,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
  * We'll need to use different classes later if we want to handle animations.
  */
 @SuppressWarnings("serial")
-class BoardPanel extends JPanel implements MyObserver, MouseListener {
+class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	
 	/**
 	 * Maximum piece size, in pixels. Corresponds to a tile's size.
@@ -247,7 +247,7 @@ class BoardPanel extends JPanel implements MyObserver, MouseListener {
 	}
 
 	@Override
-	public void update(MyObservable g, Object param) {
+	public void update(SavedObservable g, Object param) {
 		if (param.equals("chg"))
 			repaint();
 	}

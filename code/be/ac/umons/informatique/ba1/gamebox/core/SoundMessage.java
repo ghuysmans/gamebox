@@ -18,7 +18,7 @@ class SoundMessage extends TextMessage {
 	 * @param thr  Threshold
 	 * @param rst  Auto-reset
 	 */
-	public SoundMessage(MyObservable obs, String msg, String desc, String nm, int thr, boolean rst) {
+	public SoundMessage(SavedObservable obs, String msg, String desc, String nm, int thr, boolean rst) {
 		super(obs, msg, desc, nm, thr, rst);
 	}
 
@@ -33,7 +33,7 @@ class SoundMessage extends TextMessage {
 	 * @param rst  Auto-reset
 	 * @param cond Conditions
 	 */
-	public SoundMessage(MyObservable obs, String msg, String desc, String nm, int thr, boolean rst, Condition... cond) {
+	public SoundMessage(SavedObservable obs, String msg, String desc, String nm, int thr, boolean rst, Condition... cond) {
 		super(obs, msg, desc, nm, thr, rst, cond);
 	}
 

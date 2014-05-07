@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Generic game  
  */
 
-public abstract class Game extends MyObservable implements Serializable {
+public abstract class Game extends SavedObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
 	public static final int RESULT_WON 	= 420;

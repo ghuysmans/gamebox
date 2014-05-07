@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Conditions triggered by subclasses of Game using their name.
  */
 
-class Condition implements MyObserver, Serializable {
+class Condition implements SavedObserver, Serializable {
 
 	private static final long serialVersionUID = -6277076554051997918L;
 	protected int count;
@@ -22,7 +22,7 @@ class Condition implements MyObserver, Serializable {
 	 * @param nm Name (to be used in Game's subclasses)
 	 * @param max Maximum count
 	 */
-	public Condition(MyObservable obs, String desc, String nm, int max) {
+	public Condition(SavedObservable obs, String desc, String nm, int max) {
 		count = 0;
 		description = desc;
 		name = nm;
@@ -66,7 +66,7 @@ class Condition implements MyObserver, Serializable {
 	 * @param g     Game object
 	 * @param param String identifier
 	 */
-	public void update(MyObservable g, Object param) {
+	public void update(SavedObservable g, Object param) {
 		if (name.equals(param)) {
 			if (count < maximum) {
 				count++;
@@ -89,7 +89,7 @@ class Condition implements MyObserver, Serializable {
 	
 	/**
 	 * Performs the action triggered by the condition's completion.
-	 * @see Condition#update(MyObservable, Object)
+	 * @see Condition#update(SavedObservable, Object)
 	 */
 	protected void performAction() {
 		return;

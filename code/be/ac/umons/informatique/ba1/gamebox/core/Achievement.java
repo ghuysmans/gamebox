@@ -19,7 +19,7 @@ public class Achievement extends TextMessage {
 	 * @param rst  Auto-reset
 	 * @param ico  Icon?
 	 */
-	public Achievement(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
+	public Achievement(SavedObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
 		super(obs, desc, msg, nm, thr, rst);
 		icon = ico;
 	}
@@ -35,7 +35,7 @@ public class Achievement extends TextMessage {
 	 * @param ico  Icon?
 	 * @param cond Conditions
 	 */
-	public Achievement(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico, Condition... cond) {
+	public Achievement(SavedObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico, Condition... cond) {
 		super(obs, desc, msg, nm, thr, rst, cond);
 		icon = ico;
 	}

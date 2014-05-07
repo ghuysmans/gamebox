@@ -18,7 +18,7 @@ class TextMessage extends Event {
 	 * @param thr  Threshold
 	 * @param rst  Auto-reset
 	 */
-	public TextMessage(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst) {
+	public TextMessage(SavedObservable obs, String desc, String msg, String nm, int thr, boolean rst) {
 		super(obs, desc, nm, thr, rst);
 		message = msg;
 	}
@@ -33,7 +33,7 @@ class TextMessage extends Event {
 	 * @param rst  Auto-reset
 	 * @param cond Conditions
 	 */
-	public TextMessage(MyObservable obs, String desc, String msg, String nm, int thr, boolean rst, Condition... cond) {
+	public TextMessage(SavedObservable obs, String desc, String msg, String nm, int thr, boolean rst, Condition... cond) {
 		super(obs, desc, nm, thr, rst, cond);
 		message = msg;
 	}

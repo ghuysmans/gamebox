@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Generic player 
  */
 
-public abstract class Player extends MyObservable implements Serializable {
+public abstract class Player extends SavedObservable implements Serializable {
 
 	private static final long serialVersionUID = -2969901121702177313L;
 	public String name;
