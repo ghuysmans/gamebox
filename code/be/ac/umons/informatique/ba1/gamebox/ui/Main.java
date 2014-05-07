@@ -109,11 +109,9 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Creates a main window
-	 * @param dbg Debug mode
+	 * Initializes the user interface, creating menus, registering listeners...
 	 */
-	public Main(boolean dbg) {
-		debug = dbg;
+	private void initUI() {
 		setSize(800, 600);
 		setTitle("Game box");
 		setLocationRelativeTo(null);
@@ -136,21 +134,48 @@ public class Main extends JFrame implements ActionListener {
 		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false));
 		games.add(new UiGame("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false));
 		
-		context = GameContext.loadContext("savegame.dat");
-		//this must be done here because these constructors need a valid context
-		p1 = new PlayerMenu(this, "Joueur 1", 0);
-		p2 = new PlayerMenu(this, "Joueur 2", 1);
-		
 		initMenus();
 		
 		if (context.game != null) {
 			try {
 				loadBoardPanel();
 			} catch (Exception ex) {
-				//FIXME better exception handling? logging?
-				ex.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé ! Les images sont-elles présentes ?\nMessage : "+ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	/**
+	 * Asks the user to create profiles, etc.
+	 */
+	private void showFirstLaunch() {
+		int ans = JOptionPane.showConfirmDialog(this, 
+					"Bienvenue ! Voulez-vous créer un profil de joueur ? \n"+
+					"Cela vous permettra de jouer vous-même et \n"+
+					"d'enregistrer les succès que vous débloquerez. \n\n"+
+					"Cette option est disponible à tout moment \n"+
+					"depuis le menu Joueurs>Gérer.", 
+					"Premier lancement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (ans == JOptionPane.YES_OPTION)
+			new PlayersDialog(context, this, true);
+		context.firstLaunch = false;
+	}
+	
+	/**
+	 * Creates a main window
+	 * @param dbg Debug mode
+	 */
+	public Main(boolean dbg) {
+		debug = dbg;
+		
+		//this must be done here because these attributes are final
+		context = GameContext.loadContext("savegame.dat");
+		p1 = new PlayerMenu(this, "Joueur 1", 0);
+		p2 = new PlayerMenu(this, "Joueur 2", 1);
+		
+		initUI();
+		if (context.firstLaunch)
+			showFirstLaunch();
 		
 		tmrPlay = new Timer(800, this);
 		tmrPlay.start();
@@ -170,8 +195,6 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void doDebug() {
 		System.out.println("doDebug()");
-		context.game.players[0].setName("H");
-		context.game.players[1].setName("C");
 	}
 	
 	/**

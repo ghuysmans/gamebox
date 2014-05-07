@@ -21,6 +21,7 @@ public class GameContext implements Serializable {
 	public Game game;
 	public GameMode mode;
 	public ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer>();
+	public transient boolean firstLaunch;
 	public transient Player[] selPlayers;
 	
 	/**
@@ -72,6 +73,7 @@ public class GameContext implements Serializable {
 			GameContext ret = new GameContext();
 			ret.selPlayers = new Player[2];
 			ret.mode = GameMode.NORMAL;
+			ret.firstLaunch = true;
 			return ret;
 		}
 	}
