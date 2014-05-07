@@ -200,6 +200,13 @@ public abstract class Game extends MyObservable implements Serializable {
 	public abstract int getScore(Player p);
 	
 	/**
+	 * Gives bonus points to well-located pieces on the board
+	 * @param p Owner
+	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
+	 */
+	public abstract int getPositionalBonus(Player p);
+	
+	/**
 	 * Computes legal moves; called internally.
 	 * @see #getLegalMoves()
 	 */

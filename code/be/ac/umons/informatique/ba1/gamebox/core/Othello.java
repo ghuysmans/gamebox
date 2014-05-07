@@ -178,4 +178,28 @@ public class Othello extends Game {
 				return false;
 		}
 	}
+	
+	/**
+	 * Each piece in the borders is worth 1 point
+	 */
+	@Override
+	public int getPositionalBonus(Player p) {
+		Piece pc;
+		int ct=0, l=board.getHeight()-1;
+		for (int i=0; i<board.getHeight(); i++) {
+			//up
+			pc = board.getPiece(i, 0);
+			if (pc!=null && pc.owner==p) ct++;
+			//right
+			pc = board.getPiece(l, i);
+			if (pc!=null && pc.owner==p) ct++;
+			//down
+			pc = board.getPiece(i, l);
+			if (pc!=null && pc.owner==p) ct++;
+			//left
+			pc = board.getPiece(0, i);
+			if (pc!=null && pc.owner==p) ct++;
+		}
+		return ct;
+	}
 }
