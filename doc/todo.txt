@@ -6,14 +6,13 @@ basic:
 - achievements icons
 - sounds?
 
-open users management dialog when no profile exist
 selected game without players must be discarded
 AI selection dialogs must be pre-filled when modifying
-check questions.txt
+translate exceptions in the UI, trigger won
 FIXME's and TODO's
 "Recommencer" button (restart)
 use antialiasing in BoardPanel!
-explain somewhere how to run tests from the console
+HTML manual: how to run stats from the console (gnuplot)
 resync UML with code!
 
 optimization: use a bitfield instead of boolean[]. maybe not (but EXPLAIN!)
