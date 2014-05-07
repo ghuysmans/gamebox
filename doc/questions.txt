@@ -6,6 +6,8 @@ catcher précisément dans la GUI et traduire là
 
 grave si les méthodes des classes *Test ne sont pas commentées ?
 non faut juste les mettre dans un package différent
+--> non, les déplacer me forcerait à mettre des trucs internes "public"
+--- pas top pour l'encapsulation, donc je ne fais pas ça.
 
 distinction entre ordi et humain : instanceof ou méthode idiote ?
 instanceof ça va ^^
