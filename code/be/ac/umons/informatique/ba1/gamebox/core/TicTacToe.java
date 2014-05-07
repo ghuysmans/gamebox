@@ -138,25 +138,14 @@ public class TicTacToe extends Game {
 		}
 		return al;
 	}
-
+	
 	/**
-	 * Each piece in the middle of the board is worth 1 point
+	 * Not really implemented for this game (useless!)
 	 * @see Game#getPositionalBonus(Player)
 	 */
 	@Override
 	public int getPositionalBonus(Player p) {
-		Piece pc;
-		int ct=0, sx, sy, ex, ey;
-		sx = (ex=board.getWidth()/2) - (board.getWidth()%2==0 ? 1 : 0);
-		sy = (ey=board.getHeight()/2) - (board.getHeight()%2==0 ? 1 : 0);
-		for (int x=sx; x<=ex; x++) {
-			for (int y=sy; y<=ey; y++) {
-				pc = board.getPiece(x, y);
-				if (pc!=null && pc.owner==p)
-					ct++;
-			}
-		}
-		return ct;
+		return 0;
 	}
 
 }
