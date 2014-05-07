@@ -190,15 +190,18 @@ public class Othello extends Game {
 			//up
 			pc = board.getPiece(i, 0);
 			if (pc!=null && pc.owner==p) ct++;
-			//right
-			pc = board.getPiece(l, i);
-			if (pc!=null && pc.owner==p) ct++;
 			//down
 			pc = board.getPiece(i, l);
 			if (pc!=null && pc.owner==p) ct++;
-			//left
-			pc = board.getPiece(0, i);
-			if (pc!=null && pc.owner==p) ct++;
+			//other directions
+			if (i!=0 && i!=l) {
+				//right
+				pc = board.getPiece(l, i);
+				if (pc!=null && pc.owner==p) ct++;
+				//left
+				pc = board.getPiece(0, i);
+				if (pc!=null && pc.owner==p) ct++;
+			}
 		}
 		return ct;
 	}

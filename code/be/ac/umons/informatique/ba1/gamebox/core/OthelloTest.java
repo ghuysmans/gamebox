@@ -64,7 +64,7 @@ public class OthelloTest extends GameTestAbstract {
 	}
 	
 	@Test
-	public void moveSmoke () {
+	public void moveSmoke() {
 		g.createMove(1, 0).play(true);
 		Assert.assertEquals("Has flipped", p1, g.board.getPiece(1, 1).getOwner());
 	}
@@ -83,6 +83,13 @@ public class OthelloTest extends GameTestAbstract {
 				if (res[j]) pack += k;
 			Assert.assertEquals("Enemy neighbours for "+g.posToStr(data[i][0], data[i][1]), data[i][2], pack);
 		}
+	}
+	
+	@Test
+	public void posBonus() {
+		fillBoard(g, new Player[][]{new Player[]{p2, p2, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p1, p1, p2}, new Player[]{p2, p2, p2, p2}});
+		Assert.assertEquals("Positional bonus p1", 1, g.getPositionalBonus(p1));
+		Assert.assertEquals("Positional bonus p2", 11, g.getPositionalBonus(p2));
 	}
 	
 }
