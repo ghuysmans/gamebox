@@ -11,7 +11,7 @@ public class OthelloTest extends GameTestAbstract {
 
 	@Before
 	/**
-	 * Classical Othello settings (4x4)
+	 * Mini Othello settings (4x4)
 	 */
 	public void init() {
 		g = new Othello(4, 4);
