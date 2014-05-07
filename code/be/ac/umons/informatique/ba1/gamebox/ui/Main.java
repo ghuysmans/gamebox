@@ -33,7 +33,6 @@ public class Main extends JFrame implements ActionListener {
 	protected boolean debug;
 	
 	protected Timer tmrPlay;
-	//protected Timer tmrClock;
 	protected final JMenuBar menuBar = new JMenuBar();
 	
 	protected final JMenu gamesMenu = new JMenu("Jeux");
