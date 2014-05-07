@@ -170,13 +170,16 @@ public class Main extends JFrame implements ActionListener {
 		
 		//this must be done here because these attributes are final
 		context = GameContext.loadContext("savegame.dat");
+		
+		//this must be done before creating players menus... 
+		if (context.firstLaunch)
+			showFirstLaunch();
+		
 		p1 = new PlayerMenu(this, "Joueur 1", 0);
 		p2 = new PlayerMenu(this, "Joueur 2", 1);
 		
 		initUI();
-		if (context.firstLaunch)
-			showFirstLaunch();
-		
+
 		tmrPlay = new Timer(800, this);
 		tmrPlay.start();
 		setVisible(true);
