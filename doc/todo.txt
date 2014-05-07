@@ -1,6 +1,6 @@
 basic:
 - stats; they must use user's game selection (hidden)
-- automatic bot move (mode!)
+
 - aboutbox
 - report
 - achievements icons
