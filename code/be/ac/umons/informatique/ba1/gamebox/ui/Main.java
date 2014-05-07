@@ -64,6 +64,7 @@ public class Main extends JFrame implements ActionListener {
 		p1.setVisible(e);
 		p2.setVisible(e);
 		valPls.setVisible(e);
+		stats.setVisible(e);
 	}
 	
 	/**
@@ -153,6 +154,7 @@ public class Main extends JFrame implements ActionListener {
 		}
 		
 		tmrPlay = new Timer(800, this);
+		tmrPlay.start();
 		setVisible(true);
 	}
 
@@ -160,7 +162,7 @@ public class Main extends JFrame implements ActionListener {
 	 * Computer autoplay if we're in the right mode 
 	 */
 	private void doPlay() {
-		if (context.mode==GameMode.DEMO_AUTOMATIC && (context.game.getCurrentPlayer() instanceof ComputerPlayer) && !context.game.hasFinished())
+		if (context.mode==GameMode.AUTOMATIC && (context.game.getCurrentPlayer() instanceof ComputerPlayer) && !context.game.hasFinished())
 				((ComputerPlayer)context.game.getCurrentPlayer()).play();
 	}
 	
@@ -190,6 +192,7 @@ public class Main extends JFrame implements ActionListener {
 		if (context.isPlayerSelectionValid()) {
 			enablePlayersSelection(false);
 			context.game.setPlayers(context.selPlayers[0], context.selPlayers[1]);
+			context.mode = GameMode.NORMAL;
 		}
 		else
 			JOptionPane.showMessageDialog(this, "Veuillez sélectionner deux joueurs distincts...", "Attention", JOptionPane.WARNING_MESSAGE);
@@ -211,6 +214,27 @@ public class Main extends JFrame implements ActionListener {
 		new AboutDialog(this, true);
 	}
 
+	private void doStats(ActionEvent e) {
+		if (context.game != null) {
+			StatsDialog sd = new StatsDialog(this, true);
+			if (!sd.cancelled) {
+				ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
+				ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
+				if (e.getSource() == graph) {
+					context.game.setPlayers(ai1, ai2);
+					context.mode = GameMode.AUTOMATIC;
+					enablePlayersSelection(false);
+				}
+				else if (e.getSource() == res)
+					new AiStatsDialog(context.game.class, ai1, ai2, this, true);
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Il faut sélectionner un jeu pour utiliser cette fonctionnalité!");
+		}
+	}
+	
+	
 	/**
 	 * Handles timers and some menus, always calls private methods?
 	 */
@@ -222,15 +246,7 @@ public class Main extends JFrame implements ActionListener {
 		else if (e.getSource() == valPls) doValPlayersSel();
 		else if (e.getSource() == mngPls) showPlayers();
 		else if (e.getSource() == about) showAbout();
-		else if (e.getActionCommand() == ACTION_STATS) {
-			int lvl1, lvl2;
-			StatsDialog sd = new StatsDialog(this, true);
-			if (!sd.cancelled) {
-				lvl1 = sd.getLevel1();
-				lvl2 = sd.getLevel2();
-				System.out.println(lvl1+" and "+lvl2);
-			}
-		}
+		else if (e.getActionCommand() == ACTION_STATS) doStats(e);
 	}
 	
 	
