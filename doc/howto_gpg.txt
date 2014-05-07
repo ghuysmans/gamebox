@@ -1,0 +1,2 @@
+on Windows, in %PF%\Git\etc\profile, comment this line:
+export GNUPGHOME=~/.gnupg

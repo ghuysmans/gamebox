@@ -20,8 +20,6 @@ todo @report: explain Negamax a little bit
 todo @sound: implement something to play them
 
 maybe?
-todo: followed stupid conventions? I HOPE NOT!
 todo @getEnemyNeighbors: optimization, use a bitfield
 bug @AiDialog: cancel but looks like selected, though
 todo @ComputerPlayer: make the AI work on an isolated fake Game instance!
-todo @packaging: create a script using Python or Ant
