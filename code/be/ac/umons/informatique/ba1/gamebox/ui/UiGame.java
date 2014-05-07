@@ -48,8 +48,7 @@ public class UiGame {
 	 * @see #createGame(int, int)
 	 */
 	public Game createGame() throws InvocationTargetException, Exception {
-		Constructor<?> cons = cls.getConstructor(new Class<?>[]{});
-		return (Game)cons.newInstance();
+		return cls.newInstance();
 	}
 	
 	/**
