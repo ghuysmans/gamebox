@@ -22,6 +22,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
 	StatsComputer sc;
 	protected static final int COUNT = 5;
+	
 	protected JProgressBar pgb = new JProgressBar(0, COUNT);
 	protected JLabel won = new JLabel("Pourcentage de parties gagnées : ");
 	protected JLabel lost = new JLabel("Pourcentage de parties perdues : ");
@@ -36,29 +37,24 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
 	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, Main parent, boolean modal) {
 		super(parent, "Statistiques des IA", modal);
-		ccl.addActionListener(this);
 		setSize(275, 188);
 		setLocationRelativeTo(parent);
 		setLayout(new BorderLayout());
-		setResizable(true);
+		setResizable(false);
+		
 		sc = new StatsComputer(g, p1, p2, COUNT);
 		sc.addObserver(this);
 		sc.run();
-		pgb.setStringPainted(true);
-
 		
+		//left column
 		JPanel b1 = new JPanel();
-		
 		b1.setLayout(new BoxLayout(b1, BoxLayout.PAGE_AXIS));
-		won.setAlignmentX(RIGHT_ALIGNMENT);
-		lost.setAlignmentX(RIGHT_ALIGNMENT);
-		count.setAlignmentX(RIGHT_ALIGNMENT);
-		draw.setAlignmentX(RIGHT_ALIGNMENT);
-		b1.add(won);
-		b1.add(lost);
-		b1.add(draw);
-		b1.add(count);
+		won.setAlignmentX(RIGHT_ALIGNMENT); b1.add(won);
+		lost.setAlignmentX(RIGHT_ALIGNMENT); b1.add(lost);
+		count.setAlignmentX(RIGHT_ALIGNMENT); b1.add(count);
+		draw.setAlignmentX(RIGHT_ALIGNMENT); b1.add(draw);
 		
+		//right column
 		JPanel b2 = new JPanel();
 		b2.setLayout(new BoxLayout(b2, BoxLayout.PAGE_AXIS));
 		b2.add(wonval);
@@ -66,22 +62,17 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		b2.add(drawval);
 		b2.add(countval);
 		
-		//FIXME
-		
-		JPanel b3 = new JPanel();
-		b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
-		add(ccl);
-		
+		//statistics
 		JPanel ba = new JPanel();
 		setLayout(new FlowLayout());
 		ba.add(b1);
 		ba.add(b2);
 		
+		//progress bar and button
 		JPanel bb = new JPanel();
 		setLayout(new FlowLayout());
-		bb.add(pgb);
-		bb.add(ccl);
-		
+		pgb.setStringPainted(true); bb.add(pgb);
+		bb.add(ccl); ccl.addActionListener(this);
 		
 		add(ba, BorderLayout.NORTH);
 		add(notice, BorderLayout.CENTER);
