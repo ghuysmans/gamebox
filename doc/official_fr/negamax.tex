@@ -1,0 +1,30 @@
+\section{Zoom sur l'algorithme Negamax}
+
+Dans un jeu à somme nulle
+\footnote{Un jeu à somme nulle est un jeu dans lequel la~somme des valeurs des pertes et des gains de chaque joueur est nulle. Lorsqu'un joueur a un avantage de $n$ points sur l'autre, ce dernier a un désavantage de $-n$ points.}, 
+on peut imaginer une stratégie gagnante pour chaque joueur (que nous nommerons Alice et Bob) : 
+\begin{itemize}
+	\item Alice doit chercher à maximiser ses profits (minimiser ceux de Bob).
+	\item Bob doit chercher à maximiser ses profits (minimiser ceux d'Alice).
+\end{itemize}
+
+Malheureusement, l'espace de recherche est trop important pour être exploré entièrement : 
+nous devons nous limiter à une certaine profondeur. Dans notre~code, on <<~creuse~>> jusqu'à 
+6~niveaux (6~coups joués à tour de rôle).
+
+L'ensemble des situations de jeu examinées par l'algorithme Negamax 
+peut être représenté sous la~forme d'un arbre dans lequel :
+\begin{enumerate}
+	\item Chaque noeud représente une situation de jeu.
+    \item Chaque situation non finale a des descendants.
+\end{enumerate}
+
+La~valeur d'un noeud correspondra au score obtenu par le~joueur actuel; elle vaudra... :
+\begin{itemize}
+	\item le~score final si la~partie est terminée ou si le~niveau maximal de récursion a été atteint.
+    \item le meilleur score obtenu en essayant chaque mouvement légal, en se rappelant récursivement 
+            et en inversant la~valeur retournée puisque celle-ci correspond au score du~joueur adverse 
+            (puisqu'il n'y a dans nos~jeux que deux~joueurs).
+\end{itemize}
+
+Le meilleur coup à jouer est celui qui rapporte le plus de points.
