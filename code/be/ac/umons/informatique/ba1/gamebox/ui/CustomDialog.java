@@ -66,6 +66,9 @@ public class CustomDialog extends JDialog implements ActionListener {
 		return Integer.parseInt(height.getText());
 	}
 	
+	/**
+	 * Handles buttons, validating data if needed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {

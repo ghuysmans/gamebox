@@ -25,6 +25,10 @@ class AiAbstractDialog extends JDialog implements ActionListener {
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
 	
+	public AiAbstractDialog(JFrame parent, String caption, boolean modal) {
+		super(parent, caption, modal);
+	}
+	
 	/**
 	 * Creates a slider with labels for the different difficulty levels.
 	 * @param value Default value (-1 means default)
@@ -70,10 +74,6 @@ class AiAbstractDialog extends JDialog implements ActionListener {
 		if (e.getSource() == btnOK)
 			cancelled = false;
 		setVisible(false);
-	}
-	
-	public AiAbstractDialog(JFrame parent, String caption, boolean modal) {
-		super(parent, caption, modal);
 	}
 
 }

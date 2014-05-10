@@ -28,20 +28,6 @@ class AchievementsDialog extends JDialog implements ActionListener {
 	protected JPanel list;
 	protected ThinCombo<Player> cmbPlayer;
 
-	protected void populateList(int idx) {
-		list.removeAll();
-		for (Event evt: players.get(idx).events)
-			if (evt instanceof Achievement)
-				list.add(new AchievementPanel((Achievement)evt));
-		list.revalidate();
-		list.repaint();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		populateList(cmbPlayer.getSelectedIndex());
-	}
-	
 	public AchievementsDialog(ArrayList<HumanPlayer> humans, Main parent, boolean modal) {
 		super(parent, "Succès débloqués", modal);
 		setSize(500, 400);
@@ -69,6 +55,31 @@ class AchievementsDialog extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 	
+	/**
+	 * Populates the achievements list
+	 * @param idx Player index in the ThinCombo
+	 */
+	protected void populateList(int idx) {
+		list.removeAll();
+		for (Event evt: players.get(idx).events)
+			if (evt instanceof Achievement)
+				list.add(new AchievementPanel((Achievement)evt));
+		list.revalidate();
+		list.repaint();
+	}
+
+	/**
+	 * Re-populates the achievements list when another player is selected.
+	 * The code is quite trivial...
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		populateList(cmbPlayer.getSelectedIndex());
+	}
+	
+	/**
+	 * Panel displaying a single achievement with name, description and completion 
+	 */
 	protected class AchievementPanel extends JPanel {
 		public AchievementPanel(Achievement ach) {
 			add(new Picture(ach.icon ? ach.name : "no_icon", 64, 64));

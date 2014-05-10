@@ -66,6 +66,8 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		b2.add(drawval);
 		b2.add(countval);
 		
+		//FIXME
+		
 		JPanel b3 = new JPanel();
 		b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
 		add(ccl);
@@ -88,6 +90,9 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * Updates displayed data
+	 */
 	@Override
 	public void update(Observable obs, Object obj) {
 		AiStats as = (AiStats)obj;
@@ -97,18 +102,30 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		drawval.setText((Double.toString((as.getDraw()*100)))+"%");
 		pgb.setValue(as.getCount());
 	}
+
+	/**
+	 * Closes the window and stops the {@link Thread} (if it isn't yet)
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//FIXME stop the thread
+		setVisible(false);
+	}
 	
-	class StatsComputer extends Observable implements Runnable {
+	/**
+	 * Computes statistics in a separate Thread
+	 */
+	protected class StatsComputer extends Observable implements Runnable {
 		protected Class<? extends Game> gc;
 		protected int count;
 		protected AiStats as;
 		
 		/**
-		 * Creates a StatsComputer instance, usable in a {@link Thread}.
+		 * Creates a StatsComputer instance.
 		 * @param g  Game class
 		 * @param p1 AI1
 		 * @param p2 AI2
-		 * @param n  Iterations count
+		 * @param n  Tests count
 		 */
 		public StatsComputer(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, int n) {
 			gc = g;
@@ -116,6 +133,10 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 			count = n;
 		}
 
+		/**
+		 * Asks AiStats to let players play {@link #count} times against each other 
+		 * and notifies {@link Observer}'s each time a {@link Game} finishes.
+		 */
 		@Override
 		public void run() {
 			int i = count;
@@ -135,13 +156,6 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 				notifyObservers(as);
 			}
 		}
-	}
-
-	@Override//FIXME Thread
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ccl)
-		setVisible(false);
-		
 	}
 	
 }

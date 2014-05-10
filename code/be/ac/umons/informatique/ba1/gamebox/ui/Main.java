@@ -56,6 +56,30 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	/**
+	 * Creates a main window
+	 * @param dbg Debug mode
+	 */
+	public Main(boolean dbg) {
+		debug = dbg;
+		
+		//this must be done here because these attributes are final
+		context = GameContext.loadContext("savegame.dat");
+		
+		//this must be done before creating players menus... 
+		if (context.firstLaunch)
+			showFirstLaunch();
+		
+		p1 = new PlayerMenu(this, "Joueur 1", 0);
+		p2 = new PlayerMenu(this, "Joueur 2", 1);
+		
+		initUI();
+
+		tmrPlay = new Timer(800, this);
+		tmrPlay.start();
+		setVisible(true);
+	}
+
+	/**
 	 * Sets the enabled state of menus used for player selection
 	 * @param e True for enabled
 	 */
@@ -164,30 +188,6 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Creates a main window
-	 * @param dbg Debug mode
-	 */
-	public Main(boolean dbg) {
-		debug = dbg;
-		
-		//this must be done here because these attributes are final
-		context = GameContext.loadContext("savegame.dat");
-		
-		//this must be done before creating players menus... 
-		if (context.firstLaunch)
-			showFirstLaunch();
-		
-		p1 = new PlayerMenu(this, "Joueur 1", 0);
-		p2 = new PlayerMenu(this, "Joueur 2", 1);
-		
-		initUI();
-
-		tmrPlay = new Timer(800, this);
-		tmrPlay.start();
-		setVisible(true);
-	}
-
-	/**
 	 * Computer autoplay if we're in the right mode 
 	 */
 	private void doPlay() {
@@ -248,6 +248,10 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Asks the user for the AI's to compare and starts working!
+	 * @param e Clicked menu
+	 */
 	private void doStats(ActionEvent e) {
 		if (context.game != null) {
 			StatsDialog sd = new StatsDialog(this, true);
@@ -268,9 +272,8 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	
-	
 	/**
-	 * Handles timers and some menus, always calls private methods?
+	 * Handles timers and some menus, deferring work to private methods
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -378,6 +381,8 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 
+	
+	
 	/**
 	 * Information bar displaying scores, time (to be implemented)...
 	 */
@@ -396,6 +401,8 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * Menu allowing selection of a game and customization of its board

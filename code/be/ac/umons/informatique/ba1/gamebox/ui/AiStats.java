@@ -21,7 +21,7 @@ public class AiStats {
 	}
 	
 	/**
-	 * Runs one test 
+	 * Runs one test, updating counters
 	 * @param g Empty game
 	 */
 	public void playGame(Game g, boolean dbg) {
