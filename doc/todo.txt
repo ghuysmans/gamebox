@@ -1,15 +1,14 @@
 mlq
 todo @AboutDialog: implement controls!
 bug @aisel: not pre-filled when modifying
+bug @AiStatsDialog: asks for the number of tests to execute
 todo @report: complete it?
 todo @Achievement: draw the remaining ones
 todo @sounds: record them?
 
 ghs
-todo @AboutDialog: implement the hard part
 bug @automove: the /working/ flag isn't used!
 bug @gamesel: no players then discarded
-todo @AiStatsDialog: use a thread
 todo @Main: implement the restart button
 todo @Game: trigger won and won-xxx using internal flags
 todo: fix FIXME's and TODO's in the code

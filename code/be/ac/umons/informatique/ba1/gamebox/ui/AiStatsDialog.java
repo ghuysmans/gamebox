@@ -10,6 +10,7 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -20,8 +21,9 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
 @SuppressWarnings("serial")
 public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
-	StatsComputer sc;
-	protected static final int COUNT = 5;
+	protected static final int COUNT = 25;
+	protected final Thread thread;
+	protected boolean stop = false;
 	
 	protected JProgressBar pgb = new JProgressBar(0, COUNT);
 	protected JLabel won = new JLabel("Pourcentage de parties gagnées : ");
@@ -33,33 +35,42 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	protected JLabel drawval = new JLabel("-");
 	protected JLabel countval = new JLabel("-");
 	protected ZoomedLabel notice = new ZoomedLabel("Les résultats sont présentés selon la première IA", 0.85f);
-	protected JButton ccl = new JButton("Annuler");
+	protected final JButton ccl = new JButton("Annuler");
 	
-	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, Main parent, boolean modal) {
+	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, boolean modal) {
 		super(parent, "Statistiques des IA", modal);
+
+		StatsComputer sc = new StatsComputer(g, p1, p2, COUNT);
+		sc.addObserver(this);
+		thread = new Thread(sc);
+		thread.start();
+
+		initUI(parent);
+	}
+	
+	/**
+	 * Initializes controls
+	 */
+	protected void initUI(JFrame parent) {
 		setSize(275, 188);
 		setLocationRelativeTo(parent);
 		setLayout(new BorderLayout());
 		setResizable(false);
 		
-		sc = new StatsComputer(g, p1, p2, COUNT);
-		sc.addObserver(this);
-		sc.run();
-		
 		//left column
 		JPanel b1 = new JPanel();
 		b1.setLayout(new BoxLayout(b1, BoxLayout.PAGE_AXIS));
 		won.setAlignmentX(RIGHT_ALIGNMENT); b1.add(won);
+		draw.setAlignmentX(RIGHT_ALIGNMENT); b1.add(draw);
 		lost.setAlignmentX(RIGHT_ALIGNMENT); b1.add(lost);
 		count.setAlignmentX(RIGHT_ALIGNMENT); b1.add(count);
-		draw.setAlignmentX(RIGHT_ALIGNMENT); b1.add(draw);
 		
 		//right column
 		JPanel b2 = new JPanel();
 		b2.setLayout(new BoxLayout(b2, BoxLayout.PAGE_AXIS));
 		b2.add(wonval);
-		b2.add(lostval);
 		b2.add(drawval);
+		b2.add(lostval);
 		b2.add(countval);
 		
 		//statistics
@@ -80,6 +91,15 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
 		setVisible(true);
 	}
+	
+	/**
+	 * Displays completion in percent into dest
+	 * @param dest Destination label
+	 * @param value Value in range [0;1]
+	 */
+	protected void setCompletion(JLabel dest, double value) {
+		dest.setText(Double.toString(Math.floor(value*10000)/100)+"%");
+	}
 
 	/**
 	 * Updates displayed data
@@ -87,19 +107,21 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	@Override
 	public void update(Observable obs, Object obj) {
 		AiStats as = (AiStats)obj;
-		countval.setText((Integer.toString((as.getCount()))));
-		wonval.setText((Double.toString((as.getWon()*100)))+"%");
-		lostval.setText((Double.toString((as.getLost()*100)))+"%");
-		drawval.setText((Double.toString((as.getDraw()*100)))+"%");
+		countval.setText(Integer.toString(as.getCount()));
 		pgb.setValue(as.getCount());
+		setCompletion(wonval, as.getWon());
+		setCompletion(lostval, as.getLost());
+		setCompletion(drawval, as.getDraw());
+		if (as.getCount() == COUNT)
+			ccl.setText("Fermer");
 	}
 
 	/**
-	 * Closes the window and stops the {@link Thread} (if it isn't yet)
+	 * Closes the window, interrupting the {@link Thread} if needed.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//FIXME stop the thread
+		stop = true;
 		setVisible(false);
 	}
 	
@@ -131,7 +153,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		@Override
 		public void run() {
 			int i = count;
-			while (i-- > 0) {
+			while (i-->0 && !stop) {
 				Game game;
 				try {
 					game = gc.newInstance();
