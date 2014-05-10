@@ -1,11 +1,12 @@
 mlq
-todo @AboutDialog: implement it!
+todo @AboutDialog: implement controls!
 bug @aisel: not pre-filled when modifying
 todo @report: complete it?
 todo @Achievement: draw the remaining ones
 todo @sounds: record them?
 
 ghs
+todo @AboutDialog: implement the hard part
 bug @automove: the /working/ flag isn't used!
 bug @gamesel: no players then discarded
 todo @AiStatsDialog: use a thread
@@ -20,6 +21,7 @@ todo @report: explain Negamax a little bit
 todo @sound: implement something to play them
 
 maybe?
+todo @getScore: use advanced heuristics!
 todo @getEnemyNeighbors: optimization, use a bitfield
 bug @AiDialog: cancel but looks like selected, though
 todo @ComputerPlayer: make the AI work on an isolated fake Game instance!
