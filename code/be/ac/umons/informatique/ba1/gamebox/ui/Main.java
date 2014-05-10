@@ -140,7 +140,9 @@ public class Main extends JFrame implements ActionListener {
 			try {
 				loadBoardPanel();
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé ! Les images sont-elles présentes ?\nMessage : "+ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé !\n"+
+													"Les images sont-elles présentes ?\nMessage : "+ex.getMessage(), 
+													"Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -220,7 +222,8 @@ public class Main extends JFrame implements ActionListener {
 			context.mode = GameMode.NORMAL;
 		}
 		else
-			JOptionPane.showMessageDialog(this, "Veuillez sélectionner deux joueurs distincts...", "Attention", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Veuillez sélectionner deux joueurs distincts...", 
+												"Attention", JOptionPane.WARNING_MESSAGE);
 	}
 
 	/**
@@ -236,7 +239,13 @@ public class Main extends JFrame implements ActionListener {
 	 * Shows the about dialog
 	 */
 	private void showAbout() {
-		new AboutDialog(this, true);
+		try {
+			new AboutDialog(this, true);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(this, "Impossible de charger l'image de la boite de dialogue !\n"+
+												"Les images sont-elles présentes ?\nMessage : "+e.getMessage(), 
+												"Erreur", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void doStats(ActionEvent e) {
@@ -441,12 +450,11 @@ public class Main extends JFrame implements ActionListener {
 					}
 				}
 				catch(InvocationTargetException e) {
-					//FIXME Main** error
-					JOptionPane.showMessageDialog(this, e.getCause().getMessage(), "Main Error", JOptionPane.WARNING_MESSAGE);
+					//FIXME translate!
+					JOptionPane.showMessageDialog(this, e.getCause().getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				}
 				catch(Exception e) {
-					//FIXME Main** error
-					JOptionPane.showMessageDialog(this, e.getMessage(), "Main Error", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
