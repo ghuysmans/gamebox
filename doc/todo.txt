@@ -1,12 +1,13 @@
 mlq
 todo @AboutDialog: implement controls!
-bug @aisel: not pre-filled when modifying
+bug @AiDialog: not pre-filled when modifying
 bug @AiStatsDialog: asks for the number of tests to execute
 todo @report: complete it?
 todo @Achievement: draw the remaining ones
-todo @sounds: record them?
+todo @SoundMessage: record them?
 
 ghs
+todo @report: explain Negamax
 bug @automove: the /working/ flag isn't used!
 bug @gamesel: no players then discarded
 todo @Main: implement the restart button

@@ -5,22 +5,27 @@
 	\item Système de succès et plus généralement, d'événements
     \item Gestion des mouvements et de leur historisation
     \item Implémentation du jeu \oth
+    \item Sauvegarde/chargement des parties et profils de joueurs
     \item Interface graphique :
     \begin{enumerate}
-        \item plateau de jeu
-        \item succès
+        \item menu \textit{Jeux} (utilise la réflection)
+        \item plateau de jeu générique
+        \item succès avec progression, icône...
         \item profils de joueurs
+        \item à propos de
     \end{enumerate}
 \end{enumerate}
 
 \subsection{Mathieu Leclercq}
 \begin{enumerate}
-	\item Création de toutes les~textures et icônes
+	\item Création de toutes les~textures
+    \item Invention de noms de succès originaux
+    \item Écriture de quelques tests unitaires JUnit
     \item Interface graphique : 
     \begin{enumerate}
-        \item sélection des IA
+        \item sélection des IA (à l'aide de \texttt{JSlider}'s annotés et réutilisables)
         \item taille de plateau personnalisée
-        \item statistiques
-        \item barre d'informations
+        \item statistiques des IA (à l'aide d'un~\texttt{Thread})
+        \item barre d'informations (\texttt{Observer})
     \end{enumerate}
 \end{enumerate}
