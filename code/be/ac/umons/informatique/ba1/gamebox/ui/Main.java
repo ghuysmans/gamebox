@@ -72,6 +72,11 @@ public class Main extends JFrame implements ActionListener {
 		p1 = new PlayerMenu(this, "Joueur 1", 0);
 		p2 = new PlayerMenu(this, "Joueur 2", 1);
 		
+		games = new ArrayList<UiGame>();
+		games.add(new UiGame("Puissance 4", Connect4.class, "fiar/board", "fiar/yellow", "fiar/red", true));
+		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false));
+		games.add(new UiGame("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false));
+		
 		initUI();
 
 		tmrPlay = new Timer(800, this);
@@ -152,11 +157,6 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
-		games = new ArrayList<UiGame>();
-		games.add(new UiGame("Puissance 4", Connect4.class, "fiar/board", "fiar/yellow", "fiar/red", true));
-		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false));
-		games.add(new UiGame("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false));
 		
 		initMenus();
 		
