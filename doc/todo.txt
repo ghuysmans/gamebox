@@ -7,7 +7,8 @@ todo @Achievement: draw the remaining ones
 todo @SoundMessage: record them?
 
 ghs
-todo @report: explain Negamax
+todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!
+todo @Negamax: add a flag for "virtual" moves
 bug @automove: the /working/ flag isn't used!
 bug @gamesel: no players then discarded
 todo @Main: implement the restart button
