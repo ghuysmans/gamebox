@@ -1,4 +1,5 @@
 mlq
+bug @automove: the "working" flag isn't used!
 todo @AboutDialog: implement controls!
 bug @AiDialog: not pre-filled when modifying
 bug @AiStatsDialog: asks for the number of tests to execute
@@ -7,9 +8,9 @@ todo @Achievement: draw the remaining ones
 todo @SoundMessage: record them?
 
 ghs
+todo @UiGame: refactor into an enum and use it in AiStats!
 todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!
-todo @Negamax: add a flag for "virtual" moves
-bug @automove: the /working/ flag isn't used!
+todo @Negamax: add a flag for "virtual" moves and remove them at start
 bug @gamesel: no players then discarded
 todo @Main: implement the restart button
 todo @Game: trigger won and won-xxx using internal flags
