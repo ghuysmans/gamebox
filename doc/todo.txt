@@ -3,7 +3,6 @@ todo @report: resync UML with code and integrate it
 bug @automove: the "working" flag isn't used!
 todo @AboutDialog: implement controls!
 bug @AiDialog: not pre-filled when modifying
-todo @SoundMessage: record them?
 
 ghs
 todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!
