@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 public class Board implements Serializable {
 
+	public static final int MINIMUM_WIDTH = 3;
+	public static final int MINIMUM_HEIGHT = 3;
 	private static final long serialVersionUID = -7488430075749452263L;
 
 	/**
@@ -29,8 +31,8 @@ public class Board implements Serializable {
 	 * @param height Height (y)
 	 */
 	public Board(int width, int height) {
-		if (width<3 || height<3)
-			throw new IllegalArgumentException("The board must be at least 3x3!");
+		if (width<MINIMUM_WIDTH || height<MINIMUM_HEIGHT)
+			throw new IllegalArgumentException(MessageUtil.getMessage("MINIMUM_SIZE", getClass(), MINIMUM_WIDTH, MINIMUM_HEIGHT));
 		arr = new Piece[height][width];
 		
 	}

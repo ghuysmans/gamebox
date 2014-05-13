@@ -22,6 +22,7 @@ public class Achievement extends TextMessage {
 	public Achievement(SavedObservable obs, String desc, String msg, String nm, int thr, boolean rst, boolean ico) {
 		super(obs, desc, msg, nm, thr, rst);
 		icon = ico;
+		//TODO translate this (pass a key instead of two Strings)
 	}
 	
 	/**

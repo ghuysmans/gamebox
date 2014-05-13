@@ -37,7 +37,7 @@ public abstract class Move implements Serializable {
 	 */
 	public final void play(boolean notify) {
 		if (game.currentPlayer != player)
-			throw new RuntimeException("Trying to cheat? You've been caught...");
+			throw new RuntimeException(MessageUtil.getMessage("INVALID_MOVE", getClass()));
 		game.history.push(this); //must be done first for OthelloMove's consequences!
 		if (notify)
 			game.notifyEvent("mv");
@@ -54,7 +54,7 @@ public abstract class Move implements Serializable {
 	 */
 	public final void undo(boolean notify) {
 		if (game.history.peek() != this)
-			throw new RuntimeException("Trying to undo something else than the last move!");
+			throw new RuntimeException(MessageUtil.getMessage("INVALID_UNDO", getClass()));
 		internalUndo();
 		game.setCurrentPlayer(player);
 		if (!conseq && notify) {

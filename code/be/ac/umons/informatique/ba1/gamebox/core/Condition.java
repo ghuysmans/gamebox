@@ -80,11 +80,12 @@ class Condition implements SavedObserver, Serializable {
 	}
 	
 	public String toString() {
-		String cpl = (maximum==1 ? "" : " ("+count+"/"+maximum+")");
-		if (count<maximum)
-			return description+cpl+" - NOT COMPLETED";
-		else
-			return description+cpl;
+		String key = "REPR";
+		if (maximum == 1)
+			key += "_UNIQUE";
+		if (count < maximum)
+			key += "_NOTCOMP";
+		return MessageUtil.getMessage(key, getClass(), description, count, maximum);
 	}
 	
 	/**

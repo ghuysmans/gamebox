@@ -17,10 +17,10 @@ public class Othello extends Game {
 	public Othello(int width, int height) {
 		super(width, height);
 		if (width != height)
-			throw new IllegalArgumentException("The board must be a square!");
+			throw new IllegalArgumentException(MessageUtil.getMessage("BOARD_SQUARE", getClass()));
 		//dimensions are the same... let's check the parity of one of them!
 		else if ((width & 1) == 1)
-			throw new IllegalArgumentException("Dimensions must be even!");
+			throw new IllegalArgumentException(MessageUtil.getMessage("BOARD_EVEN", getClass()));
 	}
 	
 	@Override

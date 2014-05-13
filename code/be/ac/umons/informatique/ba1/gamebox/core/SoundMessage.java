@@ -2,6 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
  * Plays a sound  
+ * TODO implement this
  */
 
 class SoundMessage extends TextMessage {

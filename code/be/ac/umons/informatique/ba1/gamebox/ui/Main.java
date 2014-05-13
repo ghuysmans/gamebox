@@ -6,11 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-
+import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -141,9 +139,14 @@ public class Main extends JFrame implements ActionListener {
 	 * Both exception are declared to avoid ignoring an NPE thrown because of an unknown game.
 	 * @see UiGame#createPanel(ArrayList, GameContext, boolean)
 	 */
-	private void loadBoardPanel() throws URISyntaxException, IOException {
-		setContentPane(BoardPanel.create(context, debug));
-		revalidate(); //FIXME not present in Java 6
+	private void loadBoardPanel() {
+		try {
+			setContentPane(BoardPanel.create(context, debug));
+			revalidate(); //FIXME not present in Java 6
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé !\nMessage : "+ex.getMessage(), 
+												"Erreur", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	/**
@@ -170,15 +173,8 @@ public class Main extends JFrame implements ActionListener {
 		
 		initMenus();
 		
-		if (context.game != null) {
-			try {
-				loadBoardPanel();
-			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé !\n"+
-													"Les images sont-elles présentes ?\nMessage : "+ex.getMessage(), 
-													"Erreur", JOptionPane.ERROR_MESSAGE);
-			}
-		}
+		if (context.game != null)
+			loadBoardPanel();
 	}
 	
 	/**
@@ -467,9 +463,12 @@ public class Main extends JFrame implements ActionListener {
 					context.game = descriptor.createGame();
 					enablePlayersSelection(true);
 					loadBoardPanel();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				}
+				catch(InvocationTargetException e) {
+					JOptionPane.showMessageDialog(this, e.getCause().getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
@@ -493,7 +492,6 @@ public class Main extends JFrame implements ActionListener {
 					}
 				}
 				catch(InvocationTargetException e) {
-					//FIXME translate!
 					JOptionPane.showMessageDialog(this, e.getCause().getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 				}
 				catch(Exception e) {
@@ -512,6 +510,9 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	public static void main(String[] args) {
+		//TODO remove this when the game is completely translated (frames, buttons, menus, etc.)
+		Locale.setDefault(Locale.FRENCH);
+		
 		new Main(args.length==1 && args[0].equals("-d"));
 	}
 

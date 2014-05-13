@@ -23,7 +23,7 @@ public class ComputerPlayer extends Player {
 		level = lvl;
 		
 		if (lvl<0)
-			throw new IllegalArgumentException("ComputerPlayer's difficulty level can't be negative!");
+			throw new IllegalArgumentException(MessageUtil.getMessage("NEGATIVE_DIFF", getClass()));
 		else if (lvl==0)
 			ai = new AbsentAI(g);
 		else if (lvl==1)
