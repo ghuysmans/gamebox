@@ -24,12 +24,13 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 class AchievementsDialog extends JDialog implements ActionListener {
 	
 	protected static final int COMPLETION_RESOLUTION = 1000;
+	protected static final boolean MODAL = true;
 	protected ArrayList<HumanPlayer> players;
 	protected JPanel list;
 	protected ThinCombo<Player> cmbPlayer;
 
-	public AchievementsDialog(ArrayList<HumanPlayer> humans, Main parent, boolean modal) {
-		super(parent, "Succès débloqués", modal);
+	public AchievementsDialog(ArrayList<HumanPlayer> humans, Main parent) {
+		super(parent, "Succès débloqués", MODAL);
 		setSize(500, 400);
 		setLocationRelativeTo(parent);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

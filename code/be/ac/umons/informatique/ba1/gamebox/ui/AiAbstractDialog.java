@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
@@ -20,11 +21,13 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 @SuppressWarnings("serial")
 class AiAbstractDialog extends JDialog implements ActionListener {
-
+	
+	
 	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
-	
+	protected JLabel occ = new JLabel("Nombres de parties à tester : ");
+	protected JTextField fieldocc = new JTextField();
 	public AiAbstractDialog(JFrame parent, String caption, boolean modal) {
 		super(parent, caption, modal);
 	}
@@ -45,6 +48,18 @@ class AiAbstractDialog extends JDialog implements ActionListener {
 		diff.setPaintLabels(true);
 		return diff;
 	}
+	
+	/**
+	 * Creates a box with a label and a field 
+	 * @return Box to be added to the layout
+	 */
+	/**protected Box createFieldBox(){
+		Box ctl = Box.createHorizontalBox();
+		ctl.add(occ);
+		ctl.add(fieldocc);
+		return ctl;
+	}*/
+	
 	
 	/**
 	 * Creates a box with OK and Cancel controls.

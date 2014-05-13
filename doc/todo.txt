@@ -2,11 +2,9 @@ mlq
 bug @automove: the "working" flag isn't used!
 todo @AboutDialog: implement controls!
 bug @AiDialog: not pre-filled when modifying
-bug @AiStatsDialog: asks for the number of tests to execute
 todo @report: complete it?
-todo @Achievement: draw the remaining ones
 todo @SoundMessage: record them?
-
+todo delete the useless modal parameter in dialogs' constructors
 ghs
 todo @UiGame: refactor into an enum and use it in AiStats!
 todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!

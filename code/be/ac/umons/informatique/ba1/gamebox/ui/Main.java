@@ -209,7 +209,7 @@ public class Main extends JFrame implements ActionListener {
 		if (context.humans.isEmpty())
 			JOptionPane.showMessageDialog(this, "Il n'existe aucun profil de joueur !");
 		else
-			new AchievementsDialog(context.humans, this, true);
+			new AchievementsDialog(context.humans, this);
 	}
 	
 	/**
@@ -264,12 +264,12 @@ public class Main extends JFrame implements ActionListener {
 					enablePlayersSelection(false);
 				}
 				else if (e.getSource() == res)
-					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, true);
-			}
+					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, sd.getNumberOfTest(), true);
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Il faut sélectionner un jeu pour utiliser cette fonctionnalité!");
 		}
+	}
 	}
 	
 	/**
