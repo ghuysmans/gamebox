@@ -10,7 +10,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
 	public static final int RESULT_WON 	= 420;
-	public static final int RESULT_LOST = -420;
+	public static final int RESULT_LOST = -RESULT_WON;
 	public static final int RESULT_DRAW = 0;
 	
 	protected Player currentPlayer;
@@ -41,6 +41,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 	
 	/**
 	 * Creates the initial game state.
+	 * Default behavior: does nothing.
 	 */
 	public void setup() {
 		return;

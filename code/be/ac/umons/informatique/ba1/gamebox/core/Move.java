@@ -21,7 +21,8 @@ public abstract class Move implements Serializable {
 	}
 	
 	/**
-	 * Compares two moves. Fails if obj isn't a move
+	 * Compares two moves. Fails if obj isn't a move.
+	 * Used in AI to avoid duplicate moves...
 	 * @param obj Another move
 	 * @return true if moves are the same
 	 */
@@ -73,8 +74,9 @@ public abstract class Move implements Serializable {
 	 */
 	protected abstract void internalUndo();
 	
-	
+	/**
+	 * Provides a string representation (for debugging purposes) of the Move
+	 */
 	public abstract String toString();
-
 
 }

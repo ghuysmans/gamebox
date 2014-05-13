@@ -23,9 +23,12 @@ public class Othello extends Game {
 			throw new IllegalArgumentException(MessageUtil.getMessage("BOARD_EVEN", getClass()));
 	}
 	
+	/**
+	 * Puts the 4 initial pieces on the center of the board.
+	 */
 	@Override
 	public void setup() {
-		int hh=board.getHeight()/2, hw=board.getWidth()/2;
+		int hh=board.getHeight()>>1, hw=board.getWidth()>>1;
 		board.setPiece(new Piece(players[0]), hw, hh-1); //black
 		board.setPiece(new Piece(players[0]), hw-1, hh); //black2
 		board.setPiece(new Piece(players[1]), hw-1, hh-1); //white
@@ -37,9 +40,15 @@ public class Othello extends Game {
 	public void nextPlayer() {
 		super.nextPlayer();
 		if (getLegalMoves().size() == 0)
+			//not nextPlayer() to avoid infinite recursion!
 			super.nextPlayer();
 	}
 	
+	/**
+	 * Computes an intermediate score for p
+	 * @param p Player
+	 * @return Count of his pieces
+	 */
 	protected int getScore_internal(Player p) {
 		int count = 0;
 		for (int y=0; y<board.getHeight(); y++) {
