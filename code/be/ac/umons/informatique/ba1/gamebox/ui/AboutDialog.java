@@ -34,7 +34,6 @@ class AboutDialog extends JDialog {
 	 */
 	public AboutDialog(JFrame parent, boolean modal) throws Exception {
 		super(parent, "À propos de...", modal);
-		setLocationRelativeTo(parent);
 		setResizable(false);
 		
 		//Load the original image (to be clipped...)
@@ -47,6 +46,7 @@ class AboutDialog extends JDialog {
 		//Use it!
 		setContentPane(new MyPanel());
 		
+		setLocationRelativeTo(parent);
 		setVisible(true);
 	}
 	
