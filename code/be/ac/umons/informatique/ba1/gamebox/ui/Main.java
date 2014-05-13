@@ -1,5 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -53,7 +55,6 @@ public class Main extends JFrame implements ActionListener {
 	protected final JMenuItem dbg = new JMenuItem("DEBUG");
 	
 	
-	
 	/**
 	 * Creates a main window
 	 * @param dbg Debug mode
@@ -78,6 +79,17 @@ public class Main extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	
+	/**
+	 * Enables anti-aliasing when drawing on g. We've put it here to avoid redundancy.
+	 * @param g Graphics2D object
+	 */
+	public static void enableAntiAliasing(Graphics2D g) {
+		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g.addRenderingHints(rh);
+	}
+		
 	/**
 	 * Sets the enabled state of menus used for player selection
 	 * @param e True for enabled

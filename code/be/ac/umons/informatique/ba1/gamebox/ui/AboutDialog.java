@@ -3,7 +3,6 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
@@ -26,26 +25,47 @@ class AboutDialog extends JDialog {
 	private final BufferedImage original;
 	private final int original_s, original_hs;
 	
+	
+	/**
+	 * Preloads the image (stored once in memory) and keeps its size
+	 * @param parent Parent frame
+	 * @param modal  Modal?
+	 * @throws Exception If the image can't be loaded
+	 */
+	public AboutDialog(JFrame parent, boolean modal) throws Exception {
+		super(parent, "À propos de...", modal);
+		setLocationRelativeTo(parent);
+		setResizable(false);
+		
+		//Load the original image (to be clipped...)
+		original = ImageIO.read(getClass().getResourceAsStream("/res/about.png"));
+		//Store the frequently used size (it's a square)
+		original_s = original.getWidth();
+		original_hs = original_s>>1;
+		setSize(original_s+50, original_s+50); //FIXME find a method to get the title bar's size, etc.?
+		//setSize(410, 425);
+		//Use it!
+		setContentPane(new MyPanel());
+		
+		setVisible(true);
+	}
+	
+	
+	
 	private class MyPanel extends JPanel implements MouseListener {
+		
 		private double angle = 0;
 		private double angle1 = 0;
 		private double angle2 = 0;
 		private double angle3 = 0;
 		private double angle4 = 0;
 		private double angle5 = 0;
+		
+		
 		public MyPanel() throws Exception {
 			addMouseListener(this);
 		}
 
-		/**
-		 * Enables anti-aliasing when drawing on g
-		 * @param g Graphics2D object
-		 */
-		private void enableAntiAliasing(Graphics2D g) {
-			RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	        rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-	        g.addRenderingHints(rh);
-		}
 		
 		/**
 		 * Draws a disk from {@link AboutDialog#original}
@@ -58,7 +78,7 @@ class AboutDialog extends JDialog {
 			BufferedImage newImage = new BufferedImage(original_s, original_s, BufferedImage.TYPE_INT_ARGB);
 			//Get a handle to an object for manipulating newImage
 			Graphics2D graphics = (Graphics2D)newImage.getGraphics();
-			enableAntiAliasing(graphics);
+			Main.enableAntiAliasing(graphics);
 			//Use a circle as clipping shape
 			int start=original_hs-radius, hr=radius<<1;
 			graphics.setClip(new Ellipse2D.Float(start, start, hr, hr));
@@ -77,7 +97,7 @@ class AboutDialog extends JDialog {
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g); //background color
 			Graphics2D g2d = (Graphics2D)g;
-			enableAntiAliasing(g2d);
+			Main.enableAntiAliasing(g2d);
 			//FIXME display each ring
 			drawDisk(g2d, 175, angle);
 			drawDisk(g2d, 175, angle5);
@@ -116,30 +136,4 @@ class AboutDialog extends JDialog {
 		@Override public void mouseReleased(MouseEvent arg0) {}
 	}
 	
-	/**
-	 * Preloads the image (stored once in memory) and keeps its size
-	 * @param parent Parent frame
-	 * @param modal  Modal?
-	 * @throws Exception If the image can't be loaded
-	 */
-	public AboutDialog(JFrame parent, boolean modal) throws Exception {
-		super(parent, "À propos de...", modal);
-		setLocationRelativeTo(parent);
-		setResizable(false);
-		
-		//Load the original image (to be clipped...)
-		original = ImageIO.read(getClass().getResourceAsStream("/res/about.png"));
-		//Store the frequently used size (it's a square)
-		original_s = original.getWidth();
-		original_hs = original_s>>1;
-		setSize(original_s, original_s); //FIXME take window's borders into account?
-		//setSize(410, 425);
-		//Use it!
-		setContentPane(new MyPanel());
-		
-		setVisible(true);
-	}
-	protected class GamePanel {
-		
-	}
 }

@@ -2,11 +2,13 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -114,7 +116,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 * @param x  Cell's X coordinate
 	 * @param y  Cell's Y coordinate
 	 */
-	private void paintPiece(Graphics g, Piece pc, int x, int y) {
+	private void paintPiece(Graphics2D g, Piece pc, int x, int y) {
 		if (pc != null) {
 			Image img = (pc.getOwner()==context.game.players[0] ? imgP1 : imgP2);
 			g.drawImage(img, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
@@ -127,7 +129,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 * @param x  Cell's X coordinate
 	 * @param y  Cell's Y coordinate
 	 */
-	private void paintBoard(Graphics g, int x, int y) {
+	private void paintBoard(Graphics2D g, int x, int y) {
 		g.drawImage(imgBoard, x*pieceSize, y*pieceSize, (x+1)*pieceSize, (y+1)*pieceSize, 0, 0, PIECE_MAX_SIZE, PIECE_MAX_SIZE, null);
 	}
 	
@@ -138,6 +140,9 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	public void paintComponent(Graphics g){ 
 		//Compute pieces' size before doing anything
 		pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
+		//Enable antialiasing
+		Graphics2D g2d = (Graphics2D)g;
+		Main.enableAntiAliasing(g2d);
 		//Create an AI object if needed
 		AI ai = null;
 		if (debug && !working) { //avoid a nasty error condition...
@@ -166,12 +171,12 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 					pc = new Piece(context.game.getCurrentPlayer());
 				//Display in the right order
 				if (reversed) {
-					paintPiece(g, pc, x, y);
-					paintBoard(g, x, y);
+					paintPiece(g2d, pc, x, y);
+					paintBoard(g2d, x, y);
 				}
 				else {
-					paintBoard(g, x, y);
-					paintPiece(g, pc, x, y);
+					paintBoard(g2d, x, y);
+					paintPiece(g2d, pc, x, y);
 				}
 				//Add a green circle if we drew a legal move
 				if (lm) {
