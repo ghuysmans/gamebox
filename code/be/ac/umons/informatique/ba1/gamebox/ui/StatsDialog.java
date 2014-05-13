@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 
 /**
@@ -16,28 +17,31 @@ import javax.swing.JSlider;
 @SuppressWarnings("serial")
 class StatsDialog extends AiAbstractDialog implements ActionListener { 
 	
-	protected static final boolean MODAl = true;
 	protected final JSlider lvl1, lvl2;
-	protected JLabel occt = new JLabel("Nombre de parties à tester : ");
-	protected ThinTextField occ = new ThinTextField(4);
+	protected final boolean hasCount;
+	protected final JLabel occt = new JLabel("Nombre de parties à tester : ");
+	protected final ThinTextField occ = new ThinTextField(4);
 	
-	public StatsDialog(JFrame parent) {
+	public StatsDialog(JFrame parent, boolean ct) {
 		super(parent, "Choix des niveaux d'IA");
-		setSize(250, 195);
+		
+		if (hasCount = ct) setSize(250, 195);
+		else setSize(250, 165);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());
 		setResizable(false);
 		
-		lvl1 = createAiLevelSlider(-1); //FIXME
-		lvl2 = createAiLevelSlider(-1); //FIXME
+		lvl1 = createAiLevelSlider(-1); 
+		lvl2 = createAiLevelSlider(-1); 
 		
-		//Box field = new Box();
 		
 		add(lvl1);
 		add(lvl2);
 		Box add = Box.createHorizontalBox();
-		add.add(occt);
-		add.add(occ);
+		if (hasCount) {	
+			add.add(occt);
+			add.add(occ);
+		}
 		add(add);
 		add(createControlsBox());
 		
@@ -51,9 +55,19 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 	public int getLevel2() {
 		return lvl2.getValue();
 	}
+	
 	public int getNumberOfTest() {
-		String str = occ.getText();
-		int res = Integer.parseInt(str);
-		return res;
+		return Integer.parseInt(occ.getText());
 	}
+
+	protected boolean validateInput() {
+		try {
+			return (!hasCount || getNumberOfTest()>0);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Le nombre de tests doit être positif et entier !", "Erreur", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+	}
+	
 }

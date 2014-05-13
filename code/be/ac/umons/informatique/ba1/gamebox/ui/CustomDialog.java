@@ -66,6 +66,16 @@ public class CustomDialog extends JDialog implements ActionListener {
 		return Integer.parseInt(height.getText());
 	}
 	
+	protected boolean validateInput() {
+		try {
+			return (getTypedHeight()>0) && (getTypedWidth()>0);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Les valeurs doivent être positives et entières !", "Erreur", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+	}
+	
 	/**
 	 * Handles buttons, validating data if needed
 	 */
@@ -73,11 +83,13 @@ public class CustomDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if (e.getSource() == btnOK) {
-				cancelled = false;
-				@SuppressWarnings("unused")
-				int test = getTypedHeight()+getTypedWidth();
+				if (validateInput()) {
+					cancelled = false;
+					setVisible(false);
+				}
 			}
-			setVisible(false);
+			else //cancelled (closed the dialog OR clicked cancel)
+				setVisible(false);
 		}	
 		catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage());

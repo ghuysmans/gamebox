@@ -20,7 +20,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
  */
 
 @SuppressWarnings("serial")
-class AiAbstractDialog extends JDialog implements ActionListener {
+abstract class AiAbstractDialog extends JDialog implements ActionListener {
 	
 	protected static final boolean MODAL = true;
 	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
@@ -50,18 +50,6 @@ class AiAbstractDialog extends JDialog implements ActionListener {
 	}
 	
 	/**
-	 * Creates a box with a label and a field 
-	 * @return Box to be added to the layout
-	 */
-	/**protected Box createFieldBox(){
-		Box ctl = Box.createHorizontalBox();
-		ctl.add(occ);
-		ctl.add(fieldocc);
-		return ctl;
-	}*/
-	
-	
-	/**
 	 * Creates a box with OK and Cancel controls.
 	 * @return Box to be added to the layout
 	 */
@@ -86,9 +74,19 @@ class AiAbstractDialog extends JDialog implements ActionListener {
 	
 	@Override
 	public final void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnOK)
-			cancelled = false;
-		setVisible(false);
+		if (e.getSource() == btnOK) {
+			if (validateInput()) {
+				cancelled = false;
+				setVisible(false);
+			}
+		}
+		else //cancelled (closed the dialog OR clicked cancel)
+			setVisible(false);
 	}
+	
+	/**
+	 * Validates text inputs
+	 */
+	protected abstract boolean validateInput();
 
 }
