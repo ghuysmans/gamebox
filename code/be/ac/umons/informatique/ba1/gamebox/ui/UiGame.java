@@ -1,12 +1,11 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-
+import be.ac.umons.informatique.ba1.gamebox.core.Connect4;
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
+import be.ac.umons.informatique.ba1.gamebox.core.Othello;
+import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /**
  * Link between the UI and the core Game classes.
@@ -15,27 +14,32 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
  * - textures used by the associated BoardPanel
  */
 
-public class UiGame {
+public enum UiGame {
+
+	C4("Puissance 4", Connect4.class, "fiar/board", "fiar/yellow", "fiar/red", true),
+	TTT("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false),
+	OTH("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false);
 	
-	public final String desc;
 	
-	protected final Class<? extends Game> cls;
-	protected final String txBoard;
-	protected final String txP1;
-	protected final String txP2;
-	protected final boolean txRev;
+	public final String name;
+	public final Class<? extends Game> cls;
+	public final String txBoard;
+	public final String txP1;
+	public final String txP2;
+	public final boolean txRev;
+	
 	
 	/**
 	 * Creates a descriptor
-	 * @param d User-readable Description
+	 * @param n User-readable name
 	 * @param c Class to be instantiated
 	 * @param tb Board texture
 	 * @param t1 Texture for player 1's pieces
 	 * @param t2 Texture for player 2's pieces
 	 * @param tr Reversed layers?
 	 */
-	public UiGame(String d, Class<? extends Game> c, String tb, String t1, String t2, boolean tr) {
-		desc = d;
+	private UiGame(String n, Class<? extends Game> c, String tb, String t1, String t2, boolean tr) {
+		name = n;
 		cls = c;
 		txBoard = tb;
 		txP1 = t1;
@@ -67,22 +71,6 @@ public class UiGame {
 		Constructor<?> cons = cls.getConstructor(argTypes);
 		//use it!
 		return (Game)cons.newInstance(argValues);
-	}
-	
-	/**
-	 * Creates a panel object associated to the given context.
-	 * @param  ug  List of possible UiGame
-	 * @param  ctx Game context
-	 * @param  d   Debug mode
-	 * @return A Panel to be used in {@link Main}
-	 * @throws URISyntaxException Invalid texture path
-	 * @throws IOException        Can't read a texture
-	 */
-	public static BoardPanel createPanel(ArrayList<UiGame> ug, GameContext ctx, boolean d) throws URISyntaxException, IOException {
-		for (UiGame g: ug)
-			if (g.cls == ctx.game.getClass())
-				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev, d);
-		return null; //not found
 	}
 	
 }

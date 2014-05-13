@@ -29,7 +29,6 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 public class Main extends JFrame implements ActionListener {
 	
 	protected final GameContext context;
-	protected ArrayList<UiGame> games;
 	protected boolean debug;
 	
 	protected Timer tmrPlay;
@@ -72,11 +71,6 @@ public class Main extends JFrame implements ActionListener {
 		p1 = new PlayerMenu(this, "Joueur 1", 0);
 		p2 = new PlayerMenu(this, "Joueur 2", 1);
 		
-		games = new ArrayList<UiGame>();
-		games.add(new UiGame("Puissance 4", Connect4.class, "fiar/board", "fiar/yellow", "fiar/red", true));
-		games.add(new UiGame("Tic-tac-toe", TicTacToe.class, "ttt/board", "ttt/o", "ttt/x", false));
-		games.add(new UiGame("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false));
-		
 		initUI();
 
 		tmrPlay = new Timer(800, this);
@@ -99,7 +93,7 @@ public class Main extends JFrame implements ActionListener {
 	 * Initializes menus
 	 */
 	private void initMenus() {
-		for (UiGame gd: games)
+		for (UiGame gd: UiGame.values())
 			gamesMenu.add(new GameMenu(gd));
 		menuBar.add(gamesMenu);
 		
@@ -133,7 +127,7 @@ public class Main extends JFrame implements ActionListener {
 	 * @see UiGame#createPanel(ArrayList, GameContext, boolean)
 	 */
 	private void loadBoardPanel() throws URISyntaxException, IOException {
-		setContentPane(UiGame.createPanel(games, context, debug));
+		setContentPane(BoardPanel.create(context, debug));
 		revalidate(); //FIXME not present in Java 6
 	}
 	
@@ -480,7 +474,7 @@ public class Main extends JFrame implements ActionListener {
 		}
 
 		public GameMenu(UiGame gd) {
-			super(gd.desc);
+			super(gd.name);
 			add(new GameMenuItemNormal(gd, "Traditionnel"));
 			add(new GameMenuItemCustom(gd, "Personnalisé"));
 		}

@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -62,6 +61,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 */
 	protected boolean debug;
 	
+	
 	/**
 	 * Loads an image from the res folder. Typically called from the constructor.
 	 * @param name Image name, without extension nor absolute path
@@ -69,6 +69,21 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 */
 	protected Image getImage(String name) throws URISyntaxException, IOException {
 		return ImageIO.read(getClass().getResourceAsStream("/res/"+name+".png"));
+	}
+	
+	/**
+	 * Creates a panel object associated to the given context.
+	 * @param  ctx Game context
+	 * @param  d   Debug mode
+	 * @return A Panel to be used in {@link Main}
+	 * @throws URISyntaxException Invalid texture path
+	 * @throws IOException        Can't read a texture
+	 */
+	public static BoardPanel create(GameContext ctx, boolean d) throws URISyntaxException, IOException {
+		for (UiGame g: UiGame.values())
+			if (g.cls == ctx.game.getClass())
+				return new BoardPanel(ctx, g.txBoard, g.txP1, g.txP2, g.txRev, d);
+		return null; //not found
 	}
 	
 	/**
@@ -80,7 +95,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 * @param r  Reversed display
 	 * @param d  Debug mode
 	 */
-	public BoardPanel(GameContext c, String b, String p1, String p2, boolean r, boolean d) throws URISyntaxException, IOException {
+	private BoardPanel(GameContext c, String b, String p1, String p2, boolean r, boolean d) throws URISyntaxException, IOException {
 		addMouseListener(this);
 		c.game.addTmpObserver(this);
 		
