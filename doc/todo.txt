@@ -10,7 +10,6 @@ todo @Negamax: add a flag for "virtual" moves and remove them at start
 bug @gamesel: no players then discarded
 todo @Game: trigger won and won-xxx using internal flags
 todo @AiStats+manual: gnuplot stats from the command line
-todo @Negamax: use a single function and a "global"
 
 maybe?
 todo @sound: implement something to play them

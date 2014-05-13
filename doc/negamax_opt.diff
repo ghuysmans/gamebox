@@ -1,0 +1,113 @@
+ .../informatique/ba1/gamebox/core/NegamaxAI.java   | 61 ++++++++++------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
+
+diff --git a/code/be/ac/umons/informatique/ba1/gamebox/core/NegamaxAI.java b/code/be/ac/umons/informatique/ba1/gamebox/core/NegamaxAI.java
+index 8a717cc..3e49d54 100644
+--- a/code/be/ac/umons/informatique/ba1/gamebox/core/NegamaxAI.java
++++ b/code/be/ac/umons/informatique/ba1/gamebox/core/NegamaxAI.java
+@@ -4,12 +4,12 @@ import java.util.ArrayList;
+ 
+ /** 
+  * Negamax algorithm implementation.
+- * Much inspired from http://chessprogramming.wikispaces.com/Negamax (2014-02-13).
+  */
+ 
+ public class NegamaxAI extends AI {
+ 	
+ 	private static final long serialVersionUID = 3102809303323977852L;
++	private Move bestMove;
+ 	protected final int maxRecursion;
+ 
+ 	public NegamaxAI(Game g, int rec) {
+@@ -18,31 +18,44 @@ public class NegamaxAI extends AI {
+ 	}
+ 	
+ 	/**
++	 * Inspired from http://chessprogramming.wikispaces.com/Negamax (2014-02-13).
+ 	 * @param rec Recursion level
+ 	 * @see AI#computeNode()
+ 	 */
+ 	private int computeNode(int rec) {
+ 		//leaf? did someone win?
+ 		int result = game.getResult();
+-		if (result==Game.RESULT_LOST || result==Game.RESULT_WON || rec==maxRecursion)
++		if (result==Game.RESULT_LOST || result==Game.RESULT_WON || rec==maxRecursion) {
+ 			//no need to compute further, we're done
++			bestMove = null;
+ 			return game.getScore(rec);
++		}
+ 		//test possible moves...
+ 		ArrayList<Move> mvs = game.getLegalMoves();
+-		if (mvs.size() == 0)
++		if (mvs.size() == 0) {
++			bestMove = null;
+ 			return game.getScore(rec);
+-		else
+-		{
+-			int M = Integer.MIN_VALUE; //fake value which will be overwritten
++		}
++		else {
++			int max = Integer.MIN_VALUE; //fake value which will be overwritten
++			ArrayList<Move> best = null; //best moves so far, won't be null after the for()
+ 			for (Move mv: mvs)
+ 			{
+ 				mv.play(false);
+ 				int v = -computeNode(rec+1);
+ 				game.history.undo(false);
+-				if (v > M)
+-					M = v; //keep the max
++				if (v > max) {
++					//keep the max and the associated move
++					max = v;
++					best = new ArrayList<Move>();
++					best.add(mv);
++				}
+ 			}
+-			return M;
++			//select a random move from the best ones
++			int rand = (int)(Math.random()*best.size());
++			bestMove = best.get(rand);
++			//return the max score
++			return max;
+ 		}
+ 	}
+ 	
+@@ -55,32 +68,14 @@ public class NegamaxAI extends AI {
+ 		return computeNode(0);
+ 	}
+ 
++	/**
++	 * Another wrapper to the same internal method.
++	 * @see #computeNode(int)
++	 */
+ 	@Override
+ 	public Move getBest() {
+-		ArrayList<Move> mvs = game.getLegalMoves();
+-		if (mvs.size() != 0) { //can we do something?
+-			int bs = Integer.MIN_VALUE; //fake value which will be overwritten
+-			int v; //score for current move
+-			ArrayList<Move> bms = new ArrayList<Move>();
+-			for (Move mv: mvs) {
+-				mv.play(false);
+-				v = -computeNode(0);
+-				game.history.undo(false);
+-				if (v > bs) {
+-					bs = v; //keep the best move
+-					//create a new list of best moves
+-					bms.clear();
+-					bms.add(mv);
+-				}
+-				else if (v == bs)
+-					//yet a possible best move
+-					bms.add(mv);
+-			}
+-			//select a random move from the best ones
+-			int rand = (int)(Math.random()*bms.size());
+-			return bms.get(rand);
+-		}
+-		return null; //not found
++		computeNode(); //discard the result
++		return bestMove;
+ 	}
+ 
+ }
