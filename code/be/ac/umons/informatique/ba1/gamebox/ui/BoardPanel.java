@@ -140,7 +140,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	public void paintComponent(Graphics g){ 
 		//Compute pieces' size before doing anything
 		pieceSize = Math.min(PIECE_MAX_SIZE, Math.min(getWidth()/context.game.board.getWidth(), getHeight()/context.game.board.getHeight()));
-		//Enable antialiasing
+		//Enable anti-aliasing
 		Graphics2D g2d = (Graphics2D)g;
 		Main.enableAntiAliasing(g2d);
 		//Create an AI object if needed
@@ -181,17 +181,19 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 				//Add a green circle if we drew a legal move
 				if (lm) {
 					g.setColor(Color.GREEN);
-					g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30); //FIXME position and size
+					//TODO find a better way to compute its position and size
+					g.fillOval(x*pieceSize+pieceSize/2-15, y*pieceSize+pieceSize/2-15, 30, 30); 
 					//Display the score (if needed)
 					if (ai != null) {
-						//TODO warning reentrancy due to callback
 						//Compute the score
+						//XXX warning reentrancy due to callback
 						mv.play(false);
 						int v = -ai.computeNode();
 						context.game.history.undo(false);
 						//Display it
 						g.setColor(Color.BLACK);
-						g.drawString(Integer.toString(v), x*pieceSize+pieceSize/2-8, y*pieceSize+pieceSize/2+6); //FIXME position
+						//TODO find a better way to compute its position
+						g.drawString(Integer.toString(v), x*pieceSize+pieceSize/2-8, y*pieceSize+pieceSize/2+6);
 					}
 				}
 			}

@@ -41,8 +41,8 @@ class AboutDialog extends JDialog {
 		//Store the frequently used size (it's a square)
 		original_s = original.getWidth();
 		original_hs = original_s>>1;
-		setSize(original_s+50, original_s+50); //FIXME find a method to get the title bar's size, etc.?
-		//setSize(410, 425);
+		//TODO find a more reliable method to compute an offset
+		setSize(original_s+10, original_s+20);
 		//Use it!
 		setContentPane(new MyPanel());
 		
@@ -55,6 +55,7 @@ class AboutDialog extends JDialog {
 	private class MyPanel extends JPanel implements MouseListener {
 		
 		private double angle = 0;
+		//FIXME refactor this shit a modular way!
 		private double angle1 = 0;
 		private double angle2 = 0;
 		private double angle3 = 0;
@@ -114,17 +115,17 @@ class AboutDialog extends JDialog {
 		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			double delta = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1) * Math.toRadians(ANGLE_STEP);
-			Point coord = (e.getPoint());
-			//FIXME Mathieu, you can do it!
+			double step = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1) * Math.toRadians(ANGLE_STEP);
 			if (e.isShiftDown()) {
 				//rotate the whole disk
-				//TODO
+				angle += step;
 			}
 			else {
 				//rotate the selected ring
-				System.out.println(coord);
-				angle += delta;
+				Point target = e.getPoint();
+				System.out.println(target); //FIXME debug
+				//FIXME identify the clicked ring
+				//FIXME modify its angle
 			}
 			//redraw
 			repaint();
