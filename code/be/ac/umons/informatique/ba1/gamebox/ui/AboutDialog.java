@@ -2,11 +2,13 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,7 +28,11 @@ class AboutDialog extends JDialog {
 	
 	private class MyPanel extends JPanel implements MouseListener {
 		private double angle = 0;
-		
+		private double angle1 = 0;
+		private double angle2 = 0;
+		private double angle3 = 0;
+		private double angle4 = 0;
+		private double angle5 = 0;
 		public MyPanel() throws Exception {
 			addMouseListener(this);
 		}
@@ -73,17 +79,23 @@ class AboutDialog extends JDialog {
 			Graphics2D g2d = (Graphics2D)g;
 			enableAntiAliasing(g2d);
 			//FIXME display each ring
-			drawDisk(g2d, 100, angle);
+			drawDisk(g2d, 175, angle);
+			drawDisk(g2d, 175, angle5);
+			drawDisk(g2d, 150, angle4);
+			drawDisk(g2d, 125, angle3);
+			drawDisk(g2d, 100, angle2);
+			drawDisk(g2d, 75, angle1);
 			drawDisk(g2d, 50, 0); 
 		}
-		
+	
 		/**
 		 * Handles clicks and detects "victory"
 		 * @param e MouseEvent
 		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			double delta = (e.getButton()==MouseEvent.BUTTON1 ? 1 : -1) * Math.toRadians(ANGLE_STEP);
+			double delta = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1) * Math.toRadians(ANGLE_STEP);
+			Point coord = (e.getPoint());
 			//FIXME Mathieu, you can do it!
 			if (e.isShiftDown()) {
 				//rotate the whole disk
@@ -91,6 +103,7 @@ class AboutDialog extends JDialog {
 			}
 			else {
 				//rotate the selected ring
+				System.out.println(coord);
 				angle += delta;
 			}
 			//redraw
@@ -120,10 +133,13 @@ class AboutDialog extends JDialog {
 		original_s = original.getWidth();
 		original_hs = original_s>>1;
 		setSize(original_s, original_s); //FIXME take window's borders into account?
+		//setSize(410, 425);
 		//Use it!
 		setContentPane(new MyPanel());
 		
 		setVisible(true);
 	}
-
+	protected class GamePanel {
+		
+	}
 }
