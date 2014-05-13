@@ -14,22 +14,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-
 import be.ac.umons.informatique.ba1.gamebox.core.ComputerPlayer;
 import be.ac.umons.informatique.ba1.gamebox.core.Game;
 
 @SuppressWarnings("serial")
 public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
-	protected static final int COUNT = 25;
 	protected final Thread thread;
 	protected boolean stop = false;
-	
-	protected JProgressBar pgb = new JProgressBar(0, COUNT);
+	protected int count;
+	protected JProgressBar pgb;
 	protected JLabel won = new JLabel("Pourcentage de parties gagnées : ");
 	protected JLabel lost = new JLabel("Pourcentage de parties perdues : ");
 	protected JLabel draw = new JLabel("Pourcentage d'égalités : ");
-	protected JLabel count = new JLabel("Nombre de parties jouées : ");
+	protected JLabel countlbl = new JLabel("Nombre de parties jouées : ");
 	protected JLabel wonval = new JLabel("-");
 	protected JLabel lostval = new JLabel("-");
 	protected JLabel drawval = new JLabel("-");
@@ -37,10 +35,11 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	protected ZoomedLabel notice = new ZoomedLabel("Les résultats sont présentés selon la première IA", 0.85f);
 	protected final JButton ccl = new JButton("Annuler");
 	
-	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, boolean modal) {
+	
+	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, int ct, boolean modal) {
 		super(parent, "Statistiques des IA", modal);
-
-		StatsComputer sc = new StatsComputer(g, p1, p2, COUNT);
+		count = ct;
+		StatsComputer sc = new StatsComputer(g, p1, p2, count);
 		sc.addObserver(this);
 		thread = new Thread(sc);
 		thread.start();
@@ -63,7 +62,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		won.setAlignmentX(RIGHT_ALIGNMENT); b1.add(won);
 		draw.setAlignmentX(RIGHT_ALIGNMENT); b1.add(draw);
 		lost.setAlignmentX(RIGHT_ALIGNMENT); b1.add(lost);
-		count.setAlignmentX(RIGHT_ALIGNMENT); b1.add(count);
+		countlbl.setAlignmentX(RIGHT_ALIGNMENT); b1.add(countlbl);
 		
 		//right column
 		JPanel b2 = new JPanel();
@@ -82,6 +81,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		//progress bar and button
 		JPanel bb = new JPanel();
 		setLayout(new FlowLayout());
+		pgb = new JProgressBar(0, count);
 		pgb.setStringPainted(true); bb.add(pgb);
 		bb.add(ccl); ccl.addActionListener(this);
 		
@@ -112,7 +112,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		setCompletion(wonval, as.getWon());
 		setCompletion(lostval, as.getLost());
 		setCompletion(drawval, as.getDraw());
-		if (as.getCount() == COUNT)
+		if (as.getCount() == count)
 			ccl.setText("Fermer");
 	}
 
