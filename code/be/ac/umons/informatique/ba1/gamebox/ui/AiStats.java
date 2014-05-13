@@ -84,7 +84,6 @@ public class AiStats {
 	}
 	
 	public static void main(String[] args) {
-		
 		if (args.length!=4 && args.length!=5) {
 			System.out.println("Usage: AiStats [-d|-g] game levelA levelB count");
 			System.out.println("Available games: 0=tic-tac-toe; 1=four in a row; 2=othello");
