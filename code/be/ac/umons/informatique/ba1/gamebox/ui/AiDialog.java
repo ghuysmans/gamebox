@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import be.ac.umons.informatique.ba1.gamebox.core.ComputerPlayer;
+
 /**
  * AI selection dialog featuring a JSlider
  */
@@ -20,8 +22,14 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 	
 	protected final JTextField name = new ThinTextField(DEFAULT_NAME, 8);
 	protected final JSlider diff;
-
-	public AiDialog(JFrame parent) {
+	
+	/**
+	 * Creates a pre-filled AI selection dialog
+	 * @param parent
+	 * @param gc Current game context
+	 * @param plid	index in {@link GameContext#selPlayers} 
+	 */
+	public AiDialog(JFrame parent, GameContext gc, int plid) {
 		super(parent, "Choix de l'IA");
 		setSize(250, 145);
 		setLocationRelativeTo(parent);
@@ -32,7 +40,10 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 		sup.add(new JLabel("Nom donné à l'IA : "));
 		sup.add(name);
 		
-		diff = createAiLevelSlider(-1); //FIXME
+		int lvl = -1; //default level
+		if (gc.selPlayers[plid] instanceof ComputerPlayer)
+			lvl = ((ComputerPlayer)gc.selPlayers[plid]).level;
+		diff = createAiLevelSlider(lvl);
 		
 		add(sup);
 		add(Box.createVerticalStrut(5));
@@ -52,6 +63,10 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 	
 	public int getDifficulty() {
 		return diff.getValue();
+	}
+	
+	protected boolean validateInput() {
+		return true;
 	}
 
 }

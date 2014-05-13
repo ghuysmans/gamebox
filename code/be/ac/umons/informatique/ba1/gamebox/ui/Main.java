@@ -253,24 +253,37 @@ public class Main extends JFrame implements ActionListener {
 	 * @param e Clicked menu
 	 */
 	private void doStats(ActionEvent e) {
-		if (context.game != null) {
-			StatsDialog sd = new StatsDialog(this);
-			if (!sd.cancelled) {
-				ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
-				ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
+		try {
+			assert(context.game != null): "A game must be selected";
+			StatsDialog sd;
 				if (e.getSource() == graph) {
-					context.game.setPlayers(ai1, ai2);
-					context.mode = GameMode.AUTOMATIC;
-					enablePlayersSelection(false);
+					sd = new StatsDialog(this, false);
+					if (!sd.cancelled) {
+						ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
+						ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
+						context.game.setPlayers(ai1, ai2);
+						context.mode = GameMode.AUTOMATIC;
+						enablePlayersSelection(false);
+					}
 				}
-				else if (e.getSource() == res)
+				else if (e.getSource() == res) {
+					sd = new StatsDialog(this, true);
+					if (!sd.cancelled) {
+						ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
+						ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
 					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, sd.getNumberOfTest());
+					}
+				}
+			
 		}
-		else {
-			JOptionPane.showMessageDialog(this, "Il faut sélectionner un jeu pour utiliser cette fonctionnalité!");
+		catch (NumberFormatException i) {
+			JOptionPane.showMessageDialog(this, i.getCause().getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
+		}
+		catch (Exception i) {
+			JOptionPane.showMessageDialog(this, i.getMessage(), "Erreur", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	}
+
 	
 	/**
 	 * Handles timers and some menus, deferring work to private methods
@@ -367,7 +380,7 @@ public class Main extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			if (player == null) {
 				//AI selection dialog
-				AiDialog dlg = new AiDialog(frame);
+				AiDialog dlg = new AiDialog(frame, context, id);
 				if (!dlg.getCancelled())
 					context.selPlayers[id] = new ComputerPlayer(null, dlg.getName(), dlg.getDifficulty());
 				else
