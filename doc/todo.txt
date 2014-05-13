@@ -9,14 +9,14 @@ ghs
 todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!
 todo @Negamax: add a flag for "virtual" moves and remove them at start
 bug @gamesel: no players then discarded
-todo @Main: implement the restart button
 todo @Game: trigger won and won-xxx using internal flags
 todo: fix FIXME's and TODO's in the code
-todo @BoardPanel: use antialiasing!
 bug: exceptions must be translated
-todo @manual: (in HTML), how to get stats for gnuplot from the console?
-todo @sound: implement something to play them
+todo @manual: full stats command line
+todo @Negamax: use a single function and a "global"
 
 maybe?
+todo @sound: implement something to play them
+todo @Main: implement the restart button
 todo @getEnemyNeighbors: optimization, use a bitfield
 bug @AiDialog: cancel but looks like selected, though

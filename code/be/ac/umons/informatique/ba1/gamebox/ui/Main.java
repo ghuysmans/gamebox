@@ -30,6 +30,9 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
 	
+	protected static final int WIDTH  = 600;
+	protected static final int HEIGHT = 600;
+	
 	protected final GameContext context;
 	protected boolean debug;
 	
@@ -126,7 +129,7 @@ public class Main extends JFrame implements ActionListener {
 			help.add(dbg);
 			dbg.addActionListener(this);
 		}
-		help.add(manual);
+		help.add(manual); manual.addActionListener(this);
 		help.add(about); about.addActionListener(this);
 		menuBar.add(help);
 
@@ -147,9 +150,10 @@ public class Main extends JFrame implements ActionListener {
 	 * Initializes the user interface, creating menus, registering listeners...
 	 */
 	private void initUI() {
-		setSize(800, 600);
-		setTitle("Game box");
+		setSize(WIDTH+HelpDialog.WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
+		setSize(WIDTH, HEIGHT);
+		setTitle("Game box");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		addWindowListener(new WindowAdapter() {
@@ -255,6 +259,18 @@ public class Main extends JFrame implements ActionListener {
 	}
 
 	/**
+	 * Shows the manual
+	 */
+	private void showManual() {
+		try {
+			new HelpDialog(this);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Impossible de charger le fichier d'aide !\nMessage : "+e.getMessage(), 
+												"Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/**
 	 * Asks the user for the AI's to compare and starts working!
 	 * @param e Clicked menu
 	 */
@@ -301,6 +317,7 @@ public class Main extends JFrame implements ActionListener {
 		else if (e.getSource() == ach) showAchievements();
 		else if (e.getSource() == valPls) doValPlayersSel();
 		else if (e.getSource() == mngPls) showPlayers();
+		else if (e.getSource() == manual) showManual();
 		else if (e.getSource() == about) showAbout();
 		else if (e.getActionCommand() == ACTION_STATS) doStats(e);
 	}
