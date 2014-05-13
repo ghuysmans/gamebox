@@ -24,26 +24,32 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	protected static final boolean MODAL = true;
 	protected boolean stop = false;
 	protected int count;
-	protected JProgressBar pgb;
-	protected JLabel won = new JLabel("Pourcentage de parties gagnées : ");
-	protected JLabel lost = new JLabel("Pourcentage de parties perdues : ");
-	protected JLabel draw = new JLabel("Pourcentage d'égalités : ");
-	protected JLabel countlbl = new JLabel("Nombre de parties jouées : ");
-	protected JLabel wonval = new JLabel("-");
-	protected JLabel lostval = new JLabel("-");
-	protected JLabel drawval = new JLabel("-");
-	protected JLabel countval = new JLabel("-");
-	protected ZoomedLabel notice = new ZoomedLabel("Les résultats sont présentés selon la première IA", 0.85f);
+	
+	protected final JProgressBar pgb;
+	protected final JLabel won = new JLabel("Pourcentage de parties gagnées : ");
+	protected final JLabel lost = new JLabel("Pourcentage de parties perdues : ");
+	protected final JLabel draw = new JLabel("Pourcentage d'égalités : ");
+	protected final JLabel countlbl = new JLabel("Nombre de parties jouées : ");
+	protected final JLabel wonval = new JLabel("-");
+	protected final JLabel lostval = new JLabel("-");
+	protected final JLabel drawval = new JLabel("-");
+	protected final JLabel countval = new JLabel("-");
+	protected final ZoomedLabel notice = new ZoomedLabel("Les résultats sont présentés selon la première IA", 0.85f);
 	protected final JButton ccl = new JButton("Annuler");
 	
 	
 	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, int ct) {
 		super(parent, "Statistiques des IA", MODAL);
 		count = ct;
+		
 		StatsComputer sc = new StatsComputer(g, p1, p2, count);
 		sc.addObserver(this);
 		thread = new Thread(sc);
 		thread.start();
+		
+		//must be done here because pgb is final
+		pgb = new JProgressBar(0, count);
+		pgb.setStringPainted(true); 
 
 		initUI(parent);
 	}
@@ -82,8 +88,7 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 		//progress bar and button
 		JPanel bb = new JPanel();
 		setLayout(new FlowLayout());
-		pgb = new JProgressBar(0, count);
-		pgb.setStringPainted(true); bb.add(pgb);
+		bb.add(pgb);
 		bb.add(ccl); ccl.addActionListener(this);
 		
 		add(ba, BorderLayout.NORTH);
