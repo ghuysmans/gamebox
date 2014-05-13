@@ -22,13 +22,13 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 @SuppressWarnings("serial")
 class PlayersDialog extends JDialog {
-	
+	protected static final boolean MODAL = true;
 	protected ThinTextField name = new ThinTextField(20);
 	protected PlayersModel mod;
 	protected GameContext context;
 	
-	public PlayersDialog(GameContext ctx, Main parent, boolean modal) {
-		super(parent, "Profils de joueurs", modal);
+	public PlayersDialog(GameContext ctx, Main parent) {
+		super(parent, "Profils de joueurs", MODAL);
 		
 		context = ctx;
 		

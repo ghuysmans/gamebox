@@ -22,14 +22,14 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 @SuppressWarnings("serial")
 class AiAbstractDialog extends JDialog implements ActionListener {
 	
-	
+	protected static final boolean MODAL = true;
 	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
 	protected JLabel occ = new JLabel("Nombres de parties à tester : ");
 	protected JTextField fieldocc = new JTextField();
-	public AiAbstractDialog(JFrame parent, String caption, boolean modal) {
-		super(parent, caption, modal);
+	public AiAbstractDialog(JFrame parent, String caption) {
+		super(parent, caption, MODAL);
 	}
 	
 	/**

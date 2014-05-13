@@ -16,12 +16,13 @@ import javax.swing.JSlider;
 @SuppressWarnings("serial")
 class StatsDialog extends AiAbstractDialog implements ActionListener { 
 	
+	protected static final boolean MODAl = true;
 	protected final JSlider lvl1, lvl2;
 	protected JLabel occt = new JLabel("Nombre de parties à tester : ");
 	protected ThinTextField occ = new ThinTextField(4);
 	
-	public StatsDialog(JFrame parent, boolean modal) {
-		super(parent, "Choix des niveaux d'IA", modal);
+	public StatsDialog(JFrame parent) {
+		super(parent, "Choix des niveaux d'IA");
 		setSize(250, 195);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());

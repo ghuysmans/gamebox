@@ -16,14 +16,14 @@ import javax.swing.JTextField;
 public class CustomDialog extends JDialog implements ActionListener {
 	
 	protected boolean cancelled = true; //by default (to avoid handling the window's closing)
-	
+	protected static final boolean MODAL = true;
 	protected final JTextField width = new ThinTextField("", 3);
 	protected final JTextField height = new ThinTextField("", 3);
 	protected final JButton btnOK = new JButton("OK");
 	protected final JButton btnCcl = new JButton("Annuler");
 	
-	public CustomDialog(JFrame parent, boolean modal) {
-		super(parent, "Personnalisation", modal);
+	public CustomDialog(JFrame parent) {
+		super(parent, "Personnalisation", MODAL);
 		setSize(160, 120);
 		setLocationRelativeTo(parent);
 		setResizable(false);

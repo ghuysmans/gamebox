@@ -183,7 +183,7 @@ public class Main extends JFrame implements ActionListener {
 					"depuis le menu Joueurs>Gérer.", 
 					"Premier lancement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if (ans == JOptionPane.YES_OPTION)
-			new PlayersDialog(context, this, true);
+			new PlayersDialog(context, this);
 		context.firstLaunch = false;
 	}
 	
@@ -230,7 +230,7 @@ public class Main extends JFrame implements ActionListener {
 	 * Shows players management dialog and refreshes menus after it's closed
 	 */
 	private void showPlayers() {
-		new PlayersDialog(context, this, true);
+		new PlayersDialog(context, this);
 		p1.refresh();
 		p2.refresh();
 	}
@@ -254,7 +254,7 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void doStats(ActionEvent e) {
 		if (context.game != null) {
-			StatsDialog sd = new StatsDialog(this, true);
+			StatsDialog sd = new StatsDialog(this);
 			if (!sd.cancelled) {
 				ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
 				ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
@@ -264,7 +264,7 @@ public class Main extends JFrame implements ActionListener {
 					enablePlayersSelection(false);
 				}
 				else if (e.getSource() == res)
-					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, sd.getNumberOfTest(), true);
+					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, sd.getNumberOfTest());
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Il faut sélectionner un jeu pour utiliser cette fonctionnalité!");
@@ -367,7 +367,7 @@ public class Main extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			if (player == null) {
 				//AI selection dialog
-				AiDialog dlg = new AiDialog(frame, true);
+				AiDialog dlg = new AiDialog(frame);
 				if (!dlg.getCancelled())
 					context.selPlayers[id] = new ComputerPlayer(null, dlg.getName(), dlg.getDifficulty());
 				else
@@ -449,7 +449,7 @@ public class Main extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					CustomDialog dlg = new CustomDialog(null, true);
+					CustomDialog dlg = new CustomDialog(null);
 					if (!dlg.getCancelled()) {
 						context.game = descriptor.createGame(dlg.getTypedWidth(), dlg.getTypedHeight());
 						enablePlayersSelection(true);

@@ -21,8 +21,8 @@ class AiDialog extends AiAbstractDialog implements ActionListener {
 	protected final JTextField name = new ThinTextField(DEFAULT_NAME, 8);
 	protected final JSlider diff;
 
-	public AiDialog(JFrame parent, boolean modal) {
-		super(parent, "Choix de l'IA", modal);
+	public AiDialog(JFrame parent) {
+		super(parent, "Choix de l'IA");
 		setSize(250, 145);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());

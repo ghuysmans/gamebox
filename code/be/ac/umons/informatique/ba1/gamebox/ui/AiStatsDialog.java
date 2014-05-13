@@ -21,6 +21,7 @@ import be.ac.umons.informatique.ba1.gamebox.core.Game;
 public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	
 	protected final Thread thread;
+	protected static final boolean MODAL = true;
 	protected boolean stop = false;
 	protected int count;
 	protected JProgressBar pgb;
@@ -36,8 +37,8 @@ public class AiStatsDialog extends JDialog implements Observer, ActionListener {
 	protected final JButton ccl = new JButton("Annuler");
 	
 	
-	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, int ct, boolean modal) {
-		super(parent, "Statistiques des IA", modal);
+	public AiStatsDialog(Class<? extends Game> g, ComputerPlayer p1, ComputerPlayer p2, JFrame parent, int ct) {
+		super(parent, "Statistiques des IA", MODAL);
 		count = ct;
 		StatsComputer sc = new StatsComputer(g, p1, p2, count);
 		sc.addObserver(this);
