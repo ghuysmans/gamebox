@@ -62,28 +62,4 @@ public class Connect4 extends TicTacToe {
 		return al;
 	}
 
-	/**
-	 * Each piece in the middle of the board is worth 1 point
-	 * @see Game#getPositionalBonus(Player)
-	 */
-	@Override
-	public int getPositionalBonus(Player p) {
-		int ct = 0;
-		//we determine where to start/end (mid-1 if even)
-		//this should be fast enough!
-		int ex = board.getWidth() >> 1;
-		int sx = ex - ~board.getWidth()&1;
-		//for each piece in the range,
-		for (int x=sx; x<=ex; x++) {
-			for (int y=0; y<board.getHeight(); y++) {
-				//if p owns the piece, increment the counter
-				Piece pc = board.getPiece(x, y);
-				if (pc!=null && pc.owner==p)
-					ct++;
-			}
-		}
-		//done
-		return ct;
-	}
-
 }

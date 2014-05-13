@@ -85,11 +85,4 @@ public class OthelloTest extends GameTestAbstract {
 		}
 	}
 	
-	@Test
-	public void posBonus() {
-		fillBoard(g, new Player[][]{new Player[]{p2, p2, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p1, p1, p2}, new Player[]{p2, p2, p2, p2}});
-		Assert.assertEquals("Positional bonus p1", 1, g.getPositionalBonus(p1));
-		Assert.assertEquals("Positional bonus p2", 11, g.getPositionalBonus(p2));
-	}
-	
 }

@@ -52,24 +52,34 @@ public class Othello extends Game {
 		return count;
 	}
 	
+	/**
+	 * @param p Player
+	 * @return A delta between p's points and the other's. 
+	 */
 	@Override
 	public int getScore(Player p) {
-		int count = getScore_internal(players[0]);
-		int count2 = getScore_internal(players[1]);
-		int ct = 0;
-		if (hasFinished() && ((p==players[0] && count>=count2) || (p==players[1] && count<=count2))) {
+		//this is a correct implementation (TTT's isn't)
+		int ctPlayer1 = getScore_internal(players[0]);
+		int ctPlayer2 = getScore_internal(players[1]);
+		int ctEmpty = 0; //computed only if it's needed
+		if (hasFinished() && ((p==players[0] && ctPlayer1>=ctPlayer2) || (p==players[1] && ctPlayer1<=ctPlayer2))) {
 			for (int y=0; y<board.getHeight(); y++) {
 				for (int x=0; x<board.getWidth(); x++) {
 					Piece v = board.getPiece(x, y);
 					if (v == null)
-						ct++;
+						ctEmpty++;
 				}
 			}
 		}
 		if (p==players[0])
-			return count+ct;
+			return ctPlayer1+ctEmpty-ctPlayer2;
 		else
-			return count2+ct;
+			return ctPlayer2+ctEmpty-ctPlayer1;
+	}
+	
+	@Override
+	public int getScore(int depth) {
+		return getScore();
 	}
 	
 	@Override
@@ -84,7 +94,6 @@ public class Othello extends Game {
 			return (p==players[0] ? RESULT_WON : RESULT_LOST);
 	}
 	
-	//The other method mustn't be overloaded (it calls this one)
 	@Override
 	public Move createMove(int x, int y) {
 		return new OthelloMove(this, x, y);
@@ -179,30 +188,4 @@ public class Othello extends Game {
 		}
 	}
 	
-	/**
-	 * Each piece in the borders is worth 1 point
-	 */
-	@Override
-	public int getPositionalBonus(Player p) {
-		Piece pc;
-		int ct=0, l=board.getHeight()-1;
-		for (int i=0; i<board.getHeight(); i++) {
-			//up
-			pc = board.getPiece(i, 0);
-			if (pc!=null && pc.owner==p) ct++;
-			//down
-			pc = board.getPiece(i, l);
-			if (pc!=null && pc.owner==p) ct++;
-			//other directions
-			if (i!=0 && i!=l) {
-				//right
-				pc = board.getPiece(l, i);
-				if (pc!=null && pc.owner==p) ct++;
-				//left
-				pc = board.getPiece(0, i);
-				if (pc!=null && pc.owner==p) ct++;
-			}
-		}
-		return ct;
-	}
 }

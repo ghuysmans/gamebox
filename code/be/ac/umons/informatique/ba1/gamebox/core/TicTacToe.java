@@ -24,7 +24,7 @@ public class TicTacToe extends Game {
 	}
 	
 	@Override
-	public int getScore(Player p) {
+	public int getResult(Player p) {
 		//horizontal
 		for (int y=0; y<board.getHeight(); y++) {
 			//for each start cell,
@@ -110,6 +110,10 @@ public class TicTacToe extends Game {
 		//nobody has won: draw
 		return RESULT_DRAW;
 	}
+	
+	public int getScore(int depth) {
+		return getScore() >> depth;
+	}
 
 	@Override
 	public boolean hasFinished() {
@@ -139,13 +143,4 @@ public class TicTacToe extends Game {
 		return al;
 	}
 	
-	/**
-	 * Not really implemented for this game (useless!)
-	 * @see Game#getPositionalBonus(Player)
-	 */
-	@Override
-	public int getPositionalBonus(Player p) {
-		return 0;
-	}
-
 }

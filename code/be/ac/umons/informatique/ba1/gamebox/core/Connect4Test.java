@@ -45,30 +45,4 @@ public class Connect4Test {
 		}
 	}
 	
-	@Test
-	public void posBonusOdd() {
-		g.createMove(1, 0).play(false); //p1
-		g.createMove(2, 0).play(false); //p2
-		Assert.assertEquals("Positional bonus odd p1", 1, g.getPositionalBonus(p1));
-		Assert.assertEquals("Positional bonus odd p2", 0, g.getPositionalBonus(p2));
-		g.createMove(2, 1).play(false); //p1
-		g.createMove(1, 1).play(false); //p2
-		Assert.assertEquals("Positional bonus odd p1", 1, g.getPositionalBonus(p1));
-		Assert.assertEquals("Positional bonus odd p2", 1, g.getPositionalBonus(p2));
-	}
-	
-	@Test
-	public void posBonusEven() {
-		g = new Connect4(4, 2);
-		g.setPlayers(p1, p2);
-		g.createMove(1, 0).play(false); //p1
-		g.createMove(2, 0).play(false); //p2
-		Assert.assertEquals("Positional bonus even p1", 1, g.getPositionalBonus(p1));
-		Assert.assertEquals("Positional bonus even p2", 1, g.getPositionalBonus(p2));
-		g.createMove(0, 0).play(false); //p1
-		g.createMove(1, 1).play(false); //p2
-		Assert.assertEquals("Positional bonus even p1", 1, g.getPositionalBonus(p1));
-		Assert.assertEquals("Positional bonus even p2", 2, g.getPositionalBonus(p2));
-	}
-
 }

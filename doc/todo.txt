@@ -2,16 +2,13 @@ mlq
 todo @report: resync UML with code and integrate it
 bug @automove: the "working" flag isn't used!
 todo @AboutDialog: implement controls!
-bug @AiDialog: not pre-filled when modifying
 
 ghs
 todo @JUnit: implement basic hasFinished() tests!!!
-todo @Negamax: move ">>depth" into getScore! It has nothing to do with NM!
 todo @Negamax: add a flag for "virtual" moves and remove them at start
 bug @gamesel: no players then discarded
 todo @Game: trigger won and won-xxx using internal flags
-todo: fix FIXME's and TODO's in the code
-todo @manual: full stats command line
+todo @AiStats+manual: gnuplot stats from the command line
 todo @Negamax: use a single function and a "global"
 
 maybe?

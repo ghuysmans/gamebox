@@ -103,7 +103,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 	}
 	
 	/**
-	 * Evaluates the score of the given player.
+	 * Evaluates the score of the current player.
 	 * @see #getScore(Player)
 	 */
 	public final int getScore() {
@@ -111,12 +111,16 @@ public abstract class Game extends SavedObservable implements Serializable {
 	}
 	
 	/**
-	 * Evaluates the result of the given player and categorizes it.
-	 * @param p Player
+	 * Evaluates the score of a given player. Returns (using SCORE_* constants):
+	 * - a negative value if he loses
+	 * - zero if draw (or there's nothing special)
+	 * - a positive value if he wins
+	 * By default, it uses {@link #getResult()}...
+	 * @param p	Player
 	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
 	 */
-	public int getResult(Player p) {
-		return getScore(p); //default behavior: passthrough
+	public int getScore(Player p) {
+		return getResult(p);
 	}
 	
 	/**
@@ -125,14 +129,6 @@ public abstract class Game extends SavedObservable implements Serializable {
 	 */
 	public final int getResult() {
 		return getResult(currentPlayer);
-	}
-	
-	/**
-	 * Gives bonus points to well-located pieces on the board belonging to the current user.
-	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
-	 */
-	public final int getPositionalBonus() {
-		return getPositionalBonus(currentPlayer);
 	}
 	
 	/**
@@ -197,27 +193,25 @@ public abstract class Game extends SavedObservable implements Serializable {
 	public abstract boolean hasFinished();
 	
 	/**
-	 * Evaluates the score of a given player. Returns (using SCORE_* constants):
-	 * - a negative value if he loses
-	 * - zero if draw (or there's nothing special)
-	 * - a positive value if he wins
-	 * This function is needed for real AI to work.
-	 * @param p	Player
-	 * @return numeric score
-	 */
-	public abstract int getScore(Player p);
-	
-	/**
-	 * Gives bonus points to well-located pieces on the board
-	 * @param p Owner
-	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
-	 */
-	public abstract int getPositionalBonus(Player p);
-	
-	/**
 	 * Computes legal moves; called internally.
 	 * @see #getLegalMoves()
 	 */
 	protected abstract ArrayList<Move> computeLegalMoves();
+	
+	/**
+	 * Evaluates the result of the given player and categorizes it.
+	 * This function is needed for real AI to work.
+	 * @param p Player
+	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
+	 */
+	public abstract int getResult(Player p);
+	
+	/**
+	 * Evaluates the score of the current player taking into account 
+	 * the current recursion depth.
+	 * @param depth Recursion depth
+	 * @see #getScore(Player)
+	 */
+	public abstract int getScore(int depth);
 
 }
