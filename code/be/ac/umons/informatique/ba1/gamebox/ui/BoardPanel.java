@@ -1,6 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,6 +28,12 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	 * This constant avoids displaying ugly "overzoomed" tiles...
 	 */
 	private static final int PIECE_MAX_SIZE = 100;
+
+	/**
+	 * Minimum piece size, in pixels. Corresponds to a tile's size.
+	 * This constant avoids displaying a useless patch on the screen...
+	 */
+	private static final int PIECE_MIN_SIZE = 16;
 
 	/**
 	 * Current context (game, players...)
@@ -107,6 +114,9 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 		imgP2 = getImage(p2);
 		reversed = r;
 		debug = d;
+		
+		setMaximumSize(new Dimension(PIECE_MAX_SIZE * context.game.board.getWidth(), PIECE_MAX_SIZE * context.game.board.getHeight()));
+		setMinimumSize(new Dimension(PIECE_MIN_SIZE * context.game.board.getWidth(), PIECE_MIN_SIZE * context.game.board.getHeight()));
 	}
 	
 	/**
