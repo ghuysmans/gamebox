@@ -31,7 +31,7 @@ public class Board implements Serializable {
 	 * @param height Height (y)
 	 */
 	public Board(int width, int height) {
-		if (isValidSize(width, height))
+		if (!isValidSize(width, height))
 			throw new IllegalArgumentException(MessageUtil.getMessage("MINIMUM_SIZE", getClass(), MINIMUM_WIDTH, MINIMUM_HEIGHT));
 		arr = new Piece[height][width];
 		
