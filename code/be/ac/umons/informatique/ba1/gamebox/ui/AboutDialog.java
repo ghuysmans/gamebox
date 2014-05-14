@@ -13,6 +13,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import sun.java2d.pipe.DrawImage;
+
 /**
  * Mini-game consisting of concentric circles rotated using the mouse;
  * their directions are randomized on the JDialog's opening. 
@@ -59,7 +61,7 @@ class AboutDialog extends JDialog {
 	private class MyPanel extends JPanel implements MouseListener {
 		
 		private int offsets[];
-		private boolean firstclick = true;
+		private boolean firstClick = true;
 		public MyPanel() throws Exception {
 			addMouseListener(this);	
 			offsets = new int[original_hs/tks];
@@ -93,27 +95,43 @@ class AboutDialog extends JDialog {
 		 */
 		@Override
 		protected void paintComponent(Graphics g) {
-			super.paintComponent(g); //background color
-			Graphics2D g2d = (Graphics2D)g;
-			Main.enableAntiAliasing(g2d);
-			double angle_step = (Math.PI*2)/stp;
-			for (int i=offsets.length-1; i>=0; i--)
-				drawDisk(g2d, tks*(i+1), angle_step*offsets[i]); 
+			if (hasWon() && !firstClick) {
+				g.drawImage(original, 0, 0, original_s, original_s, null);
+			}
+			else {
+				super.paintComponent(g); //background color
+				Graphics2D g2d = (Graphics2D)g;
+				Main.enableAntiAliasing(g2d);
+				double angle_step = (Math.PI*2)/stp;
+				for (int i=offsets.length-1; i>=0; i--)
+					drawDisk(g2d, tks*(i+1), angle_step*offsets[i]);
+			}
 		}
-	
+		
+		/**
+		 * checks whether all has a no offsets 
+		 * @return true mean won
+		 */
+		private boolean hasWon() {
+			for (int k=0; k<offsets.length; k++) {
+				if (offsets[k] != 0)
+					return false;		
+			}
+			return true;	
+		}
 		/**
 		 * Handles clicks and detects "victory"
 		 * @param e MouseEvent
 		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int step = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1);
-			if (firstclick) {
+			if (firstClick) {
 				for (int k=0; k<offsets.length; k++)
 					offsets[k] = (int)(Math.random()*offsets.length);
-				firstclick = false;
+				firstClick = false;
 			}
-			else {
+			else if (!hasWon()) {
+				int step = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1);
 				if (e.isShiftDown()) {
 					//rotate the whole disk
 					for (int i=0; i<offsets.length; i++)

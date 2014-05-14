@@ -1,8 +1,6 @@
 mlq
 todo @report: resync UML with code and integrate it
 bug @automove: the "working" flag isn't used!
-todo @AboutDialog: implement controls!
-bug @CustomDialog: please test it. For real.
 
 ghs
 todo @JUnit: implement basic hasFinished() tests!!!
