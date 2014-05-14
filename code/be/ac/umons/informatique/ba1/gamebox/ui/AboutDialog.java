@@ -96,7 +96,7 @@ class AboutDialog extends JDialog {
 			super.paintComponent(g); //background color
 			Graphics2D g2d = (Graphics2D)g;
 			Main.enableAntiAliasing(g2d);
-			double angle_step = (Math.PI*2)/offsets.length;
+			double angle_step = (Math.PI*2)/stp;
 			for (int i=offsets.length-1; i>=0; i--)
 				drawDisk(g2d, tks*(i+1), angle_step*offsets[i]); 
 		}
