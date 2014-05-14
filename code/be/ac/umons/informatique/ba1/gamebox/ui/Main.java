@@ -246,7 +246,7 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void showAbout() {
 		try {
-			new AboutDialog(this, true);
+			new AboutDialog(this, 8, 50);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Impossible de charger l'image de la boite de dialogue !\n"+
 												"Les images sont-elles présentes ?\nMessage : "+e.getMessage(), 

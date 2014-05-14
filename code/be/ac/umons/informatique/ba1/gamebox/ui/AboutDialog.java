@@ -21,21 +21,25 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 class AboutDialog extends JDialog {
 
-	private static final int ANGLE_STEP = 30;
+	private final int stp;
+	private final int tks;
 	private final BufferedImage original;
 	private final int original_s, original_hs;
 	
 	
 	/**
 	 * Preloads the image (stored once in memory) and keeps its size
-	 * @param parent Parent frame
-	 * @param modal  Modal?
+	 * @param parent    Parent frame
+	 * @param step      Angular steps count
+	 * @param thickness Rings' thickness
 	 * @throws Exception If the image can't be loaded
 	 */
-	public AboutDialog(JFrame parent, boolean modal) throws Exception {
-		super(parent, "À propos de...", modal);
+	public AboutDialog(JFrame parent, int step, int thickness) throws Exception {
+		super(parent, "À propos de...", true);
 		setResizable(false);
-		
+		//save the contructor's values
+		stp = step;
+		tks = thickness;
 		//Load the original image (to be clipped...)
 		original = ImageIO.read(getClass().getResourceAsStream("/res/about.png"));
 		//Store the frequently used size (it's a square)
@@ -54,20 +58,13 @@ class AboutDialog extends JDialog {
 	
 	private class MyPanel extends JPanel implements MouseListener {
 		
-		private double angle = 0;
-		//FIXME refactor this shit a modular way!
-		private double angle1 = 0;
-		private double angle2 = 0;
-		private double angle3 = 0;
-		private double angle4 = 0;
-		private double angle5 = 0;
-		
-		
+		private int offsets[];
+		private boolean firstclick = true;
 		public MyPanel() throws Exception {
-			addMouseListener(this);
+			addMouseListener(this);	
+			offsets = new int[original_hs/tks];
 		}
 
-		
 		/**
 		 * Draws a disk from {@link AboutDialog#original}
 		 * @param dest   Destination surface
@@ -99,14 +96,9 @@ class AboutDialog extends JDialog {
 			super.paintComponent(g); //background color
 			Graphics2D g2d = (Graphics2D)g;
 			Main.enableAntiAliasing(g2d);
-			//FIXME display each ring
-			drawDisk(g2d, 175, angle);
-			drawDisk(g2d, 175, angle5);
-			drawDisk(g2d, 150, angle4);
-			drawDisk(g2d, 125, angle3);
-			drawDisk(g2d, 100, angle2);
-			drawDisk(g2d, 75, angle1);
-			drawDisk(g2d, 50, 0); 
+			double angle_step = (Math.PI*2)/offsets.length;
+			for (int i=offsets.length-1; i>=0; i--)
+				drawDisk(g2d, tks*(i+1), angle_step*offsets[i]); 
 		}
 	
 		/**
@@ -115,18 +107,26 @@ class AboutDialog extends JDialog {
 		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			double step = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1) * Math.toRadians(ANGLE_STEP);
-			if (e.isShiftDown()) {
-				//rotate the whole disk
-				angle += step;
+			int step = (e. getButton()==MouseEvent.BUTTON1 ? 1 : -1);
+			if (firstclick) {
+				for (int k=0; k<offsets.length; k++)
+					offsets[k] = (int)(Math.random()*offsets.length);
+				firstclick = false;
 			}
 			else {
-				//rotate the selected ring
-				Point target = e.getPoint();
-				System.out.println(target); //FIXME debug
-				//FIXME identify the clicked ring
-				//FIXME modify its angle
-			}
+				if (e.isShiftDown()) {
+					//rotate the whole disk
+					for (int i=0; i<offsets.length; i++)
+						offsets[i] = (offsets[i] + step) % offsets.length;
+				}
+				else {
+					//rotate the selected ring
+					Point target = e.getPoint();
+					int id = ((int)target.distance(getWidth()/2, getHeight()/2)) / tks;
+					if (id<offsets.length)
+						offsets[id] = (offsets[id] + step) % offsets.length;
+				}
+			}	
 			//redraw
 			repaint();
 		}
