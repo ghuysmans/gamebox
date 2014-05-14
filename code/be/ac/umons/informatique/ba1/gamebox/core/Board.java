@@ -31,7 +31,7 @@ public class Board implements Serializable {
 	 * @param height Height (y)
 	 */
 	public Board(int width, int height) {
-		if (width<MINIMUM_WIDTH || height<MINIMUM_HEIGHT)
+		if (isValidSize(width, height))
 			throw new IllegalArgumentException(MessageUtil.getMessage("MINIMUM_SIZE", getClass(), MINIMUM_WIDTH, MINIMUM_HEIGHT));
 		arr = new Piece[height][width];
 		
@@ -123,5 +123,15 @@ public class Board implements Serializable {
 	public boolean isValid(int[] pos) {
 		return (pos[0]>=0 && pos[0]<arr[0].length && pos[1]>=0 && pos[1]<arr.length);
 	}
-
+	
+	/**
+	 * Validates a board size
+	 * @param w Width
+	 * @param h Height
+	 * @return	true means it's valid
+	 */
+	public static boolean isValidSize(int w, int h) {
+		return (w>=MINIMUM_WIDTH) && (h>=MINIMUM_HEIGHT);
+	}
+	
 }

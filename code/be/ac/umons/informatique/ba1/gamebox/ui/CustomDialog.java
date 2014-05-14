@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import be.ac.umons.informatique.ba1.gamebox.core.Board;
+
 @SuppressWarnings("serial")
 public class CustomDialog extends JDialog implements ActionListener {
 	
@@ -68,10 +70,15 @@ public class CustomDialog extends JDialog implements ActionListener {
 	
 	protected boolean validateInput() {
 		try {
-			return (getTypedHeight()>0) && (getTypedWidth()>0);
+			if (Board.isValidSize(getTypedHeight(), getTypedWidth()))
+				return true;
+			else {
+				JOptionPane.showMessageDialog(this, "Les valeurs doivent être positives et entières !", "Erreur", JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
 		}
 		catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Les valeurs doivent être positives et entières !", "Erreur", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Les valeurs doivent être des nombres !", "Erreur", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 	}
