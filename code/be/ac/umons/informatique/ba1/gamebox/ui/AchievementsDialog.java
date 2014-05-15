@@ -65,8 +65,9 @@ class AchievementsDialog extends JDialog implements ActionListener {
 		for (Event evt: players.get(idx).events)
 			if (evt instanceof Achievement)
 				list.add(new AchievementPanel((Achievement)evt));
-		list.revalidate();
-		list.repaint();
+		//manual revalidate() for Java 6 
+		getContentPane().validate();
+		validate();
 	}
 
 	/**
