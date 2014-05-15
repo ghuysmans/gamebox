@@ -15,7 +15,7 @@ import javax.swing.JSlider;
  */
 
 @SuppressWarnings("serial")
-class StatsDialog extends AiAbstractDialog implements ActionListener { 
+class AiStatsDialog extends AiAbstractDialog implements ActionListener { 
 	
 	/**
 	 * Sliders used to select AI levels
@@ -39,11 +39,11 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 	
 	
 	/**
-	 * Creates an {@link StatsDialog}
+	 * Creates an {@link AiStatsDialog}
 	 * @param parent Parent frame
 	 * @param ct     Ask for rounds count?
 	 */
-	public StatsDialog(JFrame parent, boolean ct) {
+	public AiStatsDialog(JFrame parent, boolean ct) {
 		super(parent, "Choix des niveaux d'IA");
 		
 		if (hasRounds = ct)

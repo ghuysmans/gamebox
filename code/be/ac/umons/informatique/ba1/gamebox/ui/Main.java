@@ -344,9 +344,9 @@ public class Main extends JFrame implements ActionListener {
 	private void doStats(ActionEvent e) {
 		try {
 			assert(context.game != null): "A game must be selected";
-			StatsDialog sd;
+			AiStatsDialog sd;
 				if (e.getSource() == graph) {
-					sd = new StatsDialog(this, false);
+					sd = new AiStatsDialog(this, false);
 					if (!sd.cancelled) {
 						ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
 						ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
@@ -356,7 +356,7 @@ public class Main extends JFrame implements ActionListener {
 					}
 				}
 				else if (e.getSource() == res) {
-					sd = new StatsDialog(this, true);
+					sd = new AiStatsDialog(this, true);
 					if (!sd.cancelled) {
 						ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
 						ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());

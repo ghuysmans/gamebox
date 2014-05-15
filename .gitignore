@@ -20,3 +20,6 @@
 /code/res/
 /gamebox.jar
 /savegame.dat
+
+#Useless backups
+/doc/*.dia~
