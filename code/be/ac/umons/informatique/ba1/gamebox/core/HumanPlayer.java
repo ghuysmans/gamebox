@@ -19,7 +19,7 @@ public class HumanPlayer extends Player {
 			new Condition(this, "Mouvement joué", "ud", 1)));
 		
 		events.add(new Achievement(this, "Gagnez 10 parties d'Othello", "Othellier fou", "croth", 1, false, true, 
-			new Condition(this, "Victoire à Othello", "won-oth", 10)));
+			new Condition(this, "Victoire à Othello", "won-OTH", 10)));
 		
 		//TODO implement ScoreCondition(boolean finalScore...)
 		
