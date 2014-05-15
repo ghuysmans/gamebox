@@ -133,14 +133,14 @@ class AboutDialog extends JDialog {
 				if (e.isShiftDown()) {
 					//rotate the whole disk
 					for (int i=0; i<offsets.length; i++)
-						offsets[i] = (offsets[i] + step) % offsets.length;
+						offsets[i] = (offsets[i] + step) % stp;
 				}
 				else {
 					//rotate the selected ring
 					Point target = e.getPoint();
 					int id = ((int)target.distance(getWidth()/2, getHeight()/2)) / tks;
 					if (id<offsets.length)
-						offsets[id] = (offsets[id] + step) % offsets.length;
+						offsets[id] = (offsets[id] + step) % stp;
 				}
 			}	
 			//redraw
