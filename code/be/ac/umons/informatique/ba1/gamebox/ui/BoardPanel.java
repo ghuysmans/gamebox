@@ -243,8 +243,10 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 				context.mode==GameMode.NORMAL && //not automatic 
 				context.game.getCurrentPlayer()!=null) { //there's a current player
 			working = true;
-			if (e.isShiftDown())
-				context.game.history.undo(true);
+			if (e.isShiftDown()) {
+				if (context.game.history.size() != 0)
+					context.game.history.undo(true);
+			}
 			else if (!context.game.hasFinished())
 			{
 				if (context.game.getCurrentPlayer() instanceof ComputerPlayer && !(e.isControlDown() && debug))
