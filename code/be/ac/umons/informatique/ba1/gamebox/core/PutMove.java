@@ -7,8 +7,17 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 class PutMove extends Move {
 
 	private static final long serialVersionUID = -4556784597590146899L;
+	
+	/**
+	 * Target X coordinate
+	 */
 	public final int x;
+	
+	/**
+	 * Target Y coordinate
+	 */
 	public final int y;
+	
 	
 	public PutMove(Game g, int x, int y) {
 		super(g, false);

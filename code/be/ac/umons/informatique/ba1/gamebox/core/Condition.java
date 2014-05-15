@@ -9,11 +9,32 @@ import java.io.Serializable;
 public class Condition implements SavedObserver, Serializable {
 
 	private static final long serialVersionUID = -6277076554051997918L;
-	protected int count;
+	
+	/**
+	 * Event to notify when count==maximum
+	 */
 	protected Event parent;
+	
+	/**
+	 * Counts how many times the message was received
+	 */
+	protected int count;
+	
+	/**
+	 * How many times the message must be received for this condition to be met.
+	 */
 	public final int maximum;
+	
+	/**
+	 * Name used to filter messages
+	 */
 	public final String name;
+	
+	/**
+	 * User-friendly description 
+	 */
 	public final String description;
+	
 	
 	/**
 	 * Creates a named condition.

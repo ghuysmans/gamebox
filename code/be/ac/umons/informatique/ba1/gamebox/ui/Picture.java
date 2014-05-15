@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class Picture extends JLabel {
 
+	/**
+	 * Preferred dimensions
+	 */
 	protected int x, y;
 	
 	public Picture(String name, int width, int height) {

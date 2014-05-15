@@ -9,7 +9,12 @@ import java.io.Serializable;
 public class Piece implements Serializable {
 
 	private static final long serialVersionUID = -6098480530792767275L;
+	
+	/**
+	 * Owner player
+	 */
 	protected Player owner;
+	
 
 	public Piece(Player owner) {
 		this.owner = owner;

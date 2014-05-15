@@ -8,12 +8,36 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 public class AiStats {
 	
+	/**
+	 * The real first player
+	 */
 	protected ComputerPlayer realA1;
+	
+	/**
+	 * Current first player
+	 */
 	protected ComputerPlayer a1;
+	
+	/**
+	 * Current second player
+	 */
 	protected ComputerPlayer a2;
+	
+	/**
+	 * realA1's won rounds count
+	 */
 	protected int ctWon = 0;
+	
+	/**
+	 * realA1's lost rounds count
+	 */
 	protected int ctLost = 0;
+	
+	/**
+	 * realA1's draw rounds count
+	 */
 	protected int ctDraw = 0;
+	
 
 	public AiStats (ComputerPlayer a1, ComputerPlayer a2) {
 		this.a1 = realA1 = a1;
@@ -21,7 +45,7 @@ public class AiStats {
 	}
 	
 	/**
-	 * Runs one test, updating counters
+	 * Runs one test, updating counters and swapping a1/a2
 	 * @param g Empty game
 	 */
 	public void playGame(Game g, boolean dbg) {

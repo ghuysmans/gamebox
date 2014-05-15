@@ -17,15 +17,36 @@ import javax.swing.JSlider;
 @SuppressWarnings("serial")
 class StatsDialog extends AiAbstractDialog implements ActionListener { 
 	
+	/**
+	 * Sliders used to select AI levels
+	 */
 	protected final JSlider lvl1, lvl2;
-	protected final boolean hasCount;
-	protected final JLabel occt = new JLabel("Nombre de parties à tester : ");
-	protected final ThinTextField occ = new ThinTextField(4);
 	
+	/**
+	 * Do we need to ask about rounds to play?
+	 */
+	protected final boolean hasRounds;
+	
+	/**
+	 * Rounds label
+	 */
+	protected final JLabel rounds = new JLabel("Nombre de parties à tester : ");
+	
+	/**
+	 * Rounds textfield
+	 */
+	protected final ThinTextField roundsField = new ThinTextField(4);
+	
+	
+	/**
+	 * Creates an {@link StatsDialog}
+	 * @param parent Parent frame
+	 * @param ct     Ask for rounds count?
+	 */
 	public StatsDialog(JFrame parent, boolean ct) {
 		super(parent, "Choix des niveaux d'IA");
 		
-		if (hasCount = ct) setSize(250, 195);
+		if (hasRounds = ct) setSize(250, 195);
 		else setSize(250, 165);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());
@@ -38,9 +59,9 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 		add(lvl1);
 		add(lvl2);
 		Box add = Box.createHorizontalBox();
-		if (hasCount) {	
-			add.add(occt);
-			add.add(occ);
+		if (hasRounds) {	
+			add.add(rounds);
+			add.add(roundsField);
 		}
 		add(add);
 		add(createControlsBox());
@@ -48,21 +69,36 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 		setVisible(true);
 	}
 	
+	/**
+	 * Gets the selected level for AI1
+	 * @return Level
+	 */
 	public int getLevel1() {
 		return lvl1.getValue();
 	}
 	
+	/**
+	 * Gets the selected level for AI2
+	 * @return Level
+	 */
 	public int getLevel2() {
 		return lvl2.getValue();
 	}
 	
-	public int getNumberOfTest() {
-		return Integer.parseInt(occ.getText());
+	/**
+	 * Gets the given rounds count. Fails if !{@link #hasRounds} 
+	 * @return Count
+	 */
+	public int getRoundsCount() {
+		return Integer.parseInt(roundsField.getText());
 	}
 
+	/**
+	 * Checks whether {@link #roundsField} contains a valid value
+	 */
 	protected boolean validateInput() {
 		try {
-			return (!hasCount || getNumberOfTest()>0);
+			return (!hasRounds || getRoundsCount()>0);
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Le nombre de tests doit être positif et entier !", "Erreur", JOptionPane.WARNING_MESSAGE);

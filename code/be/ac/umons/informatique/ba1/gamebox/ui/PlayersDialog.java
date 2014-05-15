@@ -22,13 +22,30 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 @SuppressWarnings("serial")
 class PlayersDialog extends JDialog {
-	protected static final boolean MODAL = true;
+	
+	/**
+	 * Player name textfield
+	 */
 	protected ThinTextField name = new ThinTextField(20);
+	
+	/**
+	 * Human players list model
+	 */
 	protected PlayersModel mod;
+	
+	/**
+	 * Attached context
+	 */
 	protected GameContext context;
 	
+	
+	/**
+	 * Creates a {@link PlayersDialog}
+	 * @param ctx    Current context
+	 * @param parent Parent frame
+	 */
 	public PlayersDialog(GameContext ctx, Main parent) {
-		super(parent, "Profils de joueurs", MODAL);
+		super(parent, "Profils de joueurs", true);
 		
 		context = ctx;
 		
@@ -60,41 +77,67 @@ class PlayersDialog extends JDialog {
 		setVisible(true);
 	}
 	
-	
-	
+	/**
+	 * Human players list model
+	 */
 	class PlayersModel extends AbstractTableModel {
 
+		/**
+		 * Internal human players list
+		 */
 		protected ArrayList<HumanPlayer> al;
 		
+		/**
+		 * Creates a model working on p
+		 * @param p Human players list
+		 */
 		public PlayersModel(ArrayList<HumanPlayer> p) {
 			al = p;
 		}
 		
+		/**
+		 * Gets the column count
+		 */
 		@Override
 		public int getColumnCount() {
 			return 1;
 		}
 		
+		/**
+		 * Gets the column name
+		 */
 		@Override
 		public String getColumnName(int c) {
 			return "Nom du joueur";
 		}
 
+		/**
+		 * Gets the human players count
+		 */
 		@Override
 		public int getRowCount() {
 			return al.size();
 		}
 
+		/**
+		 * Gets a cell value
+		 */
 		@Override
 		public Object getValueAt(int row, int col) {
 			return al.get(row).name;
 		}
 		
+		/**
+		 * Allows nicknames editing
+		 */
 		@Override
 		public boolean isCellEditable(int row, int col) {
 			return true; //only displayed cell is editable
 		}
 		
+		/**
+		 * Actually edits nicknames
+		 */
 		@Override
 		public void setValueAt(Object val, int row, int col) {
 			if (val != null) {
@@ -114,11 +157,19 @@ class PlayersDialog extends JDialog {
 			}
 		}
 		
+		/**
+		 * Adds a human player to the list
+		 * @param p New human player
+		 */
 		public void addItem(HumanPlayer p) {
 			al.add(p);
 			fireTableRowsInserted(al.size()-1, al.size()-1);
 		}
 		
+		/**
+		 * Removes a human player by id
+		 * @param id Index
+		 */
 		public void removeItem(int id) {
 			al.remove(id);
 			fireTableRowsDeleted(id, id);

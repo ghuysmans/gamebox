@@ -8,8 +8,17 @@ import java.util.ArrayList;
 public abstract class Event extends Condition {
 
 	private static final long serialVersionUID = -2874813841580806619L;
+	
+	/**
+	 * If true, the Event will be reset when {@link Condition#maximum} is reached.
+	 */
 	public final boolean autoreset;
+	
+	/**
+	 * Condition which must be met to increment {@link Condition#count}.
+	 */
 	public final ArrayList<Condition> conditions;
+	
 	
 	/**
 	 * Creates an event without conditions

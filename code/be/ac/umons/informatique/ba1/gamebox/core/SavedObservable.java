@@ -11,24 +11,52 @@ import java.util.ArrayList;
 public class SavedObservable implements Serializable {
 	
 	private static final long serialVersionUID = -8152887616190177032L;
+	
+	/**
+	 * Internal list of temporary observers
+	 */
 	protected transient ArrayList<SavedObserver> tmpObservers;
+	
+	/**
+	 * Internal list of saved observers
+	 */
 	protected ArrayList<SavedObserver> observers = new ArrayList<SavedObserver>();
+	
+	/**
+	 * Flag to enable {@link #notifyObservers(Object)}
+	 */
 	private boolean changed;
 	
+	
+	/**
+	 * Sets the {@link #changed} flag
+	 */
 	protected void setChanged() {
 		changed = true;
 	}
 	
+	/**
+	 * Adds a saved observer
+	 * @param obs Observer
+	 */
 	public void addObserver(SavedObserver obs) {
 		observers.add(obs);
 	}
 	
+	/**
+	 * Adds a temporary observer
+	 * @param obs Observer
+	 */
 	public void addTmpObserver(SavedObserver obs) {
 		if (tmpObservers == null)
 			tmpObservers = new ArrayList<SavedObserver>();
 		tmpObservers.add(obs);
 	}
 	
+	/**
+	 * Notifies saved and temporary observers if {@link #changed} is set 
+	 * @param obj Object to be passed to observers
+	 */
 	protected void notifyObservers(Object obj) {
 		if (changed) {
 			for (SavedObserver o: observers)

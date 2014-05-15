@@ -1,12 +1,15 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
- * Like classical achievements, displays a message when a particular action is done.
- * These are saved for each player, independently. 
+ * Classical achievements, saved for each player, independently. 
  */
 
 public class Achievement extends TextMessage {
 	private static final long serialVersionUID = -830995388511588828L;
+	
+	/**
+	 * Is there an icon to represent it?
+	 */
 	public final boolean icon;
 	
 	/**

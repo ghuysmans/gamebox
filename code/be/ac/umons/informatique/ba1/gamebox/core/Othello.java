@@ -61,6 +61,7 @@ public class Othello extends Game {
 	}
 	
 	/**
+	 * Computes p's score
 	 * @param p Player
 	 * @param d To be displayed?
 	 * @return d ? A delta between p's points and the other's : a sum. 

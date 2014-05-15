@@ -7,6 +7,7 @@ import java.util.Stack;
 
 public class History extends Stack<Move> {
 	private static final long serialVersionUID = 7376467524592531262L;
+	
 
 	/**
 	 * Undoes the last move and its consequences.
@@ -21,6 +22,5 @@ public class History extends Stack<Move> {
 		peek().undo(notify);
 		pop();
 	}
-
 
 }

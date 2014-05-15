@@ -21,9 +21,24 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 class AboutDialog extends JDialog {
 
+	/**
+	 * Angular steps count
+	 */
 	private final int stp;
+	
+	/**
+	 * Rings' thickness
+	 */
 	private final int tks;
+	
+	/**
+	 * Original image
+	 */
 	private final BufferedImage original;
+	
+	/**
+	 * Original image's dimension and half-dimension
+	 */
 	private final int original_s, original_hs;
 	
 	
@@ -48,20 +63,30 @@ class AboutDialog extends JDialog {
 		//TODO find a more reliable method to compute an offset
 		setSize(original_s+10, original_s+20);
 		//Use it!
-		setContentPane(new MyPanel());
+		setContentPane(new GamePanel());
 		
 		setLocationRelativeTo(parent);
 		setVisible(true);
 	}
 	
 	
-	
-	private class MyPanel extends JPanel implements MouseListener {
+	/**
+	 * Panel which actually makes the mini-game working
+	 */
+	private class GamePanel extends JPanel implements MouseListener {
 		
+		/**
+		 * Angular offsets
+		 */
 		private int offsets[];
+		
+		/**
+		 * Has the user ever clicked on the panel?
+		 */
 		private boolean firstClick = true;
 		
-		public MyPanel() throws Exception {
+		
+		public GamePanel() throws Exception {
 			addMouseListener(this);	
 			offsets = new int[original_hs/tks];
 		}
@@ -118,6 +143,7 @@ class AboutDialog extends JDialog {
 			}
 			return true;	
 		}
+		
 		/**
 		 * Handles clicks and detects "victory"
 		 * @param e MouseEvent

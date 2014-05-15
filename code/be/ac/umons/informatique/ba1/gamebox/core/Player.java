@@ -10,8 +10,17 @@ import java.util.ArrayList;
 public abstract class Player extends SavedObservable implements Serializable {
 
 	private static final long serialVersionUID = -2969901121702177313L;
+	
+	/**
+	 * Nickname
+	 */
 	public String name;
+	
+	/**
+	 * Associated Events (Achievements, etc.)
+	 */
 	public final ArrayList<Event> events;
+	
 	
 	public Player(String n) {
 		name = n;

@@ -8,9 +8,22 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 class TakeMove extends Move {
 
 	private static final long serialVersionUID = 5249874706758381550L;
+	
+	/**
+	 * Target X coordinate
+	 */
 	public final int x;
+	
+	/**
+	 * Target Y coordinate
+	 */
 	public final int y;
+	
+	/**
+	 * Previous owner
+	 */
 	protected Player old_player;
+	
 	
 	public TakeMove(Game g, boolean csq, int x, int y) {
 		super(g, csq);

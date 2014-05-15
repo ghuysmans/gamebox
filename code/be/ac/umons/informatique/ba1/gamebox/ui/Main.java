@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.swing.ButtonGroup;
@@ -32,32 +31,87 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
 	
+	/**
+	 * Default frame width
+	 */
 	protected static final int DEFAULT_WIDTH  = 600;
+	
+	/**
+	 * Default frame height
+	 */
 	protected static final int DEFAULT_HEIGHT = 600;
 	
+	/**
+	 * Game context, saved when the application is closed 
+	 */
 	protected final GameContext context;
+	
+	/**
+	 * Debug mode flag
+	 */
 	protected boolean debug;
 	
+	/**
+	 * Timer used by {@link #doPlay()}
+	 */
 	protected Timer tmrPlay;
+	
+	/**
+	 * Flag avoiding concurrent {@link #doPlay()} calls
+	 */
 	protected boolean tmrPlayWorking;
+	
+	/**
+	 * Menu bar
+	 */
 	protected final JMenuBar menuBar = new JMenuBar();
 	
-	protected final JMenu gamesMenu = new JMenu("Jeux");
+	/**
+	 * Main menus
+	 */
+	protected final JMenu 	gamesMenu = new JMenu("Jeux"),
+							stats = new JMenu("Statistiques"),
+							help = new JMenu("Aide");
+
+	/**
+	 * Players sub-menu
+	 */
 	protected final JMenu pls = new JMenu("Joueurs");
+	
+	/**
+	 * Players
+	 */
 	protected final PlayerMenu p1, p2;
-	protected final JMenuItem valPls = new JMenuItem("Lancer le jeu");
-	protected final JMenuItem mngPls = new JMenuItem("Gérer");
-	protected final JMenuItem ach = new JMenuItem("Succès");
-	protected final JMenu stats = new JMenu("Statistiques");
-	protected final JMenu help = new JMenu("Aide");
 	
+	/**
+	 * Game menu items
+	 */
+	protected final JMenuItem 	valPls = new JMenuItem("Lancer le jeu"), 
+								mngPls = new JMenuItem("Gérer"),
+								ach = new JMenuItem("Succès");
+	
+	/**
+	 * String used to identify both stats menus.
+	 * @see #doStats(ActionEvent)
+	 */
 	protected final String ACTION_STATS = "STATS";
-	protected final JMenuItem res = new JMenuItem("Résultats");
-	protected final JMenuItem graph = new JMenuItem("Graphique");
 	
+	/**
+	 * Stats menu items
+	 */
+	protected final JMenuItem 	res = new JMenuItem("Résultats"),
+								graph = new JMenuItem("Graphique");
+	
+	/**
+	 * Help menu items
+	 */
 	protected final JMenuItem manual = new JMenuItem("Manuel");
 	protected final JMenuItem about = new JMenuItem("À propos de...");
 	
+	/**
+	 * Debug menu item
+	 * @see #doDebug()
+	 */
 	protected final JMenuItem dbg = new JMenuItem("DEBUG");
 	
 	
@@ -142,7 +196,7 @@ public class Main extends JFrame implements ActionListener {
 	/**
 	 * Loads a board panel, displays it and resizes the JFrame.
 	 * Both exception are declared to avoid ignoring an NPE thrown because of an unknown game.
-	 * @see UiGame#createPanel(ArrayList, GameContext, boolean)
+	 * @see BoardPanel#create(GameContext, boolean)
 	 */
 	private void loadBoardPanel() {
 		try {
@@ -306,7 +360,7 @@ public class Main extends JFrame implements ActionListener {
 					if (!sd.cancelled) {
 						ComputerPlayer ai1 = new ComputerPlayer(context.game, "AI1", sd.getLevel1());
 						ComputerPlayer ai2 = new ComputerPlayer(context.game, "AI2", sd.getLevel2());
-					new AiStatsDialog(context.game.getClass(), ai1, ai2, this, sd.getNumberOfTest());
+						new AiStatsResultsDialog(context.game.getClass(), ai1, ai2, this, sd.getRoundsCount());
 					}
 				}
 			
@@ -341,9 +395,17 @@ public class Main extends JFrame implements ActionListener {
 	 * Menu presenting a list of human players for selection.
 	 */
 	class PlayerMenu extends JMenu {
+		
+		/**
+		 * Frame passed to {@link PlayerMenuItem}
+		 */
 		protected JFrame frame;
+		
+		/**
+		 * Player index in {@link GameContext#selPlayers}
+		 */
 		protected int id;
-		protected ButtonGroup grp;
+		
 		
 		/**
 		 * Creates a player(s) menu
@@ -366,7 +428,7 @@ public class Main extends JFrame implements ActionListener {
 				remove(i);
 			//populate it
 			PlayerMenuItem it;
-			grp = new ButtonGroup();
+			ButtonGroup grp = new ButtonGroup();
 			for (HumanPlayer p: context.humans) {
 				it = new PlayerMenuItem(frame, p.toString(), id, p); 
 				grp.add(it);
@@ -385,9 +447,22 @@ public class Main extends JFrame implements ActionListener {
 	 * Menu item holding informations about a player object and/or id.
 	 */
 	class PlayerMenuItem extends JRadioButtonMenuItem implements ActionListener {
+		
+		/**
+		 * Attached player (null if this item is used to select an AI)
+		 */
 		public final Player player;
+		
+		/**
+		 * Player index in {@link GameContext#selPlayers}
+		 */
 		public final int id;
+		
+		/**
+		 * Parent frame for {@link AiSelectionDialog}
+		 */
 		protected final JFrame frame;
+		
 		
 		/**
 		 * Creates a player menu item
@@ -416,7 +491,7 @@ public class Main extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			if (player == null) {
 				//AI selection dialog
-				AiDialog dlg = new AiDialog(frame, context, id);
+				AiSelectionDialog dlg = new AiSelectionDialog(frame, context, id);
 				if (!dlg.getCancelled())
 					context.selPlayers[id] = new ComputerPlayer(null, dlg.getName(), dlg.getDifficulty());
 				else
@@ -436,8 +511,16 @@ public class Main extends JFrame implements ActionListener {
 	 * Information bar displaying scores, time (to be implemented)...
 	 */
 	class InfoBar extends JPanel implements SavedObserver {
+		
+		/**
+		 * Score panels (one for each player) 
+		 */
 		protected final ScorePanel sp1, sp2;
 		
+		
+		/**
+		 * Creates an information bar and attaches it to the current {@link Game}
+		 */
 		public InfoBar() {
 			setLayout(new BorderLayout());
 			add(sp1 = new ScorePanel(0, false), BorderLayout.WEST);
@@ -445,6 +528,9 @@ public class Main extends JFrame implements ActionListener {
 			context.game.addTmpObserver(this);
 		}
 
+		/**
+		 * Updates both score panels
+		 */
 		@Override
 		public void update(SavedObservable g, Object param) {
 			if (param.equals("chg") || param.equals("stp")) {
@@ -453,11 +539,26 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 		
+		/**
+		 * Displays information about one player
+		 */
 		protected class ScorePanel extends JPanel {
+			
+			/**
+			 * Player index in {@link GameContext#selPlayers}
+			 */
 			protected int playerId;
-			protected boolean leftLabel; 
+			
+			/**
+			 * Score label
+			 */
 			protected ZoomedLabel score;
+			
+			/**
+			 * Nickname label
+			 */
 			protected ZoomedLabel nick;
+			
 			
 			/**
 			 * Creates a score panel
@@ -482,6 +583,9 @@ public class Main extends JFrame implements ActionListener {
 				update();
 			}
 			
+			/**
+			 * Updates nickname and score labels
+			 */
 			public void update() {
 				Player p = context.game.players[playerId];
 				if (p != null) {
@@ -500,15 +604,24 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	/**
-	 * Menu allowing selection of a game and customization of its board
+	 * Game creation menu
 	 */
 	class GameMenu extends JMenu {
+		
+		/**
+		 * Classic board selection
+		 */
 		class GameMenuItemNormal extends JMenuItem implements ActionListener {
-			UiGame descriptor;
 			
 			/**
-			 * Creates a game variant menu item
-			 * @param gd Game descriptor
+			 * Associated descriptor
+			 */
+			UiGame descriptor;
+			
+			
+			/**
+			 * Creates a classic game menu item
+			 * @param gd      Game descriptor
 			 * @param caption Displayed text
 			 */
 			public GameMenuItemNormal(UiGame gd, String caption) {
@@ -536,7 +649,16 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 		
+		/**
+		 * Customized board selection
+		 */
 		class GameMenuItemCustom extends GameMenuItemNormal {
+			
+			/**
+			 * Creates a game variant menu item
+			 * @param gd      Game descriptor
+			 * @param caption Displayed text
+			 */
 			public GameMenuItemCustom(UiGame gd, String caption) {
 				super(gd, caption);
 			}
@@ -547,7 +669,7 @@ public class Main extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					CustomDialog dlg = new CustomDialog(null);
+					CustomBoardDialog dlg = new CustomBoardDialog(null);
 					if (!dlg.getCancelled()) {
 						context.game = descriptor.createGame(dlg.getTypedWidth(), dlg.getTypedHeight());
 						enablePlayersSelection(true);
@@ -563,6 +685,10 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 
+		/**
+		 * Creates classical/customized game menus
+		 * @param gd Game descriptor
+		 */
 		public GameMenu(UiGame gd) {
 			super(gd.name);
 			add(new GameMenuItemNormal(gd, "Traditionnel"));
@@ -572,6 +698,10 @@ public class Main extends JFrame implements ActionListener {
 	
 	
 	
+	/**
+	 * Opens the main application frame
+	 * @param args "-d" enables the debug mode
+	 */
 	public static void main(String[] args) {
 		//TODO remove this when the game is completely translated (frames, buttons, menus, etc.)
 		Locale.setDefault(Locale.FRENCH);

@@ -8,10 +8,22 @@ public class ComputerPlayer extends Player {
 
 	private static final long serialVersionUID = 2817118917278891230L;
 	
+	/**
+	 * Current AI level. Has to be stored here and not in an AI object,
+	 * because its class is selected dynamically by {@link ComputerPlayer}
+	 */
 	public final int level;
 	
+	/**
+	 * Current Game
+	 */
 	protected Game game;
+	
+	/**
+	 * AI used to actually play moves
+	 */
 	protected final AI ai;
+	
 	
 	/**
 	 * Selects an AI corresponding to the given level

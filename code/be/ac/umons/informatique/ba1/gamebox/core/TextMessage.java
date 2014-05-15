@@ -8,6 +8,10 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 class TextMessage extends Event {
 
 	private static final long serialVersionUID = -4923366138731817906L;
+	
+	/**
+	 * Text message to be displayed
+	 */
 	public final String message;
 	
 	/**

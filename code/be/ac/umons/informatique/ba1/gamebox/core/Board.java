@@ -9,12 +9,20 @@ import java.io.Serializable;
 
 public class Board implements Serializable {
 
-	public static final int MINIMUM_WIDTH = 3;
-	public static final int MINIMUM_HEIGHT = 3;
 	private static final long serialVersionUID = -7488430075749452263L;
 
 	/**
-	 * Internal array holding pieces, accessed by dedicated methods.
+	 * Minimum board width (for all Games)
+	 */
+	public static final int MINIMUM_WIDTH = 3;
+	
+	/**
+	 * Minimum board height (for all Games)
+	 */
+	public static final int MINIMUM_HEIGHT = 3;
+
+	/**
+	 * Internal array holding pieces, accessed using dedicated methods.
 	 * @see Board#getPiece(int, int)
 	 * @see Board#setPiece(Piece, int, int)
 	 */
@@ -25,6 +33,7 @@ public class Board implements Serializable {
 	 */
 	public static final int[][] vectors = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
+	
 	/**
 	 * Creates a new rectangular board.
 	 * @param width Width (x)
@@ -37,10 +46,18 @@ public class Board implements Serializable {
 		
 	}
 
+	/**
+	 * Gets the board's width
+	 * @return Width
+	 */
 	public int getWidth() {
 		return arr[0].length;
 	}
 
+	/**
+	 * Gets the board's height
+	 * @return Height
+	 */
 	public int getHeight() {
 		return arr.length;
 	}

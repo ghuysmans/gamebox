@@ -1,5 +1,8 @@
 package be.ac.umons.informatique.ba1.gamebox.core;
 
+/**
+ * Contains useful methods for filling boards in other Games' unit tests.
+ */
 public abstract class GameTestAbstract {
 
 	/**

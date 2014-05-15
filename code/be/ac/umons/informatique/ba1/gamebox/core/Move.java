@@ -9,10 +9,27 @@ import java.io.Serializable;
 public abstract class Move implements Serializable {
 
 	private static final long serialVersionUID = -966257986224879076L;
+	
+	/**
+	 * Associated Game
+	 */
 	protected Game game;
+	
+	/**
+	 * Owner
+	 */
 	protected Player player;
+	
+	/**
+	 * Previous player
+	 */
 	protected Player lastPlayer;
+	
+	/**
+	 * Consequence?
+	 */
 	public final boolean conseq;
+	
 	
 	public Move(Game g, boolean csq) {
 		game = g;

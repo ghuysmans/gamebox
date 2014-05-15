@@ -18,11 +18,31 @@ public class GameContext implements Serializable {
 
 	private static final long serialVersionUID = -1014168708599274042L;
 	
+	/**
+	 * Current {@link Game}
+	 */
 	public Game game;
+	
+	/**
+	 * Current {@link GameMode}
+	 */
 	public GameMode mode;
+	
+	/**
+	 * List of {@link HumanPlayer}
+	 */
 	public ArrayList<HumanPlayer> humans = new ArrayList<HumanPlayer>();
+	
+	/**
+	 * First launch of the game? 
+	 */
 	public transient boolean firstLaunch;
+	
+	/**
+	 * Players selected using the menus
+	 */
 	public transient Player[] selPlayers;
+	
 	
 	/**
 	 * Checks whether p is selected

@@ -8,7 +8,12 @@ import java.util.ArrayList;
 public class TicTacToe extends Game {
 	
 	private static final long serialVersionUID = 7629735041191059405L;
+	
+	/**
+	 * Number of aligned pieces required for a player to win
+	 */
 	protected final int required;
+	
 	
 	public TicTacToe() {
 		this(3, 3);
@@ -115,6 +120,7 @@ public class TicTacToe extends Game {
 		return RESULT_DRAW;
 	}
 	
+	@Override
 	public int getScore(int depth) {
 		return getScore() >> depth;
 	}

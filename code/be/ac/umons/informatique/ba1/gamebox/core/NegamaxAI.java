@@ -10,15 +10,20 @@ import java.util.ArrayList;
 public class NegamaxAI extends AI {
 	
 	private static final long serialVersionUID = 3102809303323977852L;
+	
+	/**
+	 * Maximum recursion level
+	 */
 	protected final int maxRecursion;
 
+	
 	public NegamaxAI(Game g, int rec) {
 		super(g, "Negamax AI");
 		maxRecursion = rec;
 	}
 	
 	/**
-	 * @param rec Recursion level
+	 * @param rec Current recursion level
 	 * @see AI#computeNode()
 	 */
 	private int computeNode(int rec) {
@@ -46,10 +51,6 @@ public class NegamaxAI extends AI {
 		}
 	}
 	
-	/**
-	 * Wrapper to an internal method.
-	 * @see #computeNode(int)
-	 */
 	@Override
 	public int computeNode() {
 		return computeNode(0);

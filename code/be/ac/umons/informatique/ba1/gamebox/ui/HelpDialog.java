@@ -16,6 +16,9 @@ import javax.swing.JScrollPane;
 @SuppressWarnings("serial")
 class HelpDialog extends JDialog {
 
+	/**
+	 * Default frame width
+	 */
 	public static final int WIDTH = 370;
 	
 	public HelpDialog(JFrame parent) throws IOException {
@@ -29,6 +32,7 @@ class HelpDialog extends JDialog {
 		Rectangle2D rect = parent.getBounds();
 		setSize(WIDTH, (int)rect.getHeight());
 		setLocation((int)rect.getMaxX(), (int)rect.getMinY());
+		setResizable(true);
 		
 		setVisible(true);
 	}

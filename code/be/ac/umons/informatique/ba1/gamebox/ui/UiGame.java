@@ -21,6 +21,9 @@ public enum UiGame {
 	OTH("Othello", Othello.class, "oth/board", "oth/black", "oth/white", false);
 	
 	
+	/**
+	 * User-friendly name
+	 */
 	public final String name;
 	public final Class<? extends Game> cls;
 	public final String txBoard;

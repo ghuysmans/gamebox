@@ -9,20 +9,64 @@ import java.util.ArrayList;
 public abstract class Game extends SavedObservable implements Serializable {
 
 	private static final long serialVersionUID = -535116433524494964L;
+	
+	/**
+	 * Value indicating the player has won (used by {@link #getResult(Player)}) 
+	 */
 	public static final int RESULT_WON 	= 420;
+	
+	/**
+	 * Value indicating the player has lost (used by {@link #getResult(Player)})
+	 * Must be the opposite of {@link #RESULT_WON} for {@link NegamaxAI} to work! 
+	 */
 	public static final int RESULT_LOST = -RESULT_WON;
+	
+	/**
+	 * Value indicating a neutral state and a draw (used by {@link #getResult(Player)})
+	 */
 	public static final int RESULT_DRAW = 0;
 
+	/**
+	 * Player about to play
+	 */
 	protected Player currentPlayer;
+	
+	/**
+	 * Has {@link #setPlayers(Player, Player)} been called? 
+	 */
 	protected boolean initialized;
+	
+	/**
+	 * Has an important return value of {@link #getResult(Player)} been broadcasted to {@link Condition} objects? 
+	 */
 	protected boolean resultBc;
+	
+	/**
+	 * Short name used for {@link Condition} objects 
+	 */
 	public final String shortName;
+	
+	/**
+	 * Players array
+	 */
 	public final Player[] players;
+	
+	/**
+	 * Board (unique instance)
+	 */
 	public final Board board;
+	
+	/**
+	 * Moves history (unique instance)
+	 */
 	public final History history;
-	public final ArrayList<Event> events;
+	
+	/**
+	 * Pre-computed legal moves
+	 */
 	public ArrayList<Move> legalMoves;
 
+	
 	/**
 	 * Creates a Game instance
 	 * @param sn     Short name (for won/lost events)
@@ -33,7 +77,6 @@ public abstract class Game extends SavedObservable implements Serializable {
 		board = new Board(width, height);
 		history = new History(); //empty
 		players = new Player[2];
-		events = new ArrayList<Event>();
 		shortName = sn;
 	}
 	
@@ -210,8 +253,9 @@ public abstract class Game extends SavedObservable implements Serializable {
 	}
 	
 	/**
-	 * Checks if the Game is initialized, i.e. whether {@link #setPlayers(Player, Player)} has been called. 
+	 * Checks if the Game is initialized.
 	 * @return true if it is initialized
+	 * @see #initialized
 	 */
 	public final boolean isInitialized() {
 		return initialized;
