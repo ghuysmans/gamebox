@@ -60,6 +60,7 @@ class AboutDialog extends JDialog {
 		
 		private int offsets[];
 		private boolean firstClick = true;
+		
 		public MyPanel() throws Exception {
 			addMouseListener(this);	
 			offsets = new int[original_hs/tks];
@@ -107,8 +108,8 @@ class AboutDialog extends JDialog {
 		}
 		
 		/**
-		 * checks whether all has a no offsets 
-		 * @return true mean won
+		 * Checks whether all rings have a null offset 
+		 * @return true means "won"
 		 */
 		private boolean hasWon() {
 			for (int k=0; k<offsets.length; k++) {
