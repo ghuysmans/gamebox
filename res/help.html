@@ -5,19 +5,59 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
 		p {margin: 0 0 5px 0; line-indent: 15px}
+		a {color: blue; text-decoration: none}
 	</style>
 </head>
 <body>
+
+
 <h1>Aide de Gamebox</h1>
+<h2>Table des matières</h2>
+<ol type="I">
+	<li><a href="#controls">Commandes de jeu</a><ol>
+			<li><a href="#board">Sur le&nbsp;plateau de jeu</a></li>
+			<li><a href="#about">Dans « À propos de »</a></li>
+	</ol></li>
+	<li><a href="#stats">Statistiques</a><ol>
+			<li><a href="#gnuplot">Comment calculer les stats pour gnuplot ?</a></li>
+	</ol></li>
+	<li><a href="#compilation">Compilation</a><ol>
+			<li><a href="#jar">Comment créer le&nbsp;fichier jar ?</a></li>
+	</ol></li>
+</ol>
 
-<h2>Comment créer le fichier jar ?</h2>
-<p>Dans un terminal, tapez <i>ant jar</i>. Un fichier <i>gamebox.jar</i> 
-(que vous pourrez ouvrir sans avoir besoin du JDK) sera généré...</p>
 
-<h2>Comment calculer les stats pour gnuplot ?</h2>
+<a name="controls"></a><h2>I. Commandes de jeu</h2>
+
+<a name="board"></a><h3>1. Sur le&nbsp;plateau de jeu</h3>
+<ul>
+<li>Clic gauche : effectuer un mouvement.</li>
+<li>Clic gauche (SHIFT enfoncé) : défaire le précédent mouvement.</li>
+<li>Clic droit enfoncé : voir les mouvements légaux.</li>
+</ul>
+
+<a name="about"></a><h3>2. Dans « À propos de »</h3>
+<ul>
+<li>Clic gauche : faire tourner l'anneau sélectionné dans le&nbsp;sens horlogique.</li>
+<li>Clic droit : faire tourner l'anneau sélectionné dans le&nbsp;sens anti-horlogique.</li>
+<li>Clic gauche (SHIFT enfoncé) : faire tourner le&nbsp;disque dans le&nbsp;sens horlogique.</li>
+<li>Clic droit (SHIFT enfoncé) : faire tourner le&nbsp;disque dans le&nbsp;sens anti-horlogique.</li>
+</ul>
+
+
+<a name="stats"></a><h2>II. Statistiques</h2>
+
+<a name="gnuplot"></a><h3>1. Comment calculer les stats pour gnuplot ?</h3>
 <p>Dans un terminal, lancez AiStats : 
 <i>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats FIXME </i> 
 .</p>
+
+
+<a name="compilation"></a><h2>III. Compilation</h2>
+
+<a name="jar"></a><h3>1. Comment créer le&nbsp;fichier jar ?</h3>
+<p>Dans un terminal, tapez <i>ant jar</i>. Un fichier <i>gamebox.jar</i> 
+(que vous pourrez ouvrir sans avoir besoin du JDK) sera généré...</p>
 
 
 </body>
