@@ -4,7 +4,7 @@
 	<title>Aide de Gamebox</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
-		p {margin: 0 0 5px 0; line-indent: 15px}
+		p {margin: 0 0 5px 0; text-indent: 20px}
 		a {color: blue; text-decoration: none}
 	</style>
 </head>
@@ -34,15 +34,21 @@
 
 <h3>1. Comment calculer les stats pour gnuplot ?</h3>
 <p>Dans un terminal, lancez AiStats : 
-<i>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats FIXME </i> 
+<!-- a <pre> block would be too large -->
+<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats FIXME </code> 
 .</p>
 
 
 <h2>III. Compilation</h2>
 
 <h3>1. Comment créer le&nbsp;fichier jar ?</h3>
-<p>Dans un terminal, tapez <i>ant jar</i>. Un fichier <i>gamebox.jar</i> 
+<p>Dans un terminal, tapez <code>ant jar</code>. Un fichier <i>gamebox.jar</i> 
 (que vous pourrez ouvrir sans avoir besoin du JDK) sera généré...</p>
+
+<h3>2. Comment compiler depuis Eclipse ?</h3>
+<p>En règle générale, il faut créer un lien symbolique de <i>/code/res</i> vers <i>/res</i>.</p>
+<p>Sous Windows, utilisez <i>junction</i> (cet outil fait partie des <i>Windows Sysinternals</i>) : <code>junction code\other res</code>.</p>
+<p>Sous GNU/Linux, utilisez <i>ln</i> : <code>ln -s ./res ./code/res</code>.</p>
 
 
 </body>
