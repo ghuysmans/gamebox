@@ -282,7 +282,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 
 	@Override
 	public void update(SavedObservable g, Object param) {
-		if (param.equals("chg"))
+		if (param.equals("chg") || param.equals("stp"))
 			repaint();
 	}
 }

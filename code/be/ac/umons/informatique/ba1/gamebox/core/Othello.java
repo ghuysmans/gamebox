@@ -33,7 +33,6 @@ public class Othello extends Game {
 		board.setPiece(new Piece(players[0]), hw-1, hh); //black2
 		board.setPiece(new Piece(players[1]), hw-1, hh-1); //white
 		board.setPiece(new Piece(players[1]), hw, hh); //white2
-		notifyEvent("chg");
 	}
 	
 	@Override
@@ -182,28 +181,32 @@ public class Othello extends Game {
 
 	@Override
 	public boolean hasFinished() {
-		int scoreP1 = getScore_internal(this.players[0]);
-		int scoreP2 = getScore_internal(this.players[1]);
-		if (scoreP1==0 || scoreP2==0 || board.isFull() )
-			return true;
+		if (history.size() == 0)
+			return false;
 		else {
-			//Has the current player any legal move?
-			if (getLegalMoves().isEmpty()) {
-				//No. Same question for the next one...
-				//We need to restore currentPlayer afterwards!
-				nextPlayer();
+			int scoreP1 = getScore_internal(this.players[0]);
+			int scoreP2 = getScore_internal(this.players[1]);
+			if (scoreP1==0 || scoreP2==0 || board.isFull())
+				return true;
+			else {
+				//Has the current player any legal move?
 				if (getLegalMoves().isEmpty()) {
+					//No. Same question for the next one...
+					//We need to restore currentPlayer afterwards!
 					nextPlayer();
-					return true;
+					if (getLegalMoves().isEmpty()) {
+						nextPlayer();
+						return true;
+					}
+					else {
+						nextPlayer();
+						return false;
+					}
 				}
-				else {
-					nextPlayer();
+				else
+					//Yes? The game hasn't finished!
 					return false;
-				}
 			}
-			else
-				//Yes? The game hasn't finished!
-				return false;
 		}
 	}
 	

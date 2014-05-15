@@ -440,7 +440,7 @@ public class Main extends JFrame implements ActionListener {
 
 		@Override
 		public void update(SavedObservable g, Object param) {
-			if (param.equals("chg")) {
+			if (param.equals("chg") || param.equals("stp")) {
 				sp1.update();
 				sp2.update();
 			}
@@ -461,8 +461,8 @@ public class Main extends JFrame implements ActionListener {
 				playerId = pid;
 				
 				setLayout(new FlowLayout());
-				score = new ZoomedLabel("", 4);
-				nick = new ZoomedLabel("", 2);
+				score = new ZoomedLabel("0", 4);
+				nick = new ZoomedLabel("???", 2);
 				if (ll) {
 					add(nick);
 					add(score);
@@ -481,6 +481,10 @@ public class Main extends JFrame implements ActionListener {
 					score.setForeground(p==context.game.getCurrentPlayer() ? Color.RED : Color.BLACK);
 					score.setText(Integer.toString(context.game.getDisplayableScore(p)));
 					nick.setText(p.name); //just in case it has changed...
+				}
+				else {
+					score.setText("0");
+					nick.setText("???");
 				}
 			}
 		}

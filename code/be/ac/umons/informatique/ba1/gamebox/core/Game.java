@@ -37,6 +37,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 		players[1] = p2; p2.setGame(this);
 		setup(); //must be here for Othello
 		setCurrentPlayer(p1);
+		notifyEvent("stp");
 	}
 	
 	/**
