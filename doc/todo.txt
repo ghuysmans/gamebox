@@ -1,5 +1,4 @@
 use the brand-new won-xxx messages!
-refactor new JPanel, setLayout --> new JPanel(new MyLayout())
 
 maybe?
 todo @sound: implement something to play them
