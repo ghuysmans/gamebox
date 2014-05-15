@@ -14,8 +14,9 @@ public class OthelloMove extends PutMove {
 	
 	@Override
 	protected void internalPlay() {
+		Player plBefore = game.getCurrentPlayer();
 		super.internalPlay();
-		game.nextPlayer(); //still the same player!
+		game.setCurrentPlayer(plBefore);
 		//Play TakeMove consequences
 		for (int i=0; i<8; i++) {
 			int[] vect = Board.vectors[i];
