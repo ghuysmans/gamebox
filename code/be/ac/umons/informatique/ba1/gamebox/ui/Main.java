@@ -1,6 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -476,8 +477,11 @@ public class Main extends JFrame implements ActionListener {
 			
 			public void update() {
 				Player p = context.game.players[playerId];
-				score.setText(Integer.toString(context.game.getDisplayableScore(p)));
-				nick.setText(p.name); //if it changed...
+				if (p != null) {
+					score.setForeground(p==context.game.getCurrentPlayer() ? Color.RED : Color.BLACK);
+					score.setText(Integer.toString(context.game.getDisplayableScore(p)));
+					nick.setText(p.name); //just in case it has changed...
+				}
 			}
 		}
 	}
