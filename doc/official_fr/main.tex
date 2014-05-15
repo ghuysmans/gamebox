@@ -1,6 +1,9 @@
 \documentclass[12pt]{article}
 \usepackage{fullpage}
 \usepackage[a4paper, margin=2cm, bottom=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{titling}
+\setlength{\droptitle}{-60pt}
 \input{../ghs.tex}
 \input{../ghs.fr.tex}
 
@@ -17,12 +20,9 @@
             pdfkeywords={rapport, documentation}}
 \begin{document}
 \maketitle
-
-%FIXME enable TOC in both versions when done.
-%\tableofcontents
-%\newpage
-
-TODO copie d'écran ou montage comme couverture
+\includegraphics[width=\textwidth]{../cover.png}
+\tableofcontents
+\newpage
 
 \input{intro.tex}
 \input{good.tex}
