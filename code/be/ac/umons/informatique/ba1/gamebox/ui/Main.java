@@ -39,6 +39,7 @@ public class Main extends JFrame implements ActionListener {
 	protected boolean debug;
 	
 	protected Timer tmrPlay;
+	protected boolean tmrPlayWorking;
 	protected final JMenuBar menuBar = new JMenuBar();
 	
 	protected final JMenu gamesMenu = new JMenu("Jeux");
@@ -207,8 +208,14 @@ public class Main extends JFrame implements ActionListener {
 	 * Computer autoplay if we're in the right mode 
 	 */
 	private void doPlay() {
-		if (context.mode==GameMode.AUTOMATIC && (context.game.getCurrentPlayer() instanceof ComputerPlayer) && !context.game.hasFinished())
+		if (!tmrPlayWorking && //avoid concurrent computing
+			context.mode==GameMode.AUTOMATIC && //right mode? 
+			(context.game.getCurrentPlayer() instanceof ComputerPlayer) && //something to do? 
+			!context.game.hasFinished()) { //not finished?
+				tmrPlayWorking = true;
 				((ComputerPlayer)context.game.getCurrentPlayer()).play();
+				tmrPlayWorking = false;
+		}
 	}
 	
 	/**
