@@ -13,8 +13,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import sun.java2d.pipe.DrawImage;
-
 /**
  * Mini-game consisting of concentric circles rotated using the mouse;
  * their directions are randomized on the JDialog's opening. 
