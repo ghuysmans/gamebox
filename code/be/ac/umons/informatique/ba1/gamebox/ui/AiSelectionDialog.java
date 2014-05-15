@@ -26,7 +26,7 @@ class AiSelectionDialog extends AiAbstractDialog implements ActionListener {
 	/**
 	 * Textfield containing the {@link ComputerPlayer}'s nickname
 	 */
-	protected final JTextField name = new ThinTextField(DEFAULT_NAME, 8);
+	protected final JTextField nameField;
 	
 	/**
 	 * Difficulty level slider
@@ -46,14 +46,19 @@ class AiSelectionDialog extends AiAbstractDialog implements ActionListener {
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());
 		setResizable(false);
+
+		int lvl = -1; //default level
+		String name = DEFAULT_NAME;
+		if (gc.selPlayers[plid] instanceof ComputerPlayer) {
+			lvl = ((ComputerPlayer)gc.selPlayers[plid]).level;
+			name = ((ComputerPlayer)gc.selPlayers[plid]).name;
+		}
 		
 		Box sup = Box.createHorizontalBox();
 		sup.add(new JLabel("Nom donné à l'IA : "));
-		sup.add(name);
+		nameField = new ThinTextField(name, 8);
+		sup.add(nameField);
 		
-		int lvl = -1; //default level
-		if (gc.selPlayers[plid] instanceof ComputerPlayer)
-			lvl = ((ComputerPlayer)gc.selPlayers[plid]).level;
 		diff = createAiLevelSlider(lvl);
 		
 		add(sup);
@@ -69,7 +74,7 @@ class AiSelectionDialog extends AiAbstractDialog implements ActionListener {
 	 * @return Entered name or {@link #DEFAULT_NAME} if it's empty
 	 */
 	public String getName() {
-		String s = name.getText().trim();
+		String s = nameField.getText().trim();
 		if (s.equals(""))
 			return DEFAULT_NAME;
 		else
