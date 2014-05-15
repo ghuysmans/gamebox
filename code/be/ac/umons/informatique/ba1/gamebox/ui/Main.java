@@ -1,5 +1,6 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Locale;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -28,8 +30,8 @@ import be.ac.umons.informatique.ba1.gamebox.core.*;
 @SuppressWarnings("serial")
 public class Main extends JFrame implements ActionListener {
 	
-	protected static final int WIDTH  = 600;
-	protected static final int HEIGHT = 600;
+	protected static final int DEFAULT_WIDTH  = 600;
+	protected static final int DEFAULT_HEIGHT = 600;
 	
 	protected final GameContext context;
 	protected boolean debug;
@@ -141,8 +143,12 @@ public class Main extends JFrame implements ActionListener {
 	 */
 	private void loadBoardPanel() {
 		try {
-			setContentPane(BoardPanel.create(context, debug));
-			revalidate(); //FIXME not present in Java 6
+			getContentPane().removeAll(); //removeAll() would have removed the menus, too!
+			add(BoardPanel.create(context, debug), BorderLayout.CENTER);
+			add(new InfoBar(), BorderLayout.SOUTH);
+			//manual revalidate() for Java 6 
+			getContentPane().validate();
+			validate();
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Impossible d'afficher le jeu sauvegardé !\nMessage : "+ex.getMessage(), 
 												"Erreur", JOptionPane.ERROR_MESSAGE);
@@ -153,11 +159,13 @@ public class Main extends JFrame implements ActionListener {
 	 * Initializes the user interface, creating menus, registering listeners...
 	 */
 	private void initUI() {
-		setSize(WIDTH+HelpDialog.WIDTH, HEIGHT);
-		setLocationRelativeTo(null);
-		setSize(WIDTH, HEIGHT);
 		setTitle("Game box");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		//move & size it a smart way
+		setSize(DEFAULT_WIDTH+HelpDialog.WIDTH, DEFAULT_HEIGHT);
+		setLocationRelativeTo(null);
+		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -418,18 +426,36 @@ public class Main extends JFrame implements ActionListener {
 	/**
 	 * Information bar displaying scores, time (to be implemented)...
 	 */
-	class InfoBar extends JPanel {
+	class InfoBar extends JPanel implements SavedObserver {
 		protected final ScoreLabel sp1 = new ScoreLabel(context.game.players[0]);
 		protected final ScoreLabel sp2 = new ScoreLabel(context.game.players[1]);
 		
 		public InfoBar() {
-			add(sp1);
-			add(sp2);
+			setLayout(new BorderLayout());
+			add(sp1, BorderLayout.EAST);
+			add(sp2, BorderLayout.WEST);
+			context.game.addTmpObserver(this);
 		}
 
-		class ScoreLabel extends ZoomedLabel {
+		@Override
+		public void update(SavedObservable g, Object param) {
+			if (param.equals("chg")) {
+				sp1.update();
+				sp2.update();
+			}
+		}
+		
+		protected class ScoreLabel extends ZoomedLabel {
+			private Player player;
+			
 			public ScoreLabel(Player p) {
-				super(Integer.toString(context.game.getScore(p)), 2);
+				super("", 4);
+				player = p;
+				update();
+			}
+			
+			public void update() {
+				setText(Integer.toString(context.game.getDisplayableScore(player)));
 			}
 		}
 	}
