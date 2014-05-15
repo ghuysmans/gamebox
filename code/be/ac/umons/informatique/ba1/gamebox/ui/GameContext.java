@@ -47,10 +47,15 @@ public class GameContext implements Serializable {
 	 * @throws Exception Raised by the Java API
 	 */
 	public void saveContext(String fileName) throws Exception {
+		//don't save uninitialized games
+		if (game!=null && !game.isInitialized())
+			game = null; //discard it
+		//now save the objects
 		FileOutputStream fl = new FileOutputStream(fileName);
 		ObjectOutputStream os = new ObjectOutputStream(fl);
 		os.writeObject(this);
 		os.close(); fl.close();
+		//log
 		Logging.getLogger(GameContext.class).fine("Context saved successfully.");
 	}
 	

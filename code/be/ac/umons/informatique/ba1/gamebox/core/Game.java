@@ -14,6 +14,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 	public static final int RESULT_DRAW = 0;
 	
 	protected Player currentPlayer;
+	protected boolean initialized;
 	public final Player[] players;
 	public final Board board;
 	public final History history;
@@ -37,6 +38,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 		players[1] = p2; p2.setGame(this);
 		setup(); //must be here for Othello
 		setCurrentPlayer(p1);
+		initialized = true;
 		notifyEvent("stp");
 	}
 	
@@ -196,6 +198,14 @@ public abstract class Game extends SavedObservable implements Serializable {
 	 */
 	public final ArrayList<Move> getLegalMoves() {
 		return legalMoves;
+	}
+	
+	/**
+	 * Checks if the Game is initialized, i.e. whether {@link #setPlayers(Player, Player)} has been called. 
+	 * @return true if it is initialized
+	 */
+	public final boolean isInitialized() {
+		return initialized;
 	}
 
 	/**
