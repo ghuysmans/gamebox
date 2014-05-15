@@ -45,7 +45,7 @@ public class CustomBoardDialog extends JDialog implements ActionListener {
 	
 	public CustomBoardDialog(JFrame parent) {
 		super(parent, "Personnalisation", true);
-		setSize(160, 120);
+		setSize(190, 120);
 		setLocationRelativeTo(parent);
 		setResizable(false);
 		setLayout(new FlowLayout());

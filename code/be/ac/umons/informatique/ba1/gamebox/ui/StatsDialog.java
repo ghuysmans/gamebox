@@ -46,8 +46,10 @@ class StatsDialog extends AiAbstractDialog implements ActionListener {
 	public StatsDialog(JFrame parent, boolean ct) {
 		super(parent, "Choix des niveaux d'IA");
 		
-		if (hasRounds = ct) setSize(250, 195);
-		else setSize(250, 165);
+		if (hasRounds = ct)
+			setSize(280, 195);
+		else
+			setSize(280, 165);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());
 		setResizable(false);

@@ -42,7 +42,7 @@ class AiSelectionDialog extends AiAbstractDialog implements ActionListener {
 	 */
 	public AiSelectionDialog(JFrame parent, GameContext gc, int plid) {
 		super(parent, "Choix de l'IA");
-		setSize(250, 145);
+		setSize(280, 145);
 		setLocationRelativeTo(parent);
 		setLayout(new FlowLayout());
 		setResizable(false);

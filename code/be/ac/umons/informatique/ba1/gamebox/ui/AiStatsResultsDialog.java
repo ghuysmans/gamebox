@@ -122,7 +122,7 @@ public class AiStatsResultsDialog extends JDialog implements Observer, ActionLis
 	 * Initializes controls
 	 */
 	protected void initUI(JFrame parent) {
-		setSize(275, 188);
+		setSize(305, 188);
 		setLocationRelativeTo(parent);
 		setLayout(new BorderLayout());
 		setResizable(false);
