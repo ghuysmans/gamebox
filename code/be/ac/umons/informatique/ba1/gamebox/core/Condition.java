@@ -62,12 +62,31 @@ class Condition implements SavedObserver, Serializable {
 	}
 	
 	/**
+	 * Checks if the given message matches the condition's name.
+	 * Example with name="won":
+	 * - match("won-xxx")==true
+	 * - match("won")==true
+	 * - match("wontwork")==false  
+	 * @param  msg Message
+	 * @return true if it matches
+	 */
+	protected boolean match(String msg) {
+		int ln=name.length(), lm=msg.length();
+		if (ln > lm)
+			return false;
+		else if (ln == lm)
+			return name.equals(msg);
+		else
+			return msg.startsWith(name+"-");
+	}
+	
+	/**
 	 * Updates the counter and notifies the parent Event when needed.
 	 * @param g     Game object
 	 * @param param String identifier
 	 */
 	public void update(SavedObservable g, Object param) {
-		if (name.equals(param)) {
+		if (match((String)param)) {
 			if (count < maximum) {
 				count++;
 				if (count==maximum) {
