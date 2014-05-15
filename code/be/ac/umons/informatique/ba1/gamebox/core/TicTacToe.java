@@ -19,7 +19,11 @@ public class TicTacToe extends Game {
 	}
 	
 	public TicTacToe(int width, int height, int req) {
-		super(width, height);
+		this("TTT", width, height, req);
+	}
+	
+	public TicTacToe(String sn, int width, int height, int req) {
+		super(sn, width, height);
 		required = req;
 	}
 	

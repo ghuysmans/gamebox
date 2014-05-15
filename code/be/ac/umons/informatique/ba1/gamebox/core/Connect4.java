@@ -18,7 +18,7 @@ public class Connect4 extends TicTacToe {
 	}
 	
 	public Connect4(int width, int height, int req) {
-		super(width, height, req);
+		super("C4", width, height, req);
 	}
 
 	@Override

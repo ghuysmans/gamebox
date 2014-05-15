@@ -12,20 +12,29 @@ public abstract class Game extends SavedObservable implements Serializable {
 	public static final int RESULT_WON 	= 420;
 	public static final int RESULT_LOST = -RESULT_WON;
 	public static final int RESULT_DRAW = 0;
-	
+
 	protected Player currentPlayer;
 	protected boolean initialized;
+	protected boolean resultBc;
+	public final String shortName;
 	public final Player[] players;
 	public final Board board;
 	public final History history;
 	public final ArrayList<Event> events;
 	public ArrayList<Move> legalMoves;
 
-	public Game(int width, int height) {
+	/**
+	 * Creates a Game instance
+	 * @param sn     Short name (for won/lost events)
+	 * @param width  Board width
+	 * @param height Board height
+	 */
+	public Game(String sn, int width, int height) {
 		board = new Board(width, height);
 		history = new History(); //empty
 		players = new Player[2];
 		events = new ArrayList<Event>();
+		shortName = sn;
 	}
 	
 	/**
@@ -206,6 +215,41 @@ public abstract class Game extends SavedObservable implements Serializable {
 	 */
 	public final boolean isInitialized() {
 		return initialized;
+	}
+	
+	/**
+	 * Notifies (if needed) the result to {@link Condition} objects
+	 */
+	public void notifyResult() {
+		if (!resultBc && !hasFinished()) {
+			int r = getResult(players[0]);
+			if (r == RESULT_DRAW) {
+				String e = "draw-"+shortName;
+				players[0].notifyEvent(e);
+				players[1].notifyEvent(e);
+			}
+			else {
+				String w = "won-"+shortName;
+				String l = "lost-"+shortName;
+				if (r == RESULT_WON) {
+					players[0].notifyEvent(w);
+					players[1].notifyEvent(l);
+				}
+				else {
+					players[0].notifyEvent(l);
+					players[1].notifyEvent(w);
+				}
+			}
+			notifyEvent("swon");
+			resultBc = true;
+		}
+	}
+	
+	/**
+	 * Sets the flag
+	 */
+	public final void setResultBroadcasted() {
+		resultBc = true;
 	}
 
 	/**

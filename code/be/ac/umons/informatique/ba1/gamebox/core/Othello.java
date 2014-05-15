@@ -15,7 +15,7 @@ public class Othello extends Game {
 	}
 	
 	public Othello(int width, int height) {
-		super(width, height);
+		super("OTH", width, height);
 		if (width != height)
 			throw new IllegalArgumentException(MessageUtil.getMessage("BOARD_SQUARE", getClass()));
 		//dimensions are the same... let's check the parity of one of them!

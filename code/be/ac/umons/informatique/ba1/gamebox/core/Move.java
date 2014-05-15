@@ -43,8 +43,10 @@ public abstract class Move implements Serializable {
 		if (notify)
 			game.notifyEvent("mv");
 		internalPlay();
-		if (notify)
+		if (notify) {
 			game.notifyEvent("chg");
+			game.notifyResult();
+		}
 	}
 	
 	/**
