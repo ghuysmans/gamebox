@@ -264,6 +264,7 @@ public class Main extends JFrame implements ActionListener {
 	private void doPlay() {
 		if (!tmrPlayWorking && //avoid concurrent computing
 			context.mode==GameMode.AUTOMATIC && //right mode? 
+			context.game!=null && //initialized game?
 			(context.game.getCurrentPlayer() instanceof ComputerPlayer) && //something to do? 
 			!context.game.hasFinished()) { //not finished?
 				tmrPlayWorking = true;
