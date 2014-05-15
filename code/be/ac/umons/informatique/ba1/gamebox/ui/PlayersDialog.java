@@ -2,6 +2,8 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -73,6 +75,13 @@ class PlayersDialog extends JDialog {
 		
 		add(new JScrollPane(new JTable(mod = new PlayersModel(ctx.humans))));
 		add(add);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				name.requestFocus();
+			}
+		});
 		
 		setVisible(true);
 	}

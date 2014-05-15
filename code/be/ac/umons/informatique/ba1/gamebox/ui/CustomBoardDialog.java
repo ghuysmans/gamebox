@@ -3,6 +3,8 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -67,6 +69,13 @@ public class CustomBoardDialog extends JDialog implements ActionListener {
 		box.add(Box.createHorizontalStrut(10));
 		box.add(btnCcl);
 		add(box);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				width.requestFocus();
+			}
+		});
 		
 		setVisible(true);	
 	}
