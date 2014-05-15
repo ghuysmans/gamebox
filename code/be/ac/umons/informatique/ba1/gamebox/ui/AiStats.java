@@ -3,7 +3,7 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 import be.ac.umons.informatique.ba1.gamebox.core.*;
 
 /**
- * CLI tool allowing comparison between two ComputerPlayer of (optionally) different levels.
+ * Allows comparison between two ComputerPlayer of (optionally) different levels.
  */
 
 public class AiStats {
@@ -45,13 +45,15 @@ public class AiStats {
 	}
 	
 	/**
-	 * @return Number of played games
+	 * Computes the number of played games
+	 * @return Count
 	 */
 	public int getCount() {
 		return ctWon + ctDraw + ctLost;
 	}
 	/**
-	 * @return Percentage of won games for the first player
+	 * Computes the percentage of won games for the first player
+	 * @return Value in [0;1]
 	 */
 	public double getWon() {
 		int t = getCount();
@@ -62,7 +64,8 @@ public class AiStats {
 	}
 	
 	/**
-	 * @return Percentage of lost games for the first player
+	 * Computes the percentage of lost games for the first player
+	 * @return Value in [0;1]
 	 */
 	public double getLost() {
 		int t = getCount();
@@ -73,7 +76,8 @@ public class AiStats {
 	}		
 	
 	/**
-	 * @return Percentage of draw games for the first player
+	 * Computes the percentage of draw games for the first player
+	 * @return Value in [0;1]
 	 */	
 	public double getDraw() {
 		int t = getCount();
@@ -83,55 +87,71 @@ public class AiStats {
 			return (double)ctDraw/t;
 	}
 	
+	
+	/**
+	 * Basic command-line interface
+	 * @param args Parameters
+	 */
 	public static void main(String[] args) {
 		if (args.length!=4 && args.length!=5) {
 			System.out.println("Usage: AiStats [-d|-g] game levelA levelB count");
-			System.out.println("Available games: 0=tic-tac-toe; 1=four in a row; 2=othello");
+			System.out.print("Available games: ");
+			for (UiGame ug: UiGame.values())
+				System.out.print(ug.name()+" ");
+			System.out.println("");
 		}
 		else {
-			int gn; //selected game
+			UiGame sg; //selected game
+			ComputerPlayer pA, pB;
 			int lvlA, lvlB; //IA difficulty levels
 			int f=0; //first required parameter
 			int count; //tests count
 			boolean dbg = false; //debug mode?
 			boolean gnuplot = false; //gnuplot-compatible output?
-			if (args[0].equals("-d")) {
-				f = 1;
-				dbg = true;
+			
+			//Parse arguments
+			try {
+				if (args[0].equals("-d")) {
+					f = 1;
+					dbg = true;
+				}
+				else if (args[0].equals("-g")) {
+					f = 1;
+					gnuplot = true;
+				}
+				sg = UiGame.valueOf(args[f]);
+				lvlA = Integer.parseInt(args[f+1]);
+				lvlB = Integer.parseInt(args[f+2]);
+				count = Integer.parseInt(args[f+3]);
+				pA = new ComputerPlayer(null, "A", lvlA);
+				pB = new ComputerPlayer(null, "B", lvlB);
 			}
-			else if (args[0].equals("-g")) {
-				f = 1;
-				gnuplot = true;
+			catch(Exception ex) {
+				System.out.println(ex.getMessage());
+				return;
 			}
-			gn = Integer.parseInt(args[f]);
-			lvlA = Integer.parseInt(args[f+1]);
-			lvlB = Integer.parseInt(args[f+2]);
-			count = Integer.parseInt(args[f+3]);
-			ComputerPlayer pA = new ComputerPlayer(null, "A", lvlA);
-			ComputerPlayer pB = new ComputerPlayer(null, "B", lvlB);		
+			
+			//Play a few games
 			AiStats test = new AiStats(pA, pB);
 			for (int k=1; k<=count; k++) {
 				Game g;
-				switch (gn) {
-					case 0:
-						g = new TicTacToe(3, 3, 3);
-						break;
-					case 1:
-						g = new Connect4(7, 6, 4);
-						break;
-					case 2:
-						g = new Othello(8, 8);
-						break;
-					default:
-						g = null;
-						break;
-				}
+				try {
+					g = sg.createGame();
+				} catch (Exception e) {
+					//this should never happen
+					e.printStackTrace();
+					return;
+				} 
 				pA.setGame(g);
 				pB.setGame(g);
 				if (!gnuplot)
 					System.out.println("Test #"+k);
 				test.playGame(g, dbg);
 			}
+			if (!gnuplot)
+				System.out.println("");
+			
+			//Display results
 			if (gnuplot) {
 				System.out.println("1 "+test.getWon());
 				System.out.println("0 "+test.getDraw());

@@ -33,15 +33,17 @@
 <h2>II. Statistiques</h2>
 
 <h3>1. Comment calculer les stats pour gnuplot ?</h3>
-<p>Dans un terminal, lancez AiStats : 
+<p>Dans un terminal, lancez <i>AiStats</i> selon cette&nbsp;syntaxe : 
 <!-- a <pre> block would be too large -->
-<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats FIXME </code> 
-.</p>
+<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats -g TTT|C4|OTH lvlA lblB count</code>. 
+<i>lvlA</i> et <i>lvlB</i> sont les&nbsp;niveaux des IA et <i>count</i>, le&nbsp;nombre de parties à simuler.</p>
+<p>Par exemple, si vous souhaitez faire s'affronter 100&nbsp;fois une IA de niveau 5 et une autre de niveau 9 à Tic-tac-toe, tapez : </p>
+<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats -g TTT 5 9 100</code>. 
 
 
 <h2>III. Compilation</h2>
 
-<h3>1. Comment créer le&nbsp;fichier jar ?</h3>
+<h3>1. Comment créer le&nbsp;fichier <i>jar</i> ?</h3>
 <p>Dans un terminal, tapez <code>ant jar</code>. Un fichier <i>gamebox.jar</i> 
 (que vous pourrez ouvrir sans avoir besoin du JDK) sera généré...</p>
 
