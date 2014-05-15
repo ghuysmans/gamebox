@@ -12,16 +12,28 @@
 <h1>Aide de Gamebox</h1>
 
 
-<h2>I. Commandes de jeu</h2>
+<h2>I. Plateau de jeu</h2>
 
-<h3>1. Sur le&nbsp;plateau de jeu</h3>
+<h3>1. Commandes</h3>
 <ul>
-<li>Clic gauche : effectuer un mouvement.</li>
+<li>Clic gauche : effectuer un mouvement ou faire jouer l'ordinateur.</li>
 <li>Clic gauche (SHIFT enfoncé) : défaire le précédent mouvement.</li>
 <li>Clic droit enfoncé : voir les mouvements légaux.</li>
 </ul>
 
-<h3>2. Dans « À propos de »</h3>
+<h3>2. Barre d'informations</h3>
+<p>En vis-à-vis se trouvent le&nbsp;nom et le score de chaque joueur. 
+Lorsque le&nbsp;nom d'un joueur est en rouge, cela signifie que c'est à son&nbsp;tour de jouer.</p>
+<p>Pendant une partie contre l'ordinateur, son&nbsp;nom apparaît en rouge lorsqu'il « réfléchit ».</p>
+
+<h3>3. Comment tricher</h3>
+<p>Dans un terminal, lancez l'interface graphique avec cette&nbsp;commande : 
+<!-- a <pre> block would be too large -->
+<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.Main -d</code>. 
+Cela activera le&nbsp;mode de débogage qui affiche les&nbsp;scores lors du clic droit sur le&nbsp;plateau de jeu.</p>
+
+<h2>II. Dans « À propos de »</h2>
+<h3>1. Commandes</h3>
 <ul>
 <li>Clic gauche : faire tourner l'anneau sélectionné dans le&nbsp;sens horlogique.</li>
 <li>Clic droit : faire tourner l'anneau sélectionné dans le&nbsp;sens anti-horlogique.</li>
@@ -29,14 +41,8 @@
 <li>Clic droit (SHIFT enfoncé) : faire tourner le&nbsp;disque dans le&nbsp;sens anti-horlogique.</li>
 </ul>
 
-<h3>3. Comment tricher</h3>
-<p>Dans un terminal, lancez l'interface graphique avec cette&nbsp;commande : 
-<!-- a <pre> block would be too large -->
-<code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.Main -d</code>. 
-Cela activera le&nbsp;mode de débogage qui affiche les scores lors du clic droit sur le&nbsp;plateau de jeu.</p>
 
-
-<h2>II. Statistiques</h2>
+<h2>III. Statistiques</h2>
 
 <h3>1. Comment calculer les stats pour gnuplot ?</h3>
 <p>Dans un terminal, lancez <i>AiStats</i> selon cette&nbsp;syntaxe : 
@@ -47,7 +53,7 @@ Cela activera le&nbsp;mode de débogage qui affiche les scores lors du clic droi
 <code>java -cp gamebox.jar be.ac.umons.informatique.ba1.gamebox.ui.AiStats -g TTT 5 9 100</code>. 
 
 
-<h2>III. Compilation</h2>
+<h2>IV. Compilation</h2>
 
 <h3>1. Comment créer le&nbsp;fichier <i>jar</i> ?</h3>
 <p>Dans un terminal, tapez <code>ant jar</code>. Un fichier <i>gamebox.jar</i> 
