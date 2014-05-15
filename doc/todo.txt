@@ -1,14 +1,9 @@
 mlq
-todo @report: resync UML with code and integrate it
-bug @automove: the "working" flag isn't used!
+todo @JUnit: check everything asked is checked!!!
 
 ghs
-bug @dispScore: Othello implementation is bad
-todo @JUnit: implement basic hasFinished() tests!!!
-todo @Negamax: add a flag for "virtual" moves and remove them at start
-bug @gamesel: no players then discarded
+todo @report: resync UML with code and integrate it
 todo @Game: trigger won and won-xxx using internal flags
-todo @AiStats+manual: gnuplot stats from the command line
 
 maybe?
 todo @sound: implement something to play them
