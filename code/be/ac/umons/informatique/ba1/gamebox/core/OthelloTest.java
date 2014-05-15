@@ -35,24 +35,32 @@ public class OthelloTest extends GameTestAbstract {
 		Assert.assertArrayEquals("No duplicates", exp, mv);
 	}
 
+	/**
+	 * The board is full
+	 */
 	@Test
 	public void scoreFull() {
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}});
-		Assert.assertEquals("P1 won", 16, g.getScore(p1));
-		Assert.assertEquals("P2 lost", 0, g.getScore(p2));
+		Assert.assertEquals("P1 won", 16, g.getDisplayableScore(p1));
+		Assert.assertEquals("P2 lost", 0, g.getDisplayableScore(p2));
 	}
 	
+	/**
+	 * p2 can't play anymore
+	 */
 	@Test
 	public void scoreEmpty() {
-		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p1}, new Player[]{null, null, null, null}});
+		fillBoard(g, new Player[][]{new Player[]{p1, p1, p1, p1}, new Player[]{p1, p1, p1, p2}, new Player[]{p1, p1, p1, p2}, new Player[]{null, null, null, null}});
+		Assert.assertFalse("Before last move", g.hasFinished());
+		g.createMove(3, 3).play(false);
 		Assert.assertTrue(g.hasFinished());
-		Assert.assertEquals("Score p1", 16, g.getScore(p1));
-		Assert.assertEquals("Score p2", 0, g.getScore(p2));
+		Assert.assertEquals("Score p1", 16, g.getDisplayableScore(p1));
+		Assert.assertEquals("Score p2", 0, g.getDisplayableScore(p2));
 	
 		fillBoard(g, new Player[][]{new Player[]{p1, p1, null, null}, new Player[]{p2, p1, p2, p2}, new Player[]{p1, p2, p2, p2}, new Player[]{p2, p2, p2, p2}});
 		Assert.assertTrue(g.hasFinished());
-		Assert.assertEquals("Score p1", 4, g.getScore(p1));
-		Assert.assertEquals("Score p2", 12, g.getScore(p2));
+		Assert.assertEquals("Score p1", 4, g.getDisplayableScore(p1));
+		Assert.assertEquals("Score p2", 12, g.getDisplayableScore(p2));
 	}
 	
 	@Test
