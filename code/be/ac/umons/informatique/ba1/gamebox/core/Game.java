@@ -267,12 +267,13 @@ public abstract class Game extends SavedObservable implements Serializable {
 	 * Notifies (if needed) the result to {@link Condition} objects
 	 */
 	public void notifyResult() {
-		if (!resultBc && !hasFinished()) {
+		if (!resultBc && hasFinished()) {
 			int r = getResult(players[0]);
 			if (r == RESULT_DRAW) {
 				String e = "draw-"+shortName;
 				players[0].notifyEvent(e);
 				players[1].notifyEvent(e);
+				notifyEvent("gdraw");
 			}
 			else {
 				String w = "won-"+shortName;
@@ -285,8 +286,8 @@ public abstract class Game extends SavedObservable implements Serializable {
 					players[0].notifyEvent(l);
 					players[1].notifyEvent(w);
 				}
+				notifyEvent("gwon");
 			}
-			notifyEvent("swon");
 			resultBc = true;
 		}
 	}

@@ -276,7 +276,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 	public void update(SavedObservable g, Object param) {
 		if (param.equals("chg") || param.equals("stp"))
 			repaint();
-		else if (Condition.match("won", (String)param)) {
+		else if (Condition.match("gwon", (String)param)) {
 			Player p;
 			if (context.game.getResult(context.game.players[0]) == Game.RESULT_WON)
 				p = context.game.players[0];

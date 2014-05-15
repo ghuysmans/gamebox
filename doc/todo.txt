@@ -1,9 +1,6 @@
 mlq
 todo @JUnit: check everything asked is checked!!!
 
-ghs
-todo @report: resync UML with code and integrate it
-
 maybe?
 todo @sound: implement something to play them
 todo @Main: implement the restart button
