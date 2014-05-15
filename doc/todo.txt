@@ -3,7 +3,6 @@ todo @JUnit: check everything asked is checked!!!
 
 ghs
 todo @report: resync UML with code and integrate it
-todo @Game: trigger won and won-xxx using internal flags
 
 maybe?
 todo @sound: implement something to play them
