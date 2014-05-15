@@ -99,7 +99,7 @@ class AchievementsDialog extends JDialog implements ActionListener {
 	 */
 	protected class AchievementPanel extends JPanel {
 		public AchievementPanel(Achievement ach) {
-			add(new Picture(ach.icon ? ach.name : "no_icon", 64, 64));
+			add(new Picture(ach.icon ? "ach/"+ach.name : "ach/no_icon", 64, 64));
 			Box txt = Box.createVerticalBox();
 			txt.add(new ZoomedLabel(ach.message, 1.5F));
 			txt.add(new JLabel(ach.description));

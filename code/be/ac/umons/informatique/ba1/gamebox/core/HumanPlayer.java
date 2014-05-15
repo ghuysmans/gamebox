@@ -15,8 +15,14 @@ public class HumanPlayer extends Player {
 			new Condition(this, "Mouvement joué", "mv", 1)));
 		events.add(new Achievement(this, "Gagnez votre première partie !", "Le début de la gloire", "1stwin", 1, false, true, 
 			new Condition(this, "Victoire", "won", 1)));
-		events.add(new Achievement(this, "Défaites un de vos mouvements...", "Manque de confiance en soi", "1stud", 1, false, true, 
-			new Condition(this, "Mouvement joué", "ud", 1)));
+		events.add(new Achievement(this, "Défaites un de vos mouvements...", "Confiance en soi", "1stud", 1, false, true, 
+			new Condition(this, "Mouvement défait", "ud", 1)));
+		
+		events.add(new Achievement(this, "Terminez 42 parties de Tic-tac-toe", "Il manque toujours la question !", "42ttt", 1, false, true, 
+			new Condition(this, "Parties de Tic-tac-toe terminées", "end-TTT", 42)));
+		
+		events.add(new Achievement(this, "Jouez 10000 coups dans Puissance 4", "Infinity", "infinity", 1, false, true, 
+			new Condition(this, "Coups dans Puissance 4", "mv-C4", 10000)));
 		
 		events.add(new Achievement(this, "Gagnez 10 parties d'Othello", "Othellier fou", "croth", 1, false, true, 
 			new Condition(this, "Victoire à Othello", "won-OTH", 10)));

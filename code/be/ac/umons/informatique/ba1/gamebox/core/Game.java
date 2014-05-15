@@ -91,7 +91,7 @@ public abstract class Game extends SavedObservable implements Serializable {
 		setup(); //must be here for Othello
 		setCurrentPlayer(p1);
 		initialized = true;
-		notifyEvent("stp");
+		notifyEvent("stp-"+shortName);
 	}
 	
 	/**
@@ -288,6 +288,11 @@ public abstract class Game extends SavedObservable implements Serializable {
 				}
 				notifyEvent("gwon");
 			}
+			
+			String e = "end-"+shortName;
+			players[0].notifyEvent(e);
+			players[1].notifyEvent(e);
+			
 			resultBc = true;
 		}
 	}

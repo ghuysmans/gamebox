@@ -58,7 +58,7 @@ public abstract class Move implements Serializable {
 			throw new RuntimeException(MessageUtil.getMessage("INVALID_MOVE", getClass()));
 		game.history.push(this); //must be done first for OthelloMove's consequences!
 		if (notify)
-			game.notifyEvent("mv");
+			game.notifyEvent("mv-"+game.shortName);
 		internalPlay();
 		if (notify) {
 			game.notifyEvent("chg");
