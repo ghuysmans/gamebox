@@ -10,7 +10,8 @@ on peut imaginer une stratégie gagnante pour chaque joueur (que nous nommerons 
 
 Malheureusement, l'espace de recherche est trop important pour être exploré entièrement : 
 nous devons nous limiter à une certaine profondeur. Dans notre~code, on <<~creuse~>> jusqu'à 
-6~niveaux (6~coups joués à tour de rôle).
+6~niveaux maximum\footnote{Cela signifie que l'IA simule 6~coups joués à tour de rôle.} 
+(par défaut, l'IA s'arrête à 3 coups).
 
 L'ensemble des situations de jeu examinées par l'algorithme Negamax 
 peut être représenté sous la~forme d'un arbre dans lequel :
