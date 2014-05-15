@@ -284,7 +284,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 				p = context.game.players[1];
 			JOptionPane.showMessageDialog(null, p.name+" a gagné !");
 		}
-		else if (Condition.match("draw", (String)param))
+		else if (Condition.match("gdraw", (String)param))
 			JOptionPane.showMessageDialog(null, "Match nul !");
 	}
 }

@@ -1,6 +1,5 @@
 use the brand-new won-xxx messages!
 refactor new JPanel, setLayout --> new JPanel(new MyLayout())
-C4 draw not detected
 
 maybe?
 todo @sound: implement something to play them
