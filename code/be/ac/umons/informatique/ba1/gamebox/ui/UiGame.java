@@ -8,10 +8,12 @@ import be.ac.umons.informatique.ba1.gamebox.core.Othello;
 import be.ac.umons.informatique.ba1.gamebox.core.TicTacToe;
 
 /**
- * Link between the UI and the core Game classes.
- * Stores information about:
- * - a game and how to construct one (used in menus)
- * - textures used by the associated BoardPanel
+ * <p>Link between the UI and the core Game classes.
+ * Stores information about:</p>
+ * <ul>
+ * <li>a game and how to construct one (used in menus)</li>
+ * <li>textures used by the associated BoardPanel</li>
+ * </ul>
  */
 
 public enum UiGame {
