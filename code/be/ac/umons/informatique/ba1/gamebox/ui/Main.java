@@ -1,6 +1,7 @@
 package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -427,13 +428,12 @@ public class Main extends JFrame implements ActionListener {
 	 * Information bar displaying scores, time (to be implemented)...
 	 */
 	class InfoBar extends JPanel implements SavedObserver {
-		protected final ScoreLabel sp1 = new ScoreLabel(context.game.players[0]);
-		protected final ScoreLabel sp2 = new ScoreLabel(context.game.players[1]);
+		protected final ScorePanel sp1, sp2;
 		
 		public InfoBar() {
 			setLayout(new BorderLayout());
-			add(sp1, BorderLayout.EAST);
-			add(sp2, BorderLayout.WEST);
+			add(sp1 = new ScorePanel(0, false), BorderLayout.WEST);
+			add(sp2 = new ScorePanel(1, true), BorderLayout.EAST);
 			context.game.addTmpObserver(this);
 		}
 
@@ -445,17 +445,39 @@ public class Main extends JFrame implements ActionListener {
 			}
 		}
 		
-		protected class ScoreLabel extends ZoomedLabel {
-			private Player player;
+		protected class ScorePanel extends JPanel {
+			protected int playerId;
+			protected boolean leftLabel; 
+			protected ZoomedLabel score;
+			protected ZoomedLabel nick;
 			
-			public ScoreLabel(Player p) {
-				super("", 4);
-				player = p;
+			/**
+			 * Creates a score panel
+			 * @param pid Player index in {@link Game#players}
+			 * @param ll  Place the name label on the left? 
+			 */
+			public ScorePanel(int pid, boolean ll) {
+				playerId = pid;
+				
+				setLayout(new FlowLayout());
+				score = new ZoomedLabel("", 4);
+				nick = new ZoomedLabel("", 2);
+				if (ll) {
+					add(nick);
+					add(score);
+				}
+				else {
+					add(score);
+					add(nick);
+				}
+				
 				update();
 			}
 			
 			public void update() {
-				setText(Integer.toString(context.game.getDisplayableScore(player)));
+				Player p = context.game.players[playerId];
+				score.setText(Integer.toString(context.game.getDisplayableScore(p)));
+				nick.setText(p.name); //if it changed...
 			}
 		}
 	}
