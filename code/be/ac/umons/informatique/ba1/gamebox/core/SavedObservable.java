@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * An Observable-like class with two features:
- * - classic observers are saved (for Conditions, Achievements, etc.)
- * - temporary observers aren't (for UI components, which are volatile)  
+ * <p>An Observable-like class with two features:</p>
+ * <ul>
+ * <li>classic observers are saved (for Conditions, Achievements, etc.)</li>
+ * <li>temporary observers aren't (for UI components, which are volatile)</li>
+ * </ul>  
  */
 public class SavedObservable implements Serializable {
 	

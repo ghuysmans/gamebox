@@ -167,11 +167,13 @@ public abstract class Game extends SavedObservable implements Serializable {
 	}
 	
 	/**
-	 * Evaluates the score of a given player. Returns (using SCORE_* constants):
-	 * - a negative value if he loses
-	 * - zero if draw (or there's nothing special)
-	 * - a positive value if he wins
-	 * By default, it uses {@link #getResult()}...
+	 * <p>Evaluates the score of a given player. Returns (using SCORE_* constants):</p>
+	 * <ul>
+	 * <li>a negative value if he loses</li>
+	 * <li>zero if draw (or there's nothing special)</li>
+	 * <li>a positive value if he wins</li>
+	 * </ul>
+	 * <p>By default, it uses {@link #getResult()}...</p>
 	 * @param p	Player
 	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
 	 */
