@@ -21,8 +21,18 @@ public class TicTacToeTest extends GameTestAbstract {
 	}
 
 	@Test
-	public void finishedSmoke() {
+	public void finished() {
 		Assert.assertFalse("Empty not finished", g.hasFinished());
+
+		fillBoard(g, new Player[][]{new Player[]{p1, p1, null}, new Player[]{null, null, null}, new Player[]{null, null, null}});
+		Assert.assertFalse("Not finished almost first row", g.hasFinished());
+		g.createMove(2, 0).play(false);
+		Assert.assertTrue("Finished first row", g.hasFinished());
+		
+		g.history.undo(false);
+		
+		fillBoard(g, new Player[][]{new Player[]{p1, p2, p2}, new Player[]{p2, p1, p1}, new Player[]{p2, p1, p2}});
+		Assert.assertTrue("Finished draw", g.hasFinished());
 	}
 	
 	@Test
