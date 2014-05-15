@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
@@ -56,7 +57,7 @@ class AboutDialog extends JDialog {
 		stp = step;
 		tks = thickness;
 		//Load the original image (to be clipped...)
-		original = ImageIO.read(getClass().getResourceAsStream("/res/about.png"));
+		original = ImageIO.read(getClass().getResourceAsStream("/res/aboutShuffled.png"));
 		//Store the frequently used size (it's a square)
 		original_s = original.getWidth();
 		original_hs = original_s>>1;
@@ -120,7 +121,12 @@ class AboutDialog extends JDialog {
 		@Override
 		protected void paintComponent(Graphics g) {
 			if (hasWon() && !firstClick) {
-				g.drawImage(original, 0, 0, original_s, original_s, null);
+				try {
+					BufferedImage bim = ImageIO.read(getClass().getResourceAsStream("/res/about.png"));
+					g.drawImage(bim, 0, 0, bim.getWidth(), bim.getHeight(), null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			else {
 				super.paintComponent(g); //background color
