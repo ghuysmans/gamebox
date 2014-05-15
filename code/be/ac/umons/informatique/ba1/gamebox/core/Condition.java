@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Conditions triggered by subclasses of Game using their name.
  */
 
-class Condition implements SavedObserver, Serializable {
+public class Condition implements SavedObserver, Serializable {
 
 	private static final long serialVersionUID = -6277076554051997918L;
 	protected int count;
@@ -62,15 +62,15 @@ class Condition implements SavedObserver, Serializable {
 	}
 	
 	/**
-	 * Checks if the given message matches the condition's name.
-	 * Example with name="won":
-	 * - match("won-xxx")==true
-	 * - match("won")==true
-	 * - match("wontwork")==false  
+	 * Checks if a message matches a name.
+	 * Examples:
+	 * - match("won", "won-xxx")==true
+	 * - match("won", "won")==true
+	 * - match("won", "wontwork")==false  
 	 * @param  msg Message
 	 * @return true if it matches
 	 */
-	protected boolean match(String msg) {
+	public static boolean match(String name, String msg) {
 		int ln=name.length(), lm=msg.length();
 		if (ln > lm)
 			return false;
@@ -86,7 +86,7 @@ class Condition implements SavedObserver, Serializable {
 	 * @param param String identifier
 	 */
 	public void update(SavedObservable g, Object param) {
-		if (match((String)param)) {
+		if (match(name, (String)param)) {
 			if (count < maximum) {
 				count++;
 				if (count==maximum) {
