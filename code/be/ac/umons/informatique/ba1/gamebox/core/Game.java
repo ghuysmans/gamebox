@@ -125,6 +125,16 @@ public abstract class Game extends SavedObservable implements Serializable {
 	}
 	
 	/**
+	 * Computes a score to be displayed for the user.
+	 * Default: uses {@link #getScore(Player)}
+	 * @param p	Player
+	 * @return Score
+	 */
+	public int getDisplayableScore(Player p) {
+		return getScore(p);
+	}
+	
+	/**
 	 * Evaluates the result of the current player and categorizes it.
 	 * @return {@link #RESULT_DRAW}, {@link #RESULT_LOST}, {@link #RESULT_WON}
 	 */

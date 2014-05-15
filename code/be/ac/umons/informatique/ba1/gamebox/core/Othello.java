@@ -63,10 +63,10 @@ public class Othello extends Game {
 	
 	/**
 	 * @param p Player
-	 * @return A delta between p's points and the other's. 
+	 * @param d To be displayed?
+	 * @return d ? A delta between p's points and the other's : a sum. 
 	 */
-	@Override
-	public int getScore(Player p) {
+	protected int getScore(Player p, boolean d) {
 		//this is a correct implementation (TTT's isn't)
 		int ctPlayer1 = getScore_internal(players[0]);
 		int ctPlayer2 = getScore_internal(players[1]);
@@ -80,10 +80,20 @@ public class Othello extends Game {
 				}
 			}
 		}
-		if (p==players[0])
-			return ctPlayer1+ctEmpty-ctPlayer2;
+		if (p == players[0])
+			return ctPlayer1+ctEmpty - (d ? 0 : ctPlayer2);
 		else
-			return ctPlayer2+ctEmpty-ctPlayer1;
+			return ctPlayer2+ctEmpty - (d ? 0 : ctPlayer1);
+	}
+	
+	@Override
+	public int getScore(Player p) {
+		return getScore(p, false);
+	}
+	
+	@Override
+	public int getDisplayableScore(Player p) {
+		return getScore(p, true);
 	}
 	
 	@Override
