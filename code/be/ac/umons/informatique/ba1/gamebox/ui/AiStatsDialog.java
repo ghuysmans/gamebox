@@ -2,6 +2,8 @@ package be.ac.umons.informatique.ba1.gamebox.ui;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -16,6 +18,11 @@ import javax.swing.JSlider;
 
 @SuppressWarnings("serial")
 class AiStatsDialog extends AiAbstractDialog implements ActionListener { 
+	
+	/**
+	 * Default rounds count
+	 */
+	protected final int DEFAULT_ROUNDS = 10;
 	
 	/**
 	 * Sliders used to select AI levels
@@ -35,7 +42,7 @@ class AiStatsDialog extends AiAbstractDialog implements ActionListener {
 	/**
 	 * Rounds textfield
 	 */
-	protected final ThinTextField roundsField = new ThinTextField(4);
+	protected final ThinTextField roundsField = new ThinTextField(Integer.toString(DEFAULT_ROUNDS), 4);
 	
 	
 	/**
@@ -67,6 +74,14 @@ class AiStatsDialog extends AiAbstractDialog implements ActionListener {
 		}
 		add(add);
 		add(createControlsBox());
+		
+		if (hasRounds)
+			addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowOpened(WindowEvent arg0) {
+					roundsField.requestFocus();
+				}
+			});
 		
 		setVisible(true);
 	}
