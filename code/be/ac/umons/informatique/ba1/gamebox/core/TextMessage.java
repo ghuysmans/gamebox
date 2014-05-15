@@ -2,6 +2,7 @@ package be.ac.umons.informatique.ba1.gamebox.core;
 
 /** 
  * Displays a text message  
+ * TODO implement this
  */
 
 class TextMessage extends Event {
