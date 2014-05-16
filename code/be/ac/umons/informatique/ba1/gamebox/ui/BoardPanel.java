@@ -274,7 +274,7 @@ class BoardPanel extends JPanel implements SavedObserver, MouseListener {
 
 	@Override
 	public void update(SavedObservable g, Object param) {
-		if (param.equals("chg") || param.equals("stp"))
+		if (param.equals("chg") || Condition.match("stp", (String)param))
 			repaint();
 		else if (Condition.match("gwon", (String)param)) {
 			Player p;
